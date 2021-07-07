@@ -1,0 +1,17 @@
+{
+  "name": "cuit",
+  "version": "1.6.6",
+  "description": "CUIT TOOLS",
+  "main": "app.js",
+  "dependencies": {
+    "miniprogram-component-plus": "^1.0.0",
+    "parser-wx": "^1.1.1",
+    "weui-miniprogram": "^1.0.7"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "祭夜",
+  "license": "ISC"
+}

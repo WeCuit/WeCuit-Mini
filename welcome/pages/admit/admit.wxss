@@ -1,0 +1,27 @@
+/* pages/welcome/admit/admit.wxss */
+@import '../common.wxss';
+
+.table{
+    display: flex;
+    flex-direction: column;
+}
+.title{
+    background-color: #03a9f4;
+}
+.item{
+    display: flex;
+}
+
+.item > view{
+    width: 50%;
+    padding: 20rpx;
+}
+.sub:nth-child(odd){
+    background-color: #ffffff;
+}
+
+.sub:nth-child(even){
+    background-color: #cccccc;
+}
+
+@import 'admit-wxa-auto-dark.wxss'

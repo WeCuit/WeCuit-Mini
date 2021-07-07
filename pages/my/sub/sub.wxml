@@ -1,0 +1,22 @@
+
+<!--  -->
+<mp-cells title="订阅项目" footer="点击文字可增加订阅次数">
+    <mp-cell wx:for="{{tplList}}" wx:key="tplId">
+        <switch slot="icon" checked="{{item.status}}" data-index="{{index}}" bindchange="changeSubStatus" />
+
+        <view bindtap="addSubCnt" data-index="{{index}}">{{item.description}}</view>
+        <view slot="footer" bindtap="addSubCnt" data-index="{{index}}">{{item.subCnt}}</view>
+
+    </mp-cell>
+</mp-cells>
+<button class="btn" type="warn" loading="{{delBtnLoading}}" disabled="{{delBtnDisabled}}" bindtap="bindDelSub">
+    删除订阅信息
+</button>
+<view >说明：</view>
+<text user-select="{{true}}">
+    1.打开开关，小程序将会把经过RSA非对称加密的账号于密码上传至云端，供打卡以及成绩提醒使用。
+    2.开启后，若需打卡或成绩提醒，还需到相应页面填写细节。
+    3.末尾数字为订阅次数；订阅次数为0时，不进行成绩关系监测；但会进行打卡操作。
+    4.点击文字，在同意后会增加一次订阅次数。
+    5.“删除订阅信息”将会把阁下的所有信息从数据库删除
+</text>

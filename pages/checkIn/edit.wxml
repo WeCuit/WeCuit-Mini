@@ -1,0 +1,127 @@
+<!-- pages/attendance/edit.wxml -->
+<!-- <mp-cells ext-class="my-cells" title="自动打卡操作">
+  <view class="check-info">
+  <picker mode="time" value="{{autoCheckIn.time}}" start="06:00" end="23:59" bindchange="bindAutoCheckInTime">
+    {{autoCheckIn.time}}
+  </picker>
+  <label>
+    <switch checked="{{isAutoCheckIn}}" bindchange="autoCheckInSwitch" disabled="{{!isSubscription}}" />
+    自动打卡
+  </label>
+  <label style="margin-top:10rpx;display: block;" bindtap="bindShowIntro">
+    <view wx:if="{{!showIntro}}">查看说明</view>
+    <text wx:else style="color:gray;">
+      第一次添加后，1分钟之内系统会执行一次打卡操作，没有订阅将无法收到提醒;
+    打卡数据为下方填写内容;
+    提醒次数取决于订阅次数
+    </text>
+  </label>
+  <label style="display: flex;">
+    <button style="width:151px;font-size: small;{{!isSubscription?'color:red;':''}}" type="primary" disabled="{{!isSubscription}}" bindtap="updateAutoCheckIn">
+      {{isSubscription?'更新自动打卡':'请先订阅服务'}}
+    </button>
+    <navigator url="/pages/my/sub/sub">
+      <button style="width:126px;font-size: small;" type="primary">订阅管理</button>
+    </navigator>
+  </label>
+  </view>
+</mp-cells> -->
+<mp-cells ext-class="my-cells" title="打卡时间">
+  <mp-cell ext-class="my-cell">
+    <view>{{checkInTime}}</view>
+  </mp-cell>
+</mp-cells>
+
+<!-- 表单开始 -->
+<d-form formData="{{formData}}" showSubmitBtn="{{true}}" bindDynamicFormSubmit="onFormSubmit"></d-form>
+
+<!-- <mp-cells ext-class="my-cells" title="1.个人健康状况">
+  <view wx:for="{{healthStatus}}" wx:key="key">
+    <mp-cell ext-class="my-cell">
+      <view>({{index + 1}}) {{item.title}}</view>
+      <picker slot="footer" bindchange="bindHealthStatusChange" data-index="{{index}}" value="{{item.index}}" range="{{item.select}}">
+        <view class="picker">{{item.select[item.index]}}</view>
+      </picker>
+    </mp-cell>
+    <mp-cell ext-class="my-cell" wx:if="{{index == 0 && healthStatus[0].index == 6}}" title="外地详址：">
+      <view style="display:flex;">
+        <input data-type="province" bindinput="bindHealthStatusOutLand" placeholder="?" value="{{item.outLand.province}}" />
+        <view slot="footer">省</view>
+        <input data-type="city" bindinput="bindHealthStatusOutLand" placeholder="?" value="{{item.outLand.city}}" />
+        <view slot="footer">市</view>
+        <input data-type="area" bindinput="bindHealthStatusOutLand" placeholder="?" value="{{item.outLand.area}}" />
+        <view slot="footer">区</view>
+      </view>
+    </mp-cell>
+  </view>
+  <mp-cell ext-class="my-cell">
+    <view>(7)其他需要说明情况：</view>
+    <textarea data-type="healthStatusOtherInfo" bindinput="bindInput" auto-height placeholder="请选择性填写" value="{{healthStatusOtherInfo}}" />
+  </mp-cell>
+</mp-cells>-->
+<!-- <mp-cells ext-class="my-cells" title="2.申请进出学校(无需求则不填)">
+  <mp-cell title="目的地：">
+    <input bindinput="bindInput" data-type="toPlace" class="weui-input" placeholder="请输入目的地" value="{{outIn.toPlace}}" />
+  </mp-cell>
+  <mp-cell title="事由：">
+    <input bindinput="bindInput" data-type="toResult" class="weui-input" placeholder="请输入事由" value="{{outIn.toResult}}" />
+  </mp-cell>
+  <mp-cell title="计划：">
+    <view>
+      <picker slot="footer" mode="multiSelector" bindchange="bindOutChange" value="{{outIn.outIndex}}" range="{{outIn.out}}">
+        <view class="picker">
+          {{outIn.out[0][outIn.outIndex[0]]}}-{{outIn.out[1][outIn.outIndex[1]]}}:00出校
+        </view>
+      </picker>
+    </view>
+    <view>
+      <picker slot="footer" mode="multiSelector" bindchange="bindInChange" value="{{outIn.inIndex}}" range="{{outIn.in}}">
+        <view class="picker">
+          {{outIn.in[0][outIn.inIndex[0]]}}-{{outIn.in[1][outIn.inIndex[1]]}}:00回校
+        </view>
+      </picker>
+    </view>
+  </mp-cell>
+  <mp-cell title="审核情况：">
+    <view slot="footer">{{requestRet}}</view>
+  </mp-cell>
+</mp-cells> -->
+<!--<mp-cells ext-class="my-cells" title="2.最近一个月以来的情况">
+  <mp-cell wx:for="{{monthStatus}}" wx:key="type" ext-class="my-cell">
+    <label class="radio">
+      <switch checked="{{item.isGo}}" data-index="{{index}}" bindchange="monthStatusChange" />
+      {{item.title}}
+    </label>
+    <view>
+      <textarea wx:if="{{item.isGo}}" data-index="{{index}}" bindinput="bindMonthStatusInput" auto-height placeholder="若接触过，请写明时间、地点及简要事由" value="{{item.details}}" />
+    </view>
+  </mp-cell>
+</mp-cells>
+<mp-cells ext-class="my-cells" title="3.从外地返校(预计，目前已在成都的不填)情况">
+  <mp-cell ext-class="my-cell">
+    <view>主要交通方式：</view>
+    <picker slot="footer" bindchange="bindTransportChange" value="{{transport.methodIndex}}" range="{{transport.method}}">
+      <view class="picker">{{transport.method[transport.methodIndex]}}</view>
+    </picker>
+  </mp-cell>
+  <mp-cell ext-class="my-cell">
+    <view>公共交通的航班号、车次等：</view>
+    <input bindinput="bindInput" data-type="toolId" class="weui-input" placeholder="请输入航班号、车次" value="{{transport.toolId}}" />
+  </mp-cell>
+  <mp-cell title="返校(预计)时间：" ext-class="my-cell">
+    <input bindinput="bindBackMonth" placeholder="?" />
+    <view slot="footer">月</view>
+    <input bindinput="bindBackDay" placeholder="?" />
+    <view slot="footer">日</view>
+  </mp-cell>
+</mp-cells>
+<view class="weui-btn-area">
+  <button class="weui-btn" type="primary" bindtap="submitForm">提交打卡</button>
+</view> -->
+
+<!-- 回首页按钮悬浮按钮 -->
+<view wx:if="{{fromShare}}">
+  <navigator url="/pages/index/index" open-type="reLaunch" class="floatBtn" style="bottom: 5%;font-size: x-large;">
+    <view class="iconfont icon-shouye"></view>
+  </navigator>
+</view>

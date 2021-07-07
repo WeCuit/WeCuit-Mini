@@ -1,0 +1,9 @@
+<!--pages/maintenance/maintenance.wxml-->
+<!-- 维护界面 -->
+<view>
+  <view class="maintenance-title">维护公告</view>
+  <beat-char beat-text="{{maintenanceBText}}"></beat-char>
+  <view class="maintenance-other-text">
+    <text >{{maintenanceOText}}</text>
+  </view>
+</view>

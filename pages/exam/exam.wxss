@@ -1,0 +1,21 @@
+/* pages/exam/exam.wxss */
+.exam-card{
+  border-radius: 10px;
+  background-color: #00c4ff;
+  margin: .5rem;
+}
+.exam-title{
+  padding: 5px;
+  padding-left: 10px;
+  border-bottom: 1px solid #a058ff;
+}
+.exam-info{
+  display: flex;
+  flex-wrap: wrap;
+  font-size: small;
+  padding-left: 10px;
+}
+.exam-info > view{
+  width: 47%;
+  padding: 3px;
+}

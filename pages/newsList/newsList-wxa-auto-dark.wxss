@@ -1,0 +1,30 @@
+/* 
+此文件为开发者工具生成，生成时间: 2/25/2021, 8:42:59 PM
+使用方法：
+在 newsList.wxss 文件末尾引入样式
+```
+@import "./newsList-wxa-auto-dark.wxss";
+```
+ */
+
+@media (prefers-color-scheme: dark) {
+    .top-wrap {
+        background-color: rgb(17, 17, 17);
+    }
+
+    .cells {
+        background: rgb(17, 17, 17);
+    }
+
+    .cell:not(:last-child) {
+        border-bottom: rgb(0, 0, 0);
+    }
+
+    .cell__bd .tags .tags__bd > view {
+        color: rgba(38, 117, 238, 0.6);
+    }
+
+    .cell__bd .tags .date {
+        color: rgb(99, 99, 99);
+    }
+}

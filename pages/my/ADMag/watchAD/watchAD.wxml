@@ -1,0 +1,24 @@
+<!--pages/watchAD/watchAD.wxml-->
+<view >banner广告</view>
+<ad unit-id="5454da2c63e03ff3889c8a2dc5e90fb3"></ad>
+
+<text >\r\n\r\n</text>
+<view >积木广告</view>
+<ad unit-id="cc64587dbbb385f7537d2b3a4f3b56fd" type="block" block-orientation="landscape" block-size="5"></ad>
+
+<text >\r\n\r\n</text>
+<view bind:tap="AD_box">点击显示盒子广告</view>
+
+<text >\r\n\r\n</text>
+<view bind:tap="AD_IScreen">点击显示插屏广告</view>
+
+<text >\r\n\r\n</text>
+<view bind:tap="AD_reward">点击激励视频广告</view>
+
+<text >\r\n\r\n</text>
+<view >feeds广告</view>
+<ad unit-id="240fc3785c9751daa217884bbd12334d" type="feeds"></ad>
+
+<text >\r\n\r\n</text>
+<view >卡片广告</view>
+<ad unit-id="a787d6d9637a2c0c6c69d927e301c9d2" type="card"></ad>

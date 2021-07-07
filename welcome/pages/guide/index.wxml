@@ -1,0 +1,18 @@
+<view class="page" style="{{cdnSign?('background: url('+imgCDN+images+'?token='+cdnToken+'&sign='+cdnSign +');'):''}} background-size: 100% 100%;">
+  <view class="button_container">
+    <navigator class="button" url="map/details">
+      <text>{{shortName}}简介</text>
+    </navigator>
+    <navigator class="button" url="map/index">
+      <text>逛逛{{shortName}}</text>
+    </navigator>
+  </view>
+  <view class="copyright">
+    <text>© 成信大</text>
+    <text>{{mapCopyright?"数据版权："+mapCopyright.name:""}}</text>
+  </view>
+</view>
+<!-- 回首页按钮悬浮按钮 -->
+<view wx:if="{{fromShare}}">
+  <navigator url="/pages/index/index" open-type="reLaunch" class="floatBtn" style="bottom: 5%;font-size: x-large;"><view class="iconfont icon-shouye"></view></navigator>
+</view>

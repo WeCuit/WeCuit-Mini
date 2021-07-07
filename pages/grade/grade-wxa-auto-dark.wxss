@@ -1,0 +1,27 @@
+/* 
+此文件为开发者工具生成，生成时间: 2/19/2021, 10:58:02 AM
+使用方法：
+在 grade.wxss 文件末尾引入样式
+```
+@import "./grade-wxa-auto-dark.wxss";
+```
+ */
+
+@media (prefers-color-scheme: dark) {
+    .total_card {
+        background-color: rgb(175, 13, 110);
+    }
+
+    .grade_table {
+        box-shadow: rgb(0, 0, 0);
+    }
+
+    .grade_table_item {
+        display: rgb(0, 0, 0);
+        background-color: rgb(10, 122, 210);
+    }
+
+    .grade_table_item > view:nth-child(1) {
+        border-bottom: rgb(0, 0, 0);
+    }
+}

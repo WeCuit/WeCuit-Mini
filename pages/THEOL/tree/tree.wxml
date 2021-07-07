@@ -1,0 +1,4 @@
+
+<view>
+  <mytree  model='{{ treeData }}' bind:tapitem='tapDirItem'></mytree>
+</view>

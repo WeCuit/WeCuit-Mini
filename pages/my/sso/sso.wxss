@@ -1,0 +1,57 @@
+/* pages/my/sso/sso.wxss */
+@import "../../common.wxss";
+.login{
+  border: 5px;
+}
+page{
+  background-color: #0081ff;
+  color: white;
+}
+view{
+  background-color: #0081ff;
+}
+.placeholder{
+  color:#77bcff;
+}
+.notice{
+  padding: 1rem;
+    margin: 1rem;
+    border-radius: .4rem;
+    background-color: #1d8cfa;
+    font-size: small;
+}
+.notice_sub{
+  display: flex;
+  background: inherit;
+  width: fit-content;
+}
+.notice_left{
+  padding: .2rem;
+    background: #fff;
+    color: #0081ff;
+    border-radius: .3rem 0rem 0rem .3rem;
+}
+.notice_right{
+  border: 1px solid #fff;
+  padding: .2rem;
+  border-radius: 0rem .3rem .3rem 0rem;
+  background-color: inherit;
+}
+
+
+@media (prefers-color-scheme: dark) {
+  /* DarkMode 下的样式 start */
+  page, view, .notice {
+      background-color: #1b1b1b;
+  }
+  .placeholder{
+    color: gray
+  }
+  .my-cells > .weui-cells__title, .my-cell > .weui-cell__ft{
+      color:gray
+  }
+  /* DarkMode 下的样式 end */
+}
+
+
+@import 'sso-wxa-auto-dark.wxss'

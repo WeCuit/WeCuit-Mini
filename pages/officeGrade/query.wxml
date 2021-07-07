@@ -1,0 +1,22 @@
+<!--pages/computerCenter/officeGrade/query.wxml-->
+
+<form catchsubmit="formSubmit" catchreset="formReset">
+    <mp-cells ext-class="my-cells" title="请输入所需信息">
+        <mp-cell title="昵称：">
+            <view><input name="nickname" class="login weui-input" type="number" placeholder="请输入昵称" placeholder-class="placeholder"></input></view>
+        </mp-cell>
+        <mp-cell title="邮箱：">
+            <input name="email" class="login password" placeholder="请输入邮箱" placeholder-class="placeholder"></input>
+        </mp-cell>
+        <mp-cell prop="vcode" title="验证码：" ext-class="weui-cell_vcode">
+            <input name="captcha" value="{{captchaCode}}" data-field="vcode" class="weui-input" placeholder="请输入验证码" placeholder-class="placeholder"/>
+            <image bindtap="refreshCaptcha" slot="footer" class="weui-vcode-img" src="{{captchaImg}}" style="width: 108px"></image>
+        </mp-cell>
+    </mp-cells>
+    <view class="syncTime">数据同步时间：{{syncTime}}</view>
+    <view class="result">{{result}}</view>
+    <view class="weui-btn-area">
+        <button class="weui-btn" type="primary" formType="submit">登录</button>
+        <button style="margin-top: 12px" formType="reset">重置</button>
+    </view>
+</form>

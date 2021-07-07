@@ -1,0 +1,145 @@
+<!-- index.wxml -->
+
+<view>
+  <!-- 幻灯片 -->
+  <view>
+    <swiper indicator-dots="{{false}}" style="height: 38vh;" autoplay="{{true}}" interval="5000" duration="500" current="{{isADClose?0:0}}">
+      <block wx:for="{{notice}}" wx:key="text">
+        <swiper-item>
+          <view class="swiper-item" style="background:url({{item.src}}) no-repeat;background-size: 100% 100%;height: 100%;" data-type="{{item.type}}" data-data="{{item.data}}" bind:tap="bindSwiper">
+            <text class="swiper-text">{{item.text}}</text>
+          </view>
+        </swiper-item>
+      </block>
+      <swiper-item wx:if="{{!isADClose}}">
+        <ad unit-id="5454da2c63e03ff3889c8a2dc5e90fb3"></ad>
+      </swiper-item>
+    </swiper>
+  </view>
+  <!-- 群应用提示 -->
+  <view class="groupApp" wx:if="{{showGANotice}}">
+    <view class="iconfont icon-yingyong" style="font-size:50rpx;padding:20rpx;"></view>
+    <view>
+      <view style="font-size:35rpx;">添加为群应用</view>
+      <view style="font-size:30rpx;" >欢迎成信大相关群添加本小程序</view>
+    </view>
+    <view >
+      <button style="font-size:35rpx;" type="primary" class="groupAppBtn" open-type="addGroupApp" bindaddgroupapp="addGroupApp">
+        添加
+      </button>
+    </view>
+  </view>
+  <view class="card">
+    <view class="card-header">
+      <view class="iconfont icon-chuangkou" style="align-self: flex-end;"></view>
+      <view style="margin-left:15rpx">功能</view>
+    </view>
+    <view class="card-body">
+      <!-- 功能列表 -->
+      <view>
+        <swiper style="height:400rpx" current="{{isADClose?0:0}}">
+          <view class='grid-item-container'>
+            <swiper-item wx:for="{{menuList}}" wx:key="*this" wx:for-index="i">
+              <block wx:for="{{item}}" wx:key="index" wx:for-index="j">
+                <view class='grid-item-child'>
+                  <view data-path="{{item.path}}" data-needlogin="{{item.needLogin}}" bindtap="{{item.action}}">
+                    <!-- <icon class='grid-item-icon' type='{{item.type}}' size='{{item.size}}' color='{{item.color}}'/> -->
+                    <view class='grid-item-icon iconfont {{item.icon}}'></view>
+                    <text class='grid-item-label'>{{item.text}}</text>
+                  </view>
+                </view>
+                <view wx:if="{{!isADClose && i==1 && j==2}}" class="grid-item-child" style="width:50%">
+                  <ad unit-id="cc64587dbbb385f7537d2b3a4f3b56fd" type="block" block-orientation="landscape" block-size="2"></ad>
+                </view>
+              </block>
+            </swiper-item>
+            <!-- <swiper-item wx:if="{{!isADClose}}">
+            <ad unit-id="cc64587dbbb385f7537d2b3a4f3b56fd" type="block" block-orientation="landscape" block-size="1"></ad>
+          </swiper-item> -->
+          </view>
+        </swiper>
+      </view>
+      <!-- 功能列表end -->
+    </view>
+  </view>
+  <view class="card">
+    <view class="card-header">
+      <view class="iconfont icon-kebiao" style="align-self: flex-end;"></view>
+      <view style="margin-left:15rpx">课程安排</view>
+      <view style="margin-left:auto">{{location}}</view>
+    </view>
+    <view class="card-body">
+      <!-- 课程 -->
+      <view wx:if="{{nowAndNextClass.length==0}}">
+        <view class="card-content" style="color:{{cardColor[0].color}};">
+          <view class="card-content-item">阁下</view>
+          <view class="card-content-item">
+            <view>还没有获取课表呢</view>
+          </view>
+          <view class="card-content-item">
+            <view>╮(╯▽╰)╭</view>
+          </view>
+        </view>
+      </view>
+      <view wx:else>
+        <view wx:for="{{nowAndNextClass}}" wx:key="index">
+          <view class="card-content" style="background-color:{{cardColor[index].back}};color:{{cardColor[index].color}}">
+            <view class="card-content-item">
+              <view>{{item.type}}</view>
+              <view wx:if="{{item.class_of_day}}">第{{item.class_of_day}}节</view>
+            </view>
+            <view class="card-content-item">
+              <view>{{item.name}}</view>
+              <view wx:if="{{item.time[0]}}">{{item.time[0]}}-{{item.time[1]}}</view>
+            </view>
+            <view class="card-content-item">{{item.place}}</view>
+          </view>
+        </view>
+      </view>
+      <!-- 课程END -->
+    </view>
+  </view>
+  <view class="card">
+    <view class="card-header">
+      <view class="iconfont icon-yiqiatong" style="align-self: flex-end;"></view>
+      <view style="margin-left:15rpx">一卡通余额</view>
+    </view>
+    <view class="card-body" style="background: url(https://cuit.api.jysafe.cn/public/images/card-ecard.png) 100% 100%;">
+      <!-- 一卡通余额 -->
+      <view wx:if="{{ballance}}">
+        <view class="card-content">
+          <view style="font-size:xx-large">{{ballance}}</view>
+        </view>
+      </view>
+      <view wx:else>
+        <view class="card-content">
+          <view style="font-size:xx-large">Loading~</view>
+        </view>
+      </view>
+      <!-- 一卡通余额END -->
+    </view>
+  </view>
+  <view class="card">
+    <view class="card-header">
+      <view class="iconfont icon-yiyan" style="align-self: flex-end;"></view>
+      <view style="margin-left:15rpx">一言</view>
+    </view>
+    <view class="card-body">
+      <!-- 一言 -->
+      <view>
+        <view class="card-content">
+          <view>{{hitokoto}}</view>
+        </view>
+      </view>
+      <!-- 一言END -->
+    </view>
+  </view>
+  <view>
+    <button class="buttonFix" plain="true" open-type="share">--分享给身边的同学一起使用吧--</button>
+  </view>
+  <!-- TabBar 占位 -->
+  <view style="height: 10vh;"></view>
+  <!-- <view wx:if="{{!isADClose}}" style="margin-bottom: 4rem;">
+  <ad unit-id="240fc3785c9751daa217884bbd12334d" type="feeds"></ad>
+</view> -->
+</view>

@@ -1,0 +1,33 @@
+<!--pages/calendar/calendar.wxml-->
+<view>
+	<text>点击可查看大图</text>
+</view>
+<view>
+	<image mode="aspectFill" src="{{calendarImg}}" data-src="{{[calendarImg]}}" bindtap="bindPreview"></image>
+</view>
+<view>
+	<view class="list">
+		<label class="type">教学时间</label>
+		<label class="time">
+				<view>开始时间:2020年09月14日</view>
+				<view>结束时间:2021年01月27日</view>
+		</label>
+	</view>
+	<view class="list">
+		<label class="type">寒假</label>
+		<label class="time">
+				<view>开始时间:2021年01月28日</view>
+				<view>结束时间:2021年02月25日</view>
+		</label>
+	</view>
+</view>
+<view>
+	<image mode="aspectFit" src="{{hkgImg[0]}}" data-src="{{hkgImg}}" bindtap="bindPreview"></image>
+</view>
+<view>
+	<image mode="aspectFit" src="{{lqImg}}" data-src="{{[lqImg]}}" bindtap="bindPreview"></image>
+</view>
+<!-- 回首页按钮悬浮按钮 -->
+<view wx:if="{{fromShare}}">
+  <navigator url="/pages/index/index" open-type="reLaunch" class="floatBtn" style="bottom: 5%;font-size: x-large;"><view class="iconfont icon-shouye"></view></navigator>
+</view>

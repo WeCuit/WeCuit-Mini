@@ -1,0 +1,31 @@
+<!--pages/computerCenter/index.wxml-->
+<view  class="title">龙泉校区</view>
+<view>
+    <view class='grid-item-container'>
+        <block wx:for="{{menuList_lq}}" wx:key="index" wx:for-index="j">
+          <view class='grid-item-child'>
+            <view data-path="{{item.path}}" data-needlogin="{{item.needLogin}}" bindtap="{{item.action}}">
+              <image wx:if="{{item.img}}" class='grid-item-icon' src="../../assets/img/{{item.img}}" style="height:{{item.size}}vw;width:{{item.size}}vw" />
+              <view wx:else class='grid-item-icon iconfont {{item.icon}}' style="color:{{item.color}}"></view>
+              <text class='grid-item-label'>{{item.text}}</text>
+            </view>
+          </view>
+        </block>
+    </view>
+</view>
+
+
+<view class="title">航空港校区</view>
+<view>
+   <view class='grid-item-container'>
+        <block wx:for="{{menuList_hk}}" wx:key="index" wx:for-index="j">
+          <view class='grid-item-child'>
+            <view data-path="{{item.path}}" data-needlogin="{{item.needLogin}}" bindtap="{{item.action}}">
+              <image wx:if="{{item.img}}" class='grid-item-icon' src="../../assets/img/{{item.img}}" style="height:{{item.size}}vw;width:{{item.size}}vw" />
+              <view wx:else class='grid-item-icon iconfont {{item.icon}}' style="color:{{item.color}}"></view>
+              <text class='grid-item-label'>{{item.text}}</text>
+            </view>
+          </view>
+        </block>
+    </view>
+</view>

@@ -1,0 +1,12 @@
+<!--components/scrolltab/index.wxml-->
+<!--分类导航-->
+<view class="{{scrollTop>scrollH?'nofixed':''}}"></view>
+<view class="kind_contain {{scrollTop>310?'fixed':''}}">
+
+  <scroll-view enable-flex scroll-x class="nav" scroll-with-animation scroll-left="{{advance?scrollLeft:0}}rpx">
+    <view class="nav-item" wx:for="{{college}}" wx:key="id" data-id="{{index}}" bindtap="collegeSelect">
+      <view class="nav-text {{index==collegeCur?'tab-on':''}}">{{item.text}}</view>
+    </view>
+  </scroll-view>
+
+</view>

@@ -1,0 +1,22 @@
+/* 
+此文件为开发者工具生成，生成时间: 2/25/2021, 8:58:00 PM
+使用方法：
+在 articleView.wxss 文件末尾引入样式
+```
+@import "./articleView-wxa-auto-dark.wxss";
+```
+ */
+
+@media (prefers-color-scheme: dark) {
+    .float {
+        background-color: rgba(255, 255, 255, 0.5);
+    }
+
+    .floatContent {
+        background: rgb(17, 17, 17);
+    }
+
+    .floatText text {
+        color: rgb(255, 255, 255);
+    }
+}

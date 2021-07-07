@@ -1,0 +1,89 @@
+<!-- pages/laboratory/list.wxml -->
+<view class="search">
+    <view class="title" bind:tap="hideAni" data-ele="0">
+        <view>搜索数据</view>
+        <view class="notice" style="--ani:{{isShowNotice?'showNotice':'hideNotice'}}">
+            {{notice}}
+        </view>
+    </view>
+    <form id="card-body-0" style="--card-height:{{heightData[0]?heightData[0]:'auto'}}" class="card-body {{hideData['ele_0']?'hide':'display'}}" bindsubmit="doSubmit">
+        <view class="input-form">
+            <view class="item">
+                <view>实验室：</view>
+                <input type="text" name="cxMc" data-name="cxMc" bindinput="bindinput" value="{{cxMc}}" model:value="{{cxMc}}" maxlength="20" confirm-type="search" bindfocus="showNotice" bindblur="hideNotice" data-title="可输入名称的一部分" bindconfirm="doSubmit2"/>
+            </view>
+            <view class="item">
+                <view>房间：</view>
+                <input type="text" name="cxFjh" data-name="cxFjh" bindinput="bindinput" model:value="{{cxFjh}}" value="{{cxFjh}}" maxlength="8" confirm-type="search" bindfocus="showNotice" bindblur="hideNotice" data-title="可只输入房间编号的左边部分" bindconfirm="doSubmit2"/>
+            </view>
+            <view class="item">
+                <view>教学班：</view>
+                <input type="text" name="cxJxb" data-name="cxJxb" bindinput="bindinput" model:value="{{cxJxb}}" value="{{cxJxb}}" maxlength="10" confirm-type="search" bindfocus="showNotice" bindblur="hideNotice" data-title="可只输入班简名的左边部分" bindconfirm="doSubmit2"/>
+            </view>
+            <view class="item">
+                <view>教师：</view>
+                <input type="text" name="cxJs" data-name="cxJs" bindinput="bindinput" model:value="{{cxJs}}" value="{{cxJs}}" maxlength="10" confirm-type="search" bindfocus="showNotice" bindblur="hideNotice" data-title="可只输入姓名的左边部分" bindconfirm="doSubmit2"/>
+            </view>
+            <view class="item">
+                <view>课程：</view>
+                <input type="text" name="cxKc" data-name="cxKc" bindinput="bindinput" model:value="{{cxKc}}" value="{{cxKc}}" maxlength="20" confirm-type="search" bindfocus="showNotice" bindblur="hideNotice" data-title="可只输入课程名称的左边部分" bindconfirm="doSubmit2"/>
+            </view>
+            <view class="item">
+                <view>时间范围：</view>
+                <picker mode="selector" name="cxZt" data-name="cxZt" range="{{cxZt}}" range-key="text" model:value="{{cxZt_index}}" value="{{cxZt_index}}">
+                    {{cxZt[cxZt_index].text}}
+                </picker>
+            </view>
+            <view class="item">
+                <view>第</view>
+                <input type="number" name="cxZc" data-name="cxZc" bindinput="bindinput" model:value="{{cxZc}}" value="{{cxZc}}" maxlength="2" confirm-type="search" bindconfirm="doSubmit2"/>
+                <view>周</view>
+            </view>
+            <view class="item">
+                <view>类别：</view>
+                <picker mode="selector" name="cxLb" data-name="cxLb" range="{{cxLb}}" range-key="text" model:value="{{cxLb_index}}" value="{{cxLb_index}}">
+                    {{cxLb[cxLb_index].text}}
+                </picker>
+            </view>
+            <view class="item">
+                <view>类型：</view>
+                <picker mode="selector" name="cxXsms" data-name="cxXsms" range="{{cxXsms}}" range-key="text" model:value="{{cxXsms_index}}" value="{{cxXsms_index}}">
+                    {{cxXsms[cxXsms_index].text}}
+                </picker>
+            </view>
+        </view>
+        <button class="btn" type="primary" form-type="submit">搜索</button>
+    </form>
+</view>
+
+<view class="result">
+    <block wx:for="{{retList}}" wx:key="index">
+        <view class="search">
+            <view class="title" >
+                <navigator url="detail?{{item.link}}">{{item.name}}</navigator>
+                <view bind:tap="hideAni" data-ele="{{index + 1}}" class="iconfont icon-{{!hideData['ele_' + (index+1)]?'shouqi':'zhankai'}}"></view>
+            </view>
+            <view id="card-body-{{index+1}}" style="--card-height:{{heightData[index+1]?heightData[index+1]:'auto'}}" class="card-body {{hideData['ele_' + (index+1)]?'hide':'display'}}">
+                <view class="place">
+                    <block wx:for="{{item.place}}" wx:key="index" wx:for-index="place_index" wx:for-item="place_item">
+                        <!-- <view class="place__title" data-link="{{place_item.link}}">{{place_item.name}}</view> -->
+                        <navigator class="place__title" url="detail?{{place_item.link}}">{{place_item.name}}</navigator>
+                        <view class="place__body">
+                            <block wx:for="{{place_item.lab}}" wx:key="index" wx:for-index="lab_index" wx:for-item="lab_item">
+                                <!-- <view class="lab__name" data-link="{{lab_item.link}}" style="{{lab_item.style}}">{{lab_item.name}}</view> -->
+                                <navigator class="lab__name" url="detail?{{lab_item.link}}" style="{{lab_item.style}}">{{lab_item.name}}</navigator>
+                            </block>
+                        </view>
+                    </block>
+                </view>
+            </view>
+        </view>
+    </block>
+</view>
+
+<!-- 回首页按钮悬浮按钮 -->
+<view wx:if="{{fromShare}}">
+  <navigator url="/pages/index/index" open-type="reLaunch" class="floatBtn" style="bottom: 5%;font-size: x-large;">
+    <view class="iconfont icon-shouye"></view>
+  </navigator>
+</view>

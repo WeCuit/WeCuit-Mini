@@ -1,0 +1,9 @@
+/* pages/computerCenter/officeGrade/query.wxss */
+@import "../common.wxss";
+
+.result{
+    color:red
+}
+.syncTime{
+    color:#0000FF;
+}

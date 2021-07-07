@@ -1,0 +1,58 @@
+
+<navigator url="/pages/my/sso/sso" open-type="navigate" class="btnLoginJWC">统一登录中心</navigator>
+
+<view class="setting">
+	<label wx:if="{{isQQ}}" class="label">
+		<view class="subicon iconfont icon-wenti" style=""></view>
+		<button class="buttonFix" plain="true" open-type="openGroupProfile" group-id="940309953" style="">有问题加群：940309953</button>
+		<view class="subicon-r iconfont icon-arr-right"></view>
+	</label>
+	<label wx:else bindtap="bindGroup" class="label">
+		<view class="subicon iconfont icon-wenti" style=""></view>
+		<view>有问题加群</view>
+		<view class="subicon-r iconfont icon-arr-right"></view>
+	</label>
+	<label bindtap="bindOpen" class="label">
+		<view class="subicon iconfont icon-github"></view>
+		<view>开源地址</view>
+		<view class="subicon-r iconfont icon-arr-right"></view>
+	</label>
+	<!-- <navigator url="/pages/my/sub/sub" class="label">
+		<view class="subicon iconfont icon-dingyue"></view>
+		<view>订阅管理</view>
+		<view class="subicon-r iconfont icon-arr-right"></view>
+	</navigator> -->
+	<label class="label">
+		<view class="subicon iconfont icon-yijian" style="color:#1CBBB4"></view>
+		<button class="buttonFix" plain="true" open-type="feedback">意见反馈</button>
+		<view class="subicon-r iconfont icon-arr-right"></view>
+	</label>
+	<label class="label">
+		<view class="subicon iconfont icon-fenxiang" style="color:#1CBBB4"></view>
+		<button class="buttonFix" plain="true" open-type="share">分享小程序</button>
+		<view class="subicon-r iconfont icon-arr-right"></view>
+	</label>
+	<navigator url="/pages/my/dataMag/dataMag" class="label">
+		<view class="subicon iconfont icon-data"></view>
+		<view>数据管理</view>
+		<view class="subicon-r iconfont icon-arr-right"></view>
+	</navigator>
+	<navigator wx:if="{{isQQ}}" url="/pages/my/ADMag/ADMag" class="label">
+		<view class="subicon iconfont icon-guanggao"></view>
+		<view>广告管理</view>
+		<view class="subicon-r iconfont icon-arr-right"></view>
+	</navigator>
+	<label bindtap="bindThanks" class="label">
+		<view class="subicon iconfont icon-guanyu" style="color:orange"></view>
+		<view bindtap="bindThanks">关于</view>
+		<view class="subicon-r iconfont icon-arr-right"></view>
+	</label>
+	<label style="color:red" bindtap="bindLogout" class="label">
+		<view class="subicon iconfont icon-tuichu"></view>
+		<view>退出登录</view>
+		<view class="subicon-r iconfont icon-arr-right"></view>
+	</label>
+</view>
+
+<!-- TabBar 占位 -->
+<view style="height: 10vh;"></view>

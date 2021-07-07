@@ -1,0 +1,30 @@
+/* 
+此文件为开发者工具生成，生成时间: 2/25/2021, 8:41:55 PM
+使用方法：
+在 common.wxss 文件末尾引入样式
+```
+@import "./common-wxa-auto-dark.wxss";
+```
+ */
+
+@media (prefers-color-scheme: dark) {
+    @keyframes a {
+        0% {
+            opacity: 0;
+        }
+
+        to {
+            opacity: 1;
+        }
+    }
+
+    @keyframes b {
+        0% {
+            opacity: 1;
+        }
+
+        to {
+            opacity: 0;
+        }
+    }
+}
