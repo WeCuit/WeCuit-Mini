@@ -1,0 +1,7 @@
+<!-- pages/THEOL/THEOL.wxml -->
+<mp-cells title="课程列表">
+    <mp-cell ext-class="my-cell" wx:for="{{list}}" wx:key="index" data-courseId="{{item.courseId}}" bindtap="bindViewCourseDir">
+        <view>{{item.course}}</view>
+        <view class="footer" slot="footer">{{item.teacher}}({{item.college}})</view>
+    </mp-cell>
+</mp-cells>

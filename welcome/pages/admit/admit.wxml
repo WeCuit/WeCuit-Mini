@@ -1,0 +1,31 @@
+<!-- pages/welcome/admit/admit.wxml -->
+<form bindsubmit="queryHandle">
+    <mp-cells title="考生号(14位)：">
+        <mp-cell ext-class="my-cell">
+            <input name="ksh" class="weui-input" placeholder="考生号(14位)" />
+        </mp-cell>
+    </mp-cells>
+    <mp-cells title="身份证号：">
+        <mp-cell ext-class="my-cell">
+            <input name="sfz" class="weui-input" placeholder="身份证号" />
+        </mp-cell>
+    </mp-cells>
+    <button type="primary" form-type="submit">查询</button>
+</form>
+<htmlParser html="{{ result }}">
+  少女祈祷中......
+</htmlParser>
+
+<view style="color:#0a019c;">{{update}}</view>
+<view class="table">
+    <view class="item title">
+        <view >省份及批次</view>
+        <view >录取最低分</view>
+    </view>
+    <block wx:for="{{list}}">
+        <view class="item sub">
+            <view >{{item.site}}</view>
+            <view >{{item.lowest}}</view>
+        </view>
+    </block>
+</view>

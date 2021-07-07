@@ -1,0 +1,17 @@
+/* 
+此文件为开发者工具生成，生成时间: 2/25/2021, 8:41:56 PM
+使用方法：
+在 index.wxss 文件末尾引入样式
+```
+@import "./index-wxa-auto-dark.wxss";
+```
+ */
+
+@media (prefers-color-scheme: dark) {
+    .van-hairline--bottom:after, .van-hairline--left:after,
+    .van-hairline--right:after, .van-hairline--surround:after,
+    .van-hairline--top-bottom:after, .van-hairline--top:after,
+    .van-hairline:after {
+        border: rgb(0, 0, 0);
+    }
+}

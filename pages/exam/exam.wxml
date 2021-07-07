@@ -1,0 +1,27 @@
+<!--pages/exam/exam.wxml-->
+<picker mode="multiSelector" bindchange="bindMultiPickerChange" bindcolumnchange="bindMultiPickerColumnChange" value="{{termIndex}}" range="{{termArray}}" range-key="name">
+  <view class="picker">
+    学年学期：{{termArray[0][termIndex[0]].name}}，{{termArray[1][termIndex[1]].name}}
+  </view>
+</picker>
+<picker bindchange="bindPickerChange" value="{{batchIndex}}" range="{{batchArray}}" range-key="name">
+  <view class="picker">
+    考试批次：{{batchArray[batchIndex].name}}
+  </view>
+</picker>
+
+<button bindtap="bindExamQuery" type="primary" disabled="{{batchArray.length == 0}}">查询</button>
+
+<view wx:for="{{examList}}" class="exam-card">
+  <view class="exam-title">课程：{{item.courseName}}</view>
+  <!-- 细节 -->
+  <view class="exam-info">
+    <view >考试类别：{{item.examType}}</view>
+    <view >考试日期：{{item.examDate}}</view>
+    <view >考试时间：{{item.examTime}}</view>
+    <view >考试地点：{{item.examSite}}</view>
+    <view >课程学分：{{item.credit}}</view>
+    <view >考试状态：{{item.examStatus}}</view>
+    <view >考试备注：{{item.remark}}</view>
+  </view>
+</view>

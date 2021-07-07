@@ -1,0 +1,97 @@
+<!--pages/card/card.wxml-->
+<view style="display:{{(showQRCode || showPayRet)?'none':'block'}};margin-bottom: 5rem;">
+    <view>
+        <swiper style="height: 10rem;" autoplay="{{true}}" duration="500" >
+            <block wx:for="{{wallet}}" wx:key="index">
+                <swiper-item>
+                    <view class="wallet-card">
+                        <text class="wallet-card-user">{{userName}}</text>
+                        <text class="wallet-card-name">{{item.WalletName}}余额（元）</text>
+                        <text class="wallet-card-count">{{item.MonDBCurr}}</text>
+                    </view>
+                </swiper-item>
+            </block>
+        </swiper>
+    </view>
+    <view class="actionList">
+        <view wx:for="{{actions}}" wx:key="*this">
+            <view bind:tap="{{item.action}}" data-data="{{item.data}}">
+                <view class="iconfont {{item.font}}"style="font-size: 2rem;"></view>{{item.text}}
+            </view>
+        </view>
+    </view>
+    <view wx:for="{{DealRec}}" wx:key="index">
+        <mp-cells ext-class="my-cells" title="{{item.Month}}">
+            <mp-cell ext-class="my-cell" wx:for="{{item.PaymentRows}}" wx:key="index">
+                <view style="display: flex;">
+                    <view style="border-right: 1px solid #ccc;padding: 17rpx;align-self: center;font-size: small;">{{item.Date}}</view>
+                    <view style="padding: 17rpx;">
+                        <view>{{item.FeeName}}</view>
+                        <view style="font-size:small;color:gray;">{{item.Source}}</view>
+                    </view>
+                </view>
+                <view slot="footer">
+                    <view style="color:orange;">{{item.MonDeal>=0?'+'+item.MonDeal:item.MonDeal}}</view>
+                    <view style="font-size:small;">{{item.Time}}</view>
+                </view>
+            </mp-cell>
+        </mp-cells>
+    </view>
+
+    <!-- 二维码按钮 -->
+    <!-- <view data-type="show" bind:tap="bindShowQRCode" style="display:flex;justify-content:center;">
+        <view class="card-qrcode-btn">
+            <view class="iconfont icon-qrcode" style="font-size:xx-large;"></view>
+        </view>
+    </view> -->
+</view>
+
+<!-- 二维码 -->
+<view class="QRCode" style="display:{{showQRCode?'block':'none'}};">
+    <view class="QRContent">
+        <view class="QRItem">二维码</view>
+        <!-- <image src="{{qrCode?qrAPI + qrCode: ''}}" bind:tap="previewQRCode" bind:longpress="refreshQRCode" style="width:{{windowWidth * 0.9}}px;height:{{windowWidth * 0.9}}px"/> -->
+        <canvas type="2d" style="width:90vw;height:90vh" id="payQrcode"></canvas>
+        <view bindtap="refreshQRCode" style="display: flex;"><view class="iconfont {{refresh[refreshStatus].font}}" style="color:#2347bd;"></view>{{refresh[refreshStatus].text}}</view>
+        <view class="QRItem">
+            <button style="padding: 0.6rem;" bindtap="bindShowQRCode">
+                关闭
+            </button>
+        </view>
+    </view>
+</view>
+
+<!-- 支付结果 -->
+<view style="background: #fff;position: relative;height: 100vh;flex-direction: column;justify-content: center;display:{{showPayRet?'flex':'none'}}">
+
+    <!-- 成功 -->
+    <block wx:if="{{'1'==payRet.Recflag}}">
+        <view style="text-align: center;color: #2347bd;">
+            <view class="iconfont icon-success" style="font-size:4rem;"></view>
+            <view >付款成功</view>
+        </view>
+        <view style="font-size: 3rem;text-align: center;">{{payRet.MonDealCur}}</view>
+        <mp-cells>
+            <mp-cell value="订单金额" footer="{{payRet.MonDeal}}"></mp-cell>
+            <mp-cell value="优惠" footer="{{payRet.ConcessionsMon}}"></mp-cell>
+            <mp-cell value="管理费" footer="{{payRet.ConsumeMgFee}}"></mp-cell>
+            <mp-cell value="商户名" footer="{{payRet.DealerName}}"></mp-cell>
+            <mp-cell value="消费时间" footer="{{payRet.DealTime}}"></mp-cell>
+        </mp-cells>
+    </block>
+
+    <!-- 失败 -->
+    <block wx:else>
+        <view style="text-align: center;color: red;margin-bottom: 8rem;">
+            <view class="iconfont icon-shibai" style="font-size:4rem;"></view>
+            <view >交易失败</view>
+            <view >{{payError}}</view>
+        </view>
+    </block>
+
+    <view style="margin-top:1rem;">
+        <button type="primary" bindtap="bindShowPayRet">
+            关闭
+        </button>
+    </view>
+</view>

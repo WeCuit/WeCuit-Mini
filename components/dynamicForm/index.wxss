@@ -1,0 +1,121 @@
+/* components/dynamicForm/index.wxss */
+.page{
+  background-color: #eeeeef;
+  padding-top: 1px;
+  padding-bottom: 1px;
+}
+.flex{
+  display: flex;
+  align-items: center;
+}
+.form-box{
+  padding: 0 30rpx 0px;
+  padding-right: 0;
+  margin: 30rpx;
+  box-sizing: border-box;
+  border-top: 1px solid #eee;
+  border-radius: 10rpx;
+  background-color: #fff;
+}
+.form-row{
+  position: relative;
+  display: flex;
+  align-items: center;
+  padding: 25rpx 0;
+  font-size: 30rpx;
+  border-bottom: 1px solid #eee;
+}
+.ipt-row{
+  align-items: flex-start;
+}
+.flex-start{
+  align-items: flex-start;
+}
+.picker-row{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.form-row:last-child{
+  border-bottom: none;
+}
+.form-lable{
+  position: relative;
+  min-width: 120rpx;
+  max-width: 200rpx;
+  word-break: break-all;
+  padding-right: 30rpx;
+  flex-shrink: 0;
+  flex-grow: 0;
+  font-weight: 700;
+}
+.field{
+  width: 100%;
+  flex-grow: 1;
+  min-height: 45rpx;
+  padding-right: 30rpx;
+  box-sizing: border-box;
+  line-height: 45rpx;
+}
+.error-info{
+  font-size: 24rpx;
+  color: #f00;
+}
+.required::before{
+  position: absolute;
+  top: 50%;
+  left: -18rpx;
+  transform: translateY(-35%);
+  content: '*';
+  color: #f00;
+  font-size: 36rpx;
+}
+.form-btn{
+  margin: 60rpx auto;
+  width: 400rpx;
+  background-color: #17e;
+  color: #fff;
+}
+.row-icon{
+  padding-right: 20rpx;
+}
+.img-box{
+  padding-top: 25rpx;
+  /* padding-bottom: 25rpx; */
+}
+.mb-24{
+  margin-bottom: 24rpx;
+}
+.area-lable{
+  position: relative;
+  font-size: 30rpx;
+  margin-right: 20rpx;
+  font-weight: 700;
+}
+.textarea-box{
+  padding-top: 20rpx;
+}
+.text-area{
+  position: relative;
+  width: 630rpx;
+  padding: 20rpx;
+  padding-bottom: 60rpx;
+  font-size: 30rpx;
+  min-height: 200rpx;
+  box-sizing: border-box;
+  border-radius: 8rpx;
+  border: 1px solid #eee;
+}
+.text-num{
+  position: absolute;
+  right: 20rpx;
+  bottom: 10px;
+  text-align: right;
+  color: #999;
+}
+
+.disabled{
+  opacity: 0.3;
+}
+
+@import 'index-wxa-auto-dark.wxss'

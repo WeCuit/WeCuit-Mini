@@ -1,0 +1,78 @@
+<!--table.wxml-->
+<!-- 课表类型 -->
+<picker bindchange="bindCourseTypePicker" value="{{courseTypeIndex}}" range="{{courseTypeArray}}" range-key="name">
+  <view class="floatBtn typePicker">
+    类型
+  </view>
+</picker>
+<!-- 周数选择器 -->
+<picker bindchange="bindWeekChange" value="{{week_num}}" range="{{courseWeekArray}}" range-key="name">
+  <view class="floatBtn weekPicker">
+    周数
+  </view>
+</picker>
+<!-- 学期选择器 -->
+<picker mode="multiSelector" bindchange="bindTermChange" bindcolumnchange="bindTermColumnChange" value="{{termIndex}}"
+  range="{{termArray}}" range-key="name">
+  <view class="floatBtn termPicker">
+    学期
+  </view>
+</picker>
+
+
+<view bindtouchstart="handleTouchStart" bindtouchmove="handleTouchMove" bindtouchend="handleTouchEnd"
+  bindlongpress='bindLongTab' style="background: url('{{background}}')no-repeat;background-size: 100% 100%;">
+  <view style="background-color: rgba(255, 255, 255, {{backOpacity}});">
+    <view class='top-style' style="background-color: rgba(238,238,238, {{gridOpacity}});">
+      <view wx:for="{{['一','二','三','四','五','六','日']}}" wx:key="*this" class="top-text"
+        style="{{(increment==0&&index+1==day_num)?'color: #009688;':''}}">周{{item}}</view>
+    </view>
+    <view>
+      <view class='full-table' style="height: {{windowHeight - 20}}px;">
+        <view class="left-num-bar" style="background-color: rgba(238,238,238, {{gridOpacity}});">
+          <view wx:for="{{[1,2,3,4,5,6,7,8,9,10,11]}}" wx:key="*this" class='left-num' style="height: {{gridHeight}}px;">
+            {{item}}
+          </view>
+        </view>
+        <view wx:for="{{[1,2,3,4,5,6,7,8,9,10,11]}}" wx:key="*this">
+          <view
+            style="width:715rpx;margin-top:{{(index+1)*gridHeight-1}}px;  position: absolute;border-bottom:1rpx solid {{index==3||index==7?'rgba(153,153,153,' + (backOpacity+0.2) + ')':'rgba(211,211,211,' + (backOpacity+0.2) + ')'}};">
+          </view>
+        </view>
+        <!-- <view wx:for="{{[1,2,3,4,5,6,7,8,9,10,11]}}" wx:key="*this" wx:for-item="i">
+          <view wx:for="{{[1,2,3,4,5,6,7]}}" wx:key="*this" wx:for-item="j" class="flex-item kcb-item" style='margin-left:{{(j-1)*100}}rpx;margin-top:{{(i-1)*gridHeight+1}}px;height:{{1*gridHeight-2}}px;background-color:rgba(238,238,238,{{backOpacity}});border-radius:10rpx;'>
+            <view style="display:flex;flex-direction:column;padding:10rpx 3rpx 0rpx 3rpx;">{{i}}_{{j}}</view>
+          </view>
+        </view> -->
+        <view wx:for="{{week_list}}" wx:key="index">
+          <scroll-view scroll-y="true" class="flex-item kcb-item" enable-flex="true"
+            style="margin-left:{{(item.day_of_week-1)*100}}rpx;margin-top:{{(item.class_of_day-1)*gridHeight+1}}px;height:{{item.duration*gridHeight-2}}px;background-color:{{colorArrays[index%8]}},{{gridOpacity}});border-radius:10rpx;">
+            <view style='display:flex;flex-direction:column;padding:10rpx 3rpx 0rpx 3rpx;'>
+              <view class="smalltext">{{item.name}}</view>
+              <view class="smalltext">{{item.place}}</view>
+              <view class="smalltext">{{item.teacherName}}</view>
+            </view>
+          </scroll-view>
+        </view>
+      </view>
+    </view>
+  </view>
+</view>
+
+<!-- 设置 -->
+<view class="container" hidden='{{settingHidden}}'>
+  <view class="float">
+    <view class='floatContent'>
+      <view class='floatText'>
+        <button bindtap="settingSelectImg">选择背景图片</button>
+        <view>格子不透明度：</view>
+        <slider min="0" max="100" step="1" value="{{gridOpacity * 100}}" block-size="10" block-color="#12aef3" show-value="true"
+          data-type="grid" bindchange="bindOpacityChange"></slider>
+        <view>背景不透明度：</view>
+        <slider min="0" max="100" step="1" value="{{backOpacity * 100}}" block-size="10" block-color="#12aef3" show-value="true"
+          data-type="back" bindchange="bindOpacityChange"></slider>
+        <button type="primary" bindtap="settingFrameSwitch">关闭</button>
+      </view>
+    </view>
+  </view>
+</view>

@@ -1,0 +1,6 @@
+{
+  "usingComponents": {
+  },
+  "navigationBarTitleText": "考试安排表",
+  "enablePullDownRefresh": true
+}

@@ -1,0 +1,19 @@
+<!--pages/my/dataMag/dataMag.wxml-->
+
+<view class="setting">
+	<label bindtap="bindCleanCourse" class="label">
+		<view class="subicon iconfont icon-qingchu" style="color:green"></view>
+		<view>清除课表缓存</view>
+		<view class="subicon-r iconfont icon-arr-right"></view>
+	</label>
+	<label bindtap="bindCleanAccount" class="label">
+		<view class="subicon iconfont icon-qingchu" style="color:blue"></view>
+		<view>清除账号数据</view>
+		<view class="subicon-r iconfont icon-arr-right"></view>
+	</label>
+	<label style="color:red" bindtap="bindClearAll" class="label">
+		<view class="subicon iconfont icon-qingchu"></view>
+		<view>清除全部数据</view>
+		<view class="subicon-r iconfont icon-arr-right"></view>
+    </label>
+</view>

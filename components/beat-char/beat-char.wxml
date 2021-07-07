@@ -1,0 +1,8 @@
+
+<view class="beat-text">
+    <view class="beat-char-group">
+        <block wx:for="{{beatChar}}" wx:key="index">
+            <text class="beat-char beat-char-ani" style="--delay:{{index*500}}ms;--color:#f00;--animation:{{ani?'beatAni':'beatAni1'}}">{{item}}</text>
+        </block>
+    </view>
+</view>

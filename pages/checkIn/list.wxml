@@ -1,0 +1,14 @@
+<!--pages/JSZX/jkdk.wxml-->
+<!--WXML示例代码-->
+<mp-cells ext-class="my-cells" title="最新的打卡任务">
+    <mp-cell ext-class="my-cell" wx:for="{{list.today}}" wx:key="title" data-link="{{item.link}}" bindtap="openCheckIn">
+        <view>{{item.status}} {{item.title}}</view>
+        <!-- <view slot="footer">说明文字</view> -->
+    </mp-cell>
+</mp-cells>
+<mp-cells ext-class="my-cells" title="已结束的打卡任务">
+    <mp-cell ext-class="my-cell" wx:for="{{list.outDate}}" wx:key="title" data-link="{{item.link}}" bindtap="openCheckIn">
+        <view>{{item.status}} {{item.title}}</view>
+        <!-- <view slot="footer">说明文字</view> -->
+    </mp-cell>
+</mp-cells>
