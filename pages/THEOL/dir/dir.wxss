@@ -1,0 +1,10 @@
+/* pages/THEOL/dir/dir.wxss */
+@import '../../common.wxss';
+@import '../../exam/exam.wxss';
+
+.tip{
+    margin-top: 40rpx;
+    padding: 24rpx;
+    border-bottom: solid 2rpx #dac1c1;
+    color: gray;
+}

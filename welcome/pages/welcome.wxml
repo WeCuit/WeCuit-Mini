@@ -1,0 +1,15 @@
+<!--pages/welcome/welcome.wxml-->
+
+<view>
+    <view class='grid-item-container'>
+        <block wx:for="{{menuList}}" wx:key="index" wx:for-index="j">
+          <view class='grid-item-child'>
+            <view data-data="{{item.data}}" data-needlogin="{{item.needLogin}}" bindtap="{{item.action}}">
+              <!-- <icon class='grid-item-icon' type='{{item.type}}' size='{{item.size}}' color='{{item.color}}'/> -->
+              <view class='grid-item-icon welcome-font {{item.icon}}' style="color:{{item.color}}"></view>
+              <text class='grid-item-label'>{{item.text}}</text>
+            </view>
+          </view>
+        </block>
+    </view>
+</view>

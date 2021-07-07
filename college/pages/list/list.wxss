@@ -1,0 +1,64 @@
+/* pages/computerCenter/index.wxss */
+
+.title{
+  text-align: center;
+  margin: 35rpx;
+  font-size: 30rpx;
+}
+
+/*
+  九宫格容器布局样式
+ */
+ .grid-item-container {
+    display: -webkit-flex;
+    display: flex;
+    /* align-items: center; */
+    justify-content: space-between;
+    flex-wrap: wrap;
+    /* border-top: 1rpx solid #D9D9D9; */
+    /* box-shadow: 0px 0px 20px 2px #b4b4b4; */
+    margin: 0.5rem;
+    border-radius: 0.5rem;
+  }
+  
+  /*
+    item容器样式
+  */
+  .grid-item-child {
+    display:flex;
+    display: -webkit-flex;
+    justify-content:center;
+    flex-direction: column;
+    flex-wrap: wrap;
+    float: left;
+    width: 33.3%;
+    /* height: 200rpx; */
+    box-sizing: border-box;
+    /* background-color: #FFFFFF; */
+    /* border-right: 1rpx solid #D9D9D9;
+    border-bottom: 1rpx solid #D9D9D9; */
+  }
+  .grid-item-child > view{
+    align-self: center;
+  }
+  /*
+    icon样式
+  */
+  .grid-item-icon {
+    display:flex;
+    display: -webkit-flex;
+    justify-content:center;
+    font-size: 2.5rem;
+  }
+  
+  /*
+   文本样式
+  */
+  .grid-item-label {
+    display:flex;
+    display: -webkit-flex;
+    justify-content:center;
+    color: #666;
+    font-size: 30rpx;
+  }
+  

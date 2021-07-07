@@ -1,0 +1,2 @@
+/* pages/my/sub/sub.wxss */
+@import "../../common.wxss";

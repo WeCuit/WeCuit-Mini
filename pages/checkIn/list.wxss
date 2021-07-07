@@ -1,0 +1,13 @@
+/* pages/JSZX/jkdk.wxss */
+@import '../common.wxss';
+
+@media (prefers-color-scheme: dark) {
+    /* DarkMode 下的样式 start */
+    page {
+        background-color: #1b1b1b;
+    }
+    .my-cells >.weui-cells__title{
+        color:gray
+    }
+    /* DarkMode 下的样式 end */
+  }

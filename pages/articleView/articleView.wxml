@@ -1,0 +1,35 @@
+<!-- pages/articleView/articleView.wxml -->
+<htmlParser html="{{ htmlText }}" bindlinkpress="bindLinkHandle" domain="https://www.cuit.edu.cn/">
+  少女祈祷中......
+</htmlParser>
+<!-- 验证码提示框 -->
+<view class="container" hidden='{{captchaHidden}}'>
+  <view class="float">
+    <view class='floatContent'>
+      <view class='floatText'>
+        <image bindtap="refreshCaptcha" src="{{captchaImg}}" style="height:50px;width:100px"></image>
+        <input bindinput="bindInputYZM" type="text" placeholder="验证码" />
+        <button bindtap="downByYZM" type="primary">下载</button>
+        <button bindtap="downCancel">取消</button>
+      </view>
+    </view>
+  </view>
+</view>
+<!-- 下载进度提示框 -->
+<view class="container" hidden='{{downloadHidden}}'>
+  <view class="float">
+    <view class='floatContent'>
+      <view class='floatText'>
+        <view style="white-space:pre-wrap;text-align:center;">{{progress}}</view>
+        <button type="primary" bindtap="downloadCancel">取消</button>
+      </view>
+    </view>
+  </view>
+</view>
+<!-- 回首页按钮悬浮按钮 -->
+<view wx:if="{{fromShare}}">
+  <navigator url="/pages/index/index" open-type="reLaunch" class="floatBtn" style="bottom: 5%;font-size: x-large;"><view class="iconfont icon-shouye"></view></navigator>
+</view>
+<view wx:if="{{!isADClose}}" style="margin-top:4rem">
+  <ad unit-id="a787d6d9637a2c0c6c69d927e301c9d2" type="card"></ad>
+</view>

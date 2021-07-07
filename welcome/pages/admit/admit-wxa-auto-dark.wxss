@@ -1,0 +1,22 @@
+/* 
+此文件为开发者工具生成，生成时间: 2/19/2021, 10:58:37 AM
+使用方法：
+在 admit.wxss 文件末尾引入样式
+```
+@import "./admit-wxa-auto-dark.wxss";
+```
+ */
+
+@media (prefers-color-scheme: dark) {
+    .title {
+        background-color: rgb(0, 105, 174);
+    }
+
+    .sub:nth-child(odd) {
+        background-color: rgb(17, 17, 17);
+    }
+
+    .sub:nth-child(even) {
+        background-color: rgb(55, 55, 55);
+    }
+}

@@ -1,0 +1,94 @@
+/* pages/card/card.wxss */
+@import "../common.wxss";
+
+.wallet-card {
+    height: 90%;
+    background-color: #607d8b;
+    margin: 30rpx;
+    border-radius: 35rpx;
+    box-shadow: 0px 1px 5px #b4b4b4;
+}
+
+.wallet-card-user {
+    padding: 0.6rem;
+    display: block;
+}
+.wallet-card-name {
+    padding: 0.8rem;
+    font-size: small;
+    color: #311919db;
+}
+.wallet-card-count {
+    display: block;
+    padding: 1rem;
+    font-size: x-large;
+}
+.actionList{
+    text-align: center;
+    color: red;
+}
+
+.my-cells {
+    padding: 0.1rem;
+}
+
+.card-qrcode-btn {
+    color: #fff;
+    position: fixed;
+    bottom: 0.5rem;
+    background: #2347bd;
+    border-radius: 41%;
+    width: 3rem;
+    text-align: center;
+    box-shadow: 0 0.03rem 1.12rem rgba(0,33,130,.6);
+}
+
+/* 二维码 */
+.QRCode {
+    background-image: linear-gradient(#ff5c15, #ff005a);
+    position: fixed;
+    height: 100%;
+    width: 100%;
+}
+
+.QRContent {
+    position: relative;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.QRItem{
+    margin-bottom:1.8rem;
+    margin-top: 2rem;
+}
+.refresh{
+    animation:refresh 1s linear infinite;
+  }
+  /* 
+    turn : 定义的动画名称
+    1s : 动画时间
+    linear : 动画以何种运行轨迹完成一个周期
+    infinite :规定动画应该无限次播放
+   */
+  @keyframes refresh{
+    0%{-webkit-transform:rotate(0deg);}
+    25%{-webkit-transform:rotate(90deg);}
+    50%{-webkit-transform:rotate(180deg);}
+    75%{-webkit-transform:rotate(270deg);}
+    100%{-webkit-transform:rotate(360deg);}
+  }
+/* 二维码 End */
+
+@media (prefers-color-scheme: dark) {
+    /* DarkMode 下的样式 start */
+    page {
+        background-color: #1b1b1b;
+    }
+    .my-cells > .weui-cells__title, .my-cell > .weui-cell__ft{
+        color:gray
+    }
+    /* DarkMode 下的样式 end */
+  }

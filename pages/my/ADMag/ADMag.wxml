@@ -1,0 +1,19 @@
+<!--pages/my/dataMag/dataMag.wxml-->
+
+<view class="setting">
+	<navigator url="/pages/my/ADMag/watchAD/watchAD" class="label">
+		<view class="subicon iconfont icon-guanggao"></view>
+		<view>欣赏广告</view>
+		<view class="subicon-r iconfont icon-arr-right"></view>
+	</navigator>
+	<label wx:if="{{isADClose}}" bindtap="openAD" class="label" style="color:green">
+		<view class="subicon iconfont icon-guanggao" style="color:green"></view>
+		<view>打开广告</view>
+		<view class="subicon-r iconfont icon-arr-right"></view>
+	</label>
+	<label wx:else bindtap="closeAD" class="label" style="color:red">
+		<view class="subicon iconfont icon-wuguanggao" style="color:red"></view>
+		<view>关闭广告</view>
+		<view class="subicon-r iconfont icon-arr-right"></view>
+	</label>
+</view>

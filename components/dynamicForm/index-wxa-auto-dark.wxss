@@ -1,0 +1,44 @@
+/* 
+此文件为开发者工具生成，生成时间: 2/25/2021, 8:41:55 PM
+使用方法：
+在 index.wxss 文件末尾引入样式
+```
+@import "./index-wxa-auto-dark.wxss";
+```
+ */
+
+@media (prefers-color-scheme: dark) {
+    .page {
+        background-color: rgb(29, 29, 30);
+    }
+
+    .form-box {
+        border-top: rgb(0, 0, 0);
+        background-color: rgb(17, 17, 17);
+    }
+
+    .form-row {
+        border-bottom: rgb(0, 0, 0);
+    }
+
+    .error-info {
+        color: rgb(243, 0, 0);
+    }
+
+    .required::before {
+        color: rgb(243, 0, 0);
+    }
+
+    .form-btn {
+        background-color: rgb(49, 131, 252);
+        color: rgb(17, 17, 17);
+    }
+
+    .text-area {
+        border: rgb(0, 0, 0);
+    }
+
+    .text-num {
+        color: rgb(99, 99, 99);
+    }
+}

@@ -1,0 +1,8 @@
+{
+  "usingComponents": {
+    "mp-cell": "/miniprogram_npm/weui-miniprogram/cell/cell",
+    "mp-cells": "/miniprogram_npm/weui-miniprogram/cells/cells"
+  },
+  "navigationBarTitleText": "教学平台",
+  "enablePullDownRefresh": true
+}

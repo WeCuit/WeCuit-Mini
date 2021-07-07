@@ -1,0 +1,118 @@
+<!--pages/laboratory/detail.wxml-->
+<view class="search">
+    <view class="title" bind:tap="hideAni" data-ele="0">
+        <view>搜索数据</view>
+        <view class="notice" style="--ani:{{isShowNotice?'showNotice':'hideNotice'}}">
+            {{notice}}
+        </view>
+    </view>
+    <form id="card-body-0" style="--card-height:{{heightData['card-body-0']?heightData['card-body-0']:'auto'}}" class="card-body {{hideData['ele_0']?'hide':'display'}}" bindsubmit="doSubmit">
+        <view class="input-form">
+            <view class="item">
+                <view>学期：</view>
+                <input type="text" name="Kkxq" data-name="Kkxq" bindinput="bindinput" model:value="{{Kkxq}}" value="{{Kkxq}}" maxlength="5" bindfocus="showNotice" bindblur="hideNotice" data-title="可输入名称的一部分" confirm-type="search" bindconfirm="doSubmit2"/>
+            </view>
+            <view class="item">
+                <view>院系：</view>
+                <picker mode="selector" name="Yx" data-name="Yx" range="{{Yx}}" range-key="text" model:value="{{Yx_index}}" value="{{Yx_index}}">
+                    {{Yx[Yx_index].text}}
+                </picker>
+            </view>
+            <view class="item">
+                <view>任务：</view>
+                <picker mode="selector" name="Rw" data-name="Rw" range="{{Rw}}" range-key="text" model:value="{{Rw_index}}" value="{{Rw_index}}">
+                    {{Rw[Rw_index].text}}
+                </picker>
+            </view>
+            <view class="item">
+                <view>实验室：</view>
+                <input type="text" name="Sys" data-name="Sys" bindinput="bindinput" model:value="{{Sys}}" value="{{Sys}}" maxlength="16" confirm-type="search" bindfocus="showNotice" bindblur="hideNotice" data-title="可输入名称的一部分" bindconfirm="doSubmit2"/>
+            </view>
+            <view class="item">
+                <view>房间：</view>
+                <input type="text" name="Fj" data-name="Fj" bindinput="bindinput" model:value="{{Fj}}" value="{{Fj}}" maxlength="8" confirm-type="search" bindfocus="showNotice" bindblur="hideNotice" data-title="可只输入房间编号的左边部分" bindconfirm="doSubmit2"/>
+            </view>
+            <view class="item">
+                <view>教学班：</view>
+                <input type="text" name="Jxb" data-name="Jxb" bindinput="bindinput" model:value="{{Jxb}}" value="{{Jxb}}" maxlength="10" confirm-type="search" bindfocus="showNotice" bindblur="hideNotice" data-title="可只输入班简名的左边部分" bindconfirm="doSubmit2"/>
+            </view>
+            <view class="item">
+                <view>教师/助教：</view>
+                <input type="text" name="Zjjs" data-name="Zjjs" bindinput="bindinput" model:value="{{Zjjs}}" value="{{Zjjs}}" maxlength="10" confirm-type="search" bindfocus="showNotice" bindblur="hideNotice" data-title="可只输入姓名的左边部分" bindconfirm="doSubmit2"/>
+            </view>
+            <view class="item">
+                <view>课程：</view>
+                <input type="text" name="Jxkc" data-name="Jxkc" bindinput="bindinput" model:value="{{Jxkc}}" value="{{Jxkc}}" maxlength="20" confirm-type="search" bindfocus="showNotice" bindblur="hideNotice" data-title="可只输入课程名称的左边部分" bindconfirm="doSubmit2"/>
+            </view>
+            <view class="item">
+                <view>时间范围：</view>
+                <picker mode="selector" name="cxZt" data-name="cxZt" range="{{cxZt}}" range-key="text" model:value="{{cxZt_index}}" value="{{cxZt_index}}">
+                    {{cxZt[cxZt_index].text}}
+                </picker>
+            </view>
+            <view class="item">
+                <view>第</view>
+                <input type="number" name="cxZc" data-name="cxZc" bindinput="bindinput" model:value="{{cxZc}}" value="{{cxZc}}" maxlength="2" bindconfirm="doSubmit2"/>
+                <view>周</view>
+            </view>
+            <view class="item">
+                <view>类别：</view>
+                <picker mode="selector" name="Lb" data-name="Lb" range="{{Lb}}" range-key="text" model:value="{{Lb_index}}" value="{{Lb_index}}">
+                    {{Lb[Lb_index].text}}
+                </picker>
+            </view>
+        </view>
+        <button class="btn" type="primary" form-type="submit">搜索</button>
+    </form>
+</view>
+<wxs module="labDetail">
+    function getDay(index){
+        var dayList = ["星期一", "星期二", "星期三", "星期四", "星期五", "星期六", "星期日"];
+        return dayList[parseInt(index)];
+    }
+    function getStyle(str){
+        if("string" != typeof str)return '';
+        
+        if(-1 != str.indexOf('～'))
+            return "color:red;";
+        else if((-1 != str.indexOf('第') || 1 != str.indexOf('-')) && -1 != str.indexOf('周'))
+            return 'color:blue;';
+        return '';
+    }
+    module.exports = {
+        getDay: getDay,
+        getStyle: getStyle
+    }
+</wxs>
+<view class="result">
+    <!-- <block wx:if="{{!retList[0]}}">
+        <view >空的</view>
+    </block> -->
+    <block wx:for="{{retList}}" wx:key="index">
+        <view class="search">
+            <view class="title" >
+                <view >{{labDetail.getDay(index)}}</view>
+                <view bind:tap="hideAni" data-ele="{{(1+index)}}" class="iconfont icon-{{!hideData['ele_' + (1+index)]?'shouqi':'zhankai'}}"></view>
+            </view>
+            <view id="card-body-{{1+index}}" style="--card-height:{{heightData['card-body-'+(1+index)]?heightData['card-body-'+(1+index)]:'auto'}}" class="card-body {{hideData['ele_' + (1+index)]?'hide':'display'}}">
+                <view class="lesson">
+                    <block wx:for="{{item}}" wx:key="index" wx:for-index="lesson_index" wx:for-item="lesson_item">
+                        <view class="lesson__title" >{{lesson_index}}</view>
+                        <view class="lesson__body">
+                            <block wx:for="{{lesson_item}}" wx:key="index" wx:for-index="plan_index" wx:for-item="plan_item">
+                                <view class="plan__name" style="{{labDetail.getStyle(plan_item)}}">{{plan_item}}</view>
+                            </block>
+                        </view>
+                    </block>
+                </view>
+            </view>
+        </view>
+    </block>
+</view>
+
+<!-- 回首页按钮悬浮按钮 -->
+<view wx:if="{{fromShare}}">
+  <navigator url="/pages/index/index" open-type="reLaunch" class="floatBtn" style="bottom: 5%;font-size: x-large;">
+    <view class="iconfont icon-shouye"></view>
+  </navigator>
+</view>

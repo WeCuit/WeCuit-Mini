@@ -1,0 +1,7 @@
+{
+  "usingComponents": {
+    "htmlParser":"/miniprogram_npm/parser-wx/index"
+  },
+  "navigationBarTitleText": "内容浏览",
+  "enablePullDownRefresh": true
+}

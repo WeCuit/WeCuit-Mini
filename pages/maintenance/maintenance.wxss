@@ -1,0 +1,10 @@
+/* pages/maintenance/maintenance.wxss */
+.maintenance-title{
+    padding: 50rpx;
+    font-size: 100rpx;
+    text-align: center;
+}
+.maintenance-other-text{
+    color:cadetblue;
+    text-align: center;
+}

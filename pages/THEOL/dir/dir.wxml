@@ -1,0 +1,20 @@
+<!--pages/THEOL/dir/dir.wxml-->
+
+<mp-cells title="目录" wx:if="{{dir.folder}}">
+    <mp-cell ext-class="my-cell" wx:for="{{dir.folder}}" id="{{item.id}}" wx:key="id" data-courseId="{{item.courseId}}" bindtap="bindViewDir">
+        <view>{{item.text}}</view>
+        <view class="footer" slot="footer">{{item.type}}</view>
+    </mp-cell>
+</mp-cells>
+
+<view wx:if="{{dir.file}}" class="tip">文件</view>
+<view wx:for="{{dir.file}}" wx:key="id" class="exam-card" data-suffix="{{item.suffix}}" data-fileid="{{item.id}}" data-resid="{{item.resId}}" bind:tap="downloadFile">
+  <view class="exam-title">文件名：{{item.text}}</view>
+  <!-- 细节 -->
+  <view class="exam-info">
+    <view >访问次数：{{item.view}}</view>
+    <view >下载次数：{{item.download}}</view>
+  </view>
+</view>
+
+<text wx:if="{{dir.length==0}}">无目录或文件</text>

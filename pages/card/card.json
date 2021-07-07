@@ -1,0 +1,8 @@
+{
+  "usingComponents": {
+    "mp-cell": "/miniprogram_npm/weui-miniprogram/cell/cell",
+    "mp-cells": "/miniprogram_npm/weui-miniprogram/cells/cells"
+  },
+  "navigationBarTitleText": "我的一卡通",
+  "enablePullDownRefresh": true
+}

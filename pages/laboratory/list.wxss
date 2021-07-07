@@ -1,0 +1,94 @@
+/* pages/laboratory/list.wxss */
+@import 'iconfont.wxss';
+
+page{
+    background-color: #f7f7f7;
+}
+.search{
+    background-color: #fff;
+    border-radius: 7px;
+    border: 1px solid #eee;
+    padding: 10rpx;
+    margin: 10rpx;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+}
+.card-body{
+    min-height: 0;
+    transition: height .5s;
+    -webkit-transition: height .5s;
+}
+.display {
+    height: var(--card-height);
+}
+.hide {
+    height: 0px;
+}
+.search .title{
+    display: flex;
+    padding: 10rpx;
+    justify-content: space-between;
+}
+
+.title > .notice{
+    /* height: 30rpx; */
+    animation: var(--ani) 2000ms forwards;
+    --progress: 0%;
+}
+
+@keyframes showNotice{
+    0%{
+	    color:rgba(255, 0, 0, 0)
+    }
+    100%{
+	    color:rgba(255,0,0,1)
+    }
+}
+@keyframes hideNotice{
+    from{
+	    color:rgba(255,0,0,1)
+    }
+    to{
+	    color:rgba(255,0,0,0)
+    }
+}
+.input-form{
+    display: flex;
+    flex-wrap: wrap;
+    font-size: small;
+    margin: 10rpx;
+    border-top: 1px solid #eee;
+}
+
+.item {
+    display: flex;
+    float: left;
+    width: 45%;
+    margin-top: 10rpx;
+    margin-bottom: 10rpx;
+}
+input{
+    width: 50%;
+    background-color: #f7f7f7;
+}
+
+/* 搜索结果 */
+.place{
+    padding-left: 10rpx;
+}
+.place__title{
+    padding: 15rpx 0rpx 3rpx 15rpx;
+    font-size: medium;
+    color:royalblue;
+}
+.place__body{
+    padding: 10rpx 0rpx 0rpx 25rpx;
+    display: flex;
+    flex-wrap: wrap;
+    font-size: small;
+}
+.place__body > navigator{
+    width:50%;
+    color: darkcyan;
+}

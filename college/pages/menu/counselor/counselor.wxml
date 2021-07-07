@@ -1,0 +1,6 @@
+<!--college/pages/menu/counselor/counselor.wxml-->
+<mp-cells title="辅导员">
+    <mp-cell ext-class="my-cell" wx:for="{{list}}" wx:key="index" data-id="{{item.cid}}" bindtap="bindViewCounselor">
+      <view>{{item.name}}</view>
+    </mp-cell>
+</mp-cells>

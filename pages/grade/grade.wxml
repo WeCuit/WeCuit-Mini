@@ -1,0 +1,53 @@
+<!--pages/grade/grade.wxml-->
+<wxs module="check">
+function isPass(str){
+  if(-1 !== str.indexOf('禁考') || parseInt(str) < 60)
+  {
+    return false;
+  }
+  return true;
+}
+module.exports = {
+  isPass : isPass,
+}
+</wxs>
+<!-- <view style="display: flex;align-items: center;margin-bottom: 2rem;">
+  <switch checked="{{isGradeSub}}" bindchange="changeSubStatus" disabled="{{!isSysSub}}"/><label style="{{!isSysSub?'color:red':''}}">{{isSysSub?'订阅成绩更新提醒':'如需提醒请先订阅'}}</label>
+  <navigator url="/pages/my/sub/sub" ><button style="width: auto;font-size: small;left: 1rem;" type="primary">订阅管理</button></navigator>
+</view> -->
+<view class="total_card" style="margin-bottom: 2rem;">
+    <view >全部成绩</view>
+    <view class="total_card_sub">
+      <view class="total_item">全部学时：{{total.learnTime}}</view>
+      <view class="total_item total_text_right">全部学分：{{total.creditTotal}}</view>
+      <view class="total_item">实获学分：{{total.creditGet}}</view>
+      <view class="total_item total_text_right">学分绩点：{{total.point}}</view>
+    </view>
+</view>
+<view wx:for="{{grade}}" wx:key="name" style="margin-bottom: 2rem;">
+  <!-- 标题 -->
+  <view class="total_card">
+      <view >{{item.name}}</view>
+      <view class="total_card_sub">
+        <view class="total_item">全部学时：{{item.total.learnTime}}</view>
+        <view class="total_item total_text_right">全部学分：{{item.total.creditTotal}}</view>
+        <view class="total_item">实获学分：{{item.total.creditGet}}</view>
+        <view class="total_item total_text_right">学分绩点：{{item.total.point}}</view>
+      </view>
+  </view>
+  <!-- 成绩 -->
+  <view class="grade_table">
+    <view wx:for="{{item.data}}" wx:key="n" wx:for-index="n" wx:for-item="d" class="grade_table_item" style="{{!check.isPass(d.learnGrade)?'background-color:red':''}}">
+      <!-- 科目名称 -->
+      <view>课程：{{n}}</view>
+      <!-- 成绩详情 -->
+      <view class="detail">
+        <view>课程学时：{{d.learnTime}}</view>
+        <view>课程学分：{{d.learnCredit}}</view>
+        <view>平时成绩：{{d.lessonGrade}}</view>
+        <view>期末成绩：{{d.examGrade}}</view>
+        <view>总评成绩：{{d.learnGrade}}</view>
+      </view>
+    </view>
+  </view>
+</view>

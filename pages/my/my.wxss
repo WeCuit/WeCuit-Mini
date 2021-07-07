@@ -1,0 +1,46 @@
+.btnLoginJWC {
+    margin: 0.5rem;
+    text-align: center;
+    background-color: #0066ff;
+    border-radius: 9px;
+    padding: 0.8rem;
+    color: white;
+    font-size: 30rpx;
+}
+
+.setting {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    border-radius: 7px;
+    margin: 0.3rem;
+    font-size: small;
+    margin-top: 3vh;
+    margin-bottom: 4rem;
+}
+.setting > .label {
+    color: gray;
+    border-bottom: 1rpx solid #d9d9d9;
+    height: 9vh;
+    font-size: 30rpx;
+    align-items: center;
+    display: flex;
+}
+.buttonFix {
+    border: 0px !important;
+    color: gray !important;
+    margin-left: 0px !important;
+    font-size: 30rpx;
+    font-weight: normal;
+    text-align: left !important;
+    padding: 0% !important;
+}
+.subicon {
+    margin: 11px;
+    font-size: 30rpx;
+}
+.subicon-r {
+    margin-left: auto;
+    margin-right: 1rem;
+    font-size: 30rpx;
+}
