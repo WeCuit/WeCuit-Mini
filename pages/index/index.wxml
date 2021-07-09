@@ -6,7 +6,7 @@
     <swiper indicator-dots="{{false}}" style="height: 38vh;" autoplay="{{true}}" interval="5000" duration="500" current="{{isADClose?0:0}}">
       <block wx:for="{{notice}}" wx:key="text">
         <swiper-item>
-          <view class="swiper-item" style="background:url({{item.src}}) no-repeat;background-size: 100% 100%;height: 100%;" data-type="{{item.type}}" data-data="{{item.data}}" bind:tap="bindSwiper">
+          <view class="swiper-item" style="background:url({{api}}{{item.src}}) no-repeat;background-size: 100% 100%;height: 100%;" data-type="{{item.type}}" data-data="{{item.data}}" bind:tap="bindSwiper">
             <text class="swiper-text">{{item.text}}</text>
           </view>
         </swiper-item>
