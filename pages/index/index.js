@@ -4,6 +4,7 @@ const app = getApp();
 
 Page({
     data: {
+        api: "",
         showGANotice: false,
         menuList: [
             [
@@ -65,15 +66,14 @@ Page({
                 //   "icon": "icon-kebiaoxinxi",
                 //   "text": "公共课表"
                 // },
-
-                {
-                    path: "/welcome/pages/welcome",
-                    size: 30,
-                    color: "#185f97",
-                    action: "bindAction",
-                    icon: "icon-xinshengfuwu",
-                    text: "新生服务",
-                },
+                // {
+                //     path: "/welcome/pages/welcome",
+                //     size: 30,
+                //     color: "#185f97",
+                //     action: "bindAction",
+                //     icon: "icon-xinshengfuwu",
+                //     text: "新生服务",
+                // },
                 // {
                 //     path: "/map/pages/index",
                 //     size: 30,
@@ -90,8 +90,6 @@ Page({
                     text: "校历/地图",
                     icon: "icon-calendar",
                 },
-            ],
-            [
                 {
                     path: "../laboratory/list",
                     size: 30,
@@ -100,6 +98,8 @@ Page({
                     icon: "icon-shiyanshijianshe",
                     text: "实验查询",
                 },
+            ],
+            [
                 {
                     path: "../officeGrade/query",
                     size: 30,
@@ -116,23 +116,23 @@ Page({
                 //     text: "教师评选",
                 //     icon: "icon-toupiao",
                 // },
-                {
-                    path: "/college/pages/list/list",
-                    size: 30,
-                    color: "purple",
-                    action: "bindAction",
-                    icon: "icon-xueyuan",
-                    text: "学院信息",
-                },
-                {
-                    path: "../THEOL/THEOL",
-                    size: 30,
-                    color: "purple",
-                    action: "bindAction",
-                    needLogin: true,
-                    icon: "icon-jiaoxuepingtai",
-                    text: "教学平台",
-                },
+                // {
+                //     path: "/college/pages/list/list",
+                //     size: 30,
+                //     color: "purple",
+                //     action: "bindAction",
+                //     icon: "icon-xueyuan",
+                //     text: "学院信息",
+                // },
+                // {
+                //     path: "../THEOL/THEOL",
+                //     size: 30,
+                //     color: "purple",
+                //     action: "bindAction",
+                //     needLogin: true,
+                //     icon: "icon-jiaoxuepingtai",
+                //     text: "教学平台",
+                // },
                 // {
                 //     path: "",
                 //     size: 30,
@@ -146,25 +146,19 @@ Page({
         notice: [
             {
                 data: app.globalData.API_DOMAIN + "/Sys/getHtml/name/gradeHelp",
-                src:
-                    app.globalData.API_DOMAIN +
-                    "/../public/images/notice/4.jpg",
+                src: "/../public/images/notice/4.jpg",
                 text: "成绩提醒设置帮助",
                 type: "html",
             },
             {
                 data: app.globalData.API_DOMAIN + "/Sys/getHtml/name/changelog",
-                src:
-                    app.globalData.API_DOMAIN +
-                    "/../public/images/notice/4.jpg",
+                src: "/../public/images/notice/4.jpg",
                 text: "公告日志",
                 type: "html",
             },
             {
                 data: app.globalData.API_DOMAIN + "/Sys/getHtml/name/helper",
-                src:
-                    app.globalData.API_DOMAIN +
-                    "/../public/images/notice/help.png",
+                src: "/../public/images/notice/help.png",
                 text: "使用说明",
                 type: "html",
             },
@@ -184,6 +178,7 @@ Page({
     },
 
     onLoad: function (options) {
+        this.setData({api: app.globalData.API_DOMAIN})
         wx.showShareMenu({
             withShareTicket: true,
             // for wx
