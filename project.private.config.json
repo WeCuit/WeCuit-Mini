@@ -71,6 +71,12 @@
           "pathName": "pages/laboratory/detail",
           "query": "Yx=118&Lb=1",
           "scene": null
+        },
+        {
+          "name": "pages/articleView/articleView",
+          "pathName": "pages/articleView/articleView",
+          "query": "path=/info/1090/48680.htm&source=home&domain=www.cuit.edu.cn",
+          "scene": null
         }
       ]
     }

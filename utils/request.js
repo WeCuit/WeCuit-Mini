@@ -39,7 +39,7 @@ function httpBase(method, url, data, contentType, loading, loadingMsg) {
                 }
 
                 let res = result.data || {};
-                let code = res.errorCode;
+                let code = res.code;
 
                 if (code !== 2000) {
                     if (10503 === code) {
@@ -47,9 +47,9 @@ function httpBase(method, url, data, contentType, loading, loadingMsg) {
                             url: `/pages/maintenance/maintenance?BText=${res.maintenance.BText}&OText=${res.maintenance.OText}`,
                         });
                     } else reject(res);
-                    if (res.errMsg) {
+                    if (res.error) {
                         wx.showToast({
-                            title: res.errMsg,
+                            title: res.error,
                             icon: "none",
                         });
                     }
