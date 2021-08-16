@@ -2,7 +2,17 @@
 
 const XMLParser = require("../../../utils/xmldom/dom-parser");
 const xmlParser = new XMLParser.DOMParser();
-import { captchaOCR, getSSOCaptcha, checkSSOLogin, jwglLogin } from '../api'
+import {
+    captchaOCR,
+    getSSOCaptcha,
+    checkSSOLogin,
+    jwglLogin,
+    ssoLogout,
+    WV_login,
+    WV_loginAuth,
+    jwglLoginCheck,
+    WV_loginCheck
+} from '../api'
 // var L = new login.DoLogin();
 
 // rsa 加密
@@ -180,60 +190,6 @@ Page({
      *
      */
     checkSsoLogin: function (r) {
-        // new Promise((resolve, reject) => {
-        //     wx.request({
-        //         url: "https://sso.cuit.edu.cn/authserver/login",
-        //         header: {
-        //             cookie:
-        //                 "SESSION=" +
-        //                 this.data.SSO_SESSION +
-        //                 "; TGC=" +
-        //                 this.data.sessionInfo.SSO_TGC,
-        //         },
-        //         success(res) {
-        //             var ret = {};
-        //             if (
-        //                 res.data &&
-        //                 res.data.indexOf("已经成功登统一认证中心") != -1
-        //             ) {
-        //                 ret["status"] = 2000;
-        //                 resolve(ret);
-        //             } else if (
-        //                 res.data.indexOf("成都信息工程大学统一身份") != -1
-        //             ) {
-        //                 // 登录webvpn，未登录统一认证中心
-        //                 ret["status"] = 2002;
-        //                 ret["SESSION"] = null;
-        //                 var cookie = "";
-        //                 if ("undefined" != typeof res.header["set-cookie"])
-        //                     cookie = res.header["set-cookie"];
-        //                 else if ("undefined" != typeof res.header["Set-Cookie"])
-        //                     cookie = res.header["Set-Cookie"];
-        //                 if (-1 != cookie.indexOf("SESSION")) {
-        //                     // SESSION需要更新
-        //                     ret["SESSION"] = cookie.match(/SESSION=(.*);/)[1];
-        //                 }
-        //                 ret["execution"] = null;
-        //                 if (res.data.indexOf("execution") != -1) {
-        //                     ret["execution"] = res.data.match(
-        //                         /" name="execution" value="(.*?)" \/>/
-        //                     )[1];
-        //                 }
-        //                 resolve(ret);
-        //             } else {
-        //                 // 两个站点都未登录
-        //                 reject(-1);
-        //             }
-        //         },
-        //         fail: (err) => {
-        //             console.error("失败", err);
-        //             wx.showToast({
-        //                 icon: "none",
-        //                 title: "网络异常",
-        //             });
-        //         },
-        //     });
-        // })
         checkSSOLogin("SESSION=" +
             this.data.SSO_SESSION +
             "; TGC=" +
@@ -378,25 +334,7 @@ Page({
             vpnPass: this.data.vpnPass,
             isWebVpnLogin: false,
         });
-        new Promise((resolve) => {
-            wx.request({
-                url: "https://sso.cuit.edu.cn/authserver/logout",
-                header: {
-                    cookie: "SESSION=" + this.data.SSO_SESSION,
-                },
-                success(res) {
-                    resolve();
-                },
-                fail: (err) => {
-                    console.error("失败", err);
-                    wx.showToast({
-                        icon: "none",
-                        title: "网络异常",
-                    });
-                    reject();
-                },
-            });
-        }).then(() => {
+        ssoLogout("SESSION=" + this.data.SSO_SESSION).then(() => {
             this.setData({
                 isNeedLogin: true,
             });
@@ -510,50 +448,39 @@ Page({
         WEBVPN: (r) => {
             new Promise((resolve, reject) => {
                 _this.loginFunc.loginAuth((auth) => {
-                    wx.request({
-                        url:
-                            "https://webvpn.cuit.edu.cn/por/login_psw.csp?anti_replay=1&encrypt=1&apiversion=1",
-                        method: "POST",
-                        data: {
-                            mitm_result: "",
-                            svpn_req_randcode: auth.rc,
-                            svpn_name: _this.data.userId,
-                            svpn_password: auth.encrypted_pwd,
-                            svpn_rand_code: "",
-                        },
-                        header: {
-                            "content-type": "application/x-www-form-urlencoded",
-                            cookie:
-                                "language=zh_CN; privacy=1; ENABLE_RANDCODE=" +
-                                _this.data.isNeedCaptcha +
-                                "; TWFID=" +
-                                auth.TwfID,
-                        },
-                        success(res) {
-                            var ret = {};
-                            var doc = xmlParser.parseFromString(res.data);
-                            var msg = doc.getElementsByTagName("Message")[0]
+                    WV_login("language=zh_CN; privacy=1; ENABLE_RANDCODE=" +
+                        _this.data.isNeedCaptcha +
+                        "; TWFID=" +
+                        auth.TwfID, {
+                        mitm_result: "",
+                        svpn_req_randcode: auth.rc,
+                        svpn_name: _this.data.userId,
+                        svpn_password: auth.encrypted_pwd,
+                        svpn_rand_code: "",
+                    }).then(res => {
+                        var ret = {};
+                        var doc = xmlParser.parseFromString(res.data);
+                        var msg = doc.getElementsByTagName("Message")[0]
+                            .firstChild.data;
+                        var cookie = "";
+                        if ("undefined" != typeof res.header["set-cookie"])
+                            cookie = res.header["set-cookie"];
+                        else if (
+                            "undefined" != typeof res.header["Set-Cookie"]
+                        )
+                            cookie = res.header["Set-Cookie"];
+                        if (msg == "radius auth succ") {
+                            ret["status"] = 200;
+                            var TWFID = doc.getElementsByTagName("TwfID")[0]
                                 .firstChild.data;
-                            var cookie = "";
-                            if ("undefined" != typeof res.header["set-cookie"])
-                                cookie = res.header["set-cookie"];
-                            else if (
-                                "undefined" != typeof res.header["Set-Cookie"]
-                            )
-                                cookie = res.header["Set-Cookie"];
-                            if (msg == "radius auth succ") {
-                                ret["status"] = 200;
-                                var TWFID = doc.getElementsByTagName("TwfID")[0]
-                                    .firstChild.data;
-                                resolve(TWFID);
-                            } else {
-                                ret["doc"] = doc;
-                                if (-1 != cookie.indexOf("ENABLE_RANDCODE=1"))
-                                    ret["needCaptcha"] = true;
-                                reject(ret);
-                            }
-                        },
-                    });
+                            resolve(TWFID);
+                        } else {
+                            ret["doc"] = doc;
+                            if (-1 != cookie.indexOf("ENABLE_RANDCODE=1"))
+                                ret["needCaptcha"] = true;
+                            reject(ret);
+                        }
+                    })
                 });
             })
                 .then((TWFID) => {
@@ -624,57 +551,38 @@ Page({
         },
 
         loginAuth: function (r) {
-            new Promise((resolve, reject) => {
-                // https://webvpn.cuit.edu.cn/por/login_auth.csp?apiversion=1
-                wx.request({
-                    url:
-                        "https://webvpn.cuit.edu.cn/por/login_auth.csp?apiversion=1", //仅为示例，并非真实的接口地址
-                    header: {
-                        cookie:
-                            "language=zh_CN; privacy=1; ENABLE_RANDCODE=" +
-                            _this.data.isNeedCaptcha +
-                            ";TWFID=" +
-                            app.globalData.sessionInfo.TWFID,
-                    },
-                    success(res) {
-                        var doc = xmlParser.parseFromString(res.data);
-                        var randCode = doc.getElementsByTagName(
-                            "CSRF_RAND_CODE"
-                        )[0].firstChild.data;
-                        var msg = doc.getElementsByTagName("Message")[0]
-                            .firstChild.data;
-                        var TwfID = doc.getElementsByTagName("TwfID")[0]
-                            .firstChild.data;
-                        var RSA_ENCRYPT_KEY = doc.getElementsByTagName(
-                            "RSA_ENCRYPT_KEY"
-                        )[0].firstChild.data;
-                        var RSA_ENCRYPT_EXP = doc.getElementsByTagName(
-                            "RSA_ENCRYPT_EXP"
-                        )[0].firstChild.data;
-                        if (msg == "login auth success") {
-                            var auth = {
-                                rc: randCode,
-                                TwfID: TwfID,
-                                RSA_ENCRYPT_KEY: RSA_ENCRYPT_KEY,
-                                RSA_ENCRYPT_EXP: parseInt(RSA_ENCRYPT_EXP),
-                            };
-                            resolve(auth);
-                        } else {
-                            reject(2004);
-                        }
-                    },
-                    fail: (err) => {
-                        console.error("失败", err);
-                        wx.showToast({
-                            icon: "none",
-                            title: "网络异常",
-                        });
-                        reject();
-                    },
-                });
-            })
+            WV_loginAuth("language=zh_CN; privacy=1; ENABLE_RANDCODE=" +
+                _this.data.isNeedCaptcha +
+                ";TWFID=" +
+                app.globalData.sessionInfo.TWFID)
                 // new login.DoLogin().webVpnAuth(_this.data.isNeedCaptcha, app.globalData.sessionInfo.TWFID)
-                .then((ret) => {
+                .then((res) => {
+                    var doc = xmlParser.parseFromString(res.data);
+                    var randCode = doc.getElementsByTagName(
+                        "CSRF_RAND_CODE"
+                    )[0].firstChild.data;
+                    var msg = doc.getElementsByTagName("Message")[0]
+                        .firstChild.data;
+                    var TwfID = doc.getElementsByTagName("TwfID")[0]
+                        .firstChild.data;
+                    var RSA_ENCRYPT_KEY = doc.getElementsByTagName(
+                        "RSA_ENCRYPT_KEY"
+                    )[0].firstChild.data;
+                    var RSA_ENCRYPT_EXP = doc.getElementsByTagName(
+                        "RSA_ENCRYPT_EXP"
+                    )[0].firstChild.data;
+                    let auth;
+                    if (msg == "login auth success") {
+                        auth = {
+                            rc: randCode,
+                            TwfID: TwfID,
+                            RSA_ENCRYPT_KEY: RSA_ENCRYPT_KEY,
+                            RSA_ENCRYPT_EXP: parseInt(RSA_ENCRYPT_EXP),
+                        };
+                    } else {
+                        return Promise.reject(2004);
+                    }
+                    const ret = auth;
                     if (ret.TwfID != app.globalData.sessionInfo.TWFID) {
                         app.globalData.sessionInfo.TWFID = ret.TwfID;
                     }
@@ -709,44 +617,24 @@ Page({
     loginCheckFunc: {
         // WEBVPN检查登录状态
         WEBVPN: function () {
-            new Promise((resolve, reject) => {
-                wx.request({
-                    url:
-                        "https://webvpn.cuit.edu.cn/por/svpnSetting.csp?apiversion=1",
-                    header: {
-                        cookie:
-                            "language=zh_CN; privacy=1; ENABLE_RANDCODE=" +
-                            _this.data.isNeedCaptcha +
-                            "; TWFID=" +
-                            app.globalData.sessionInfo.TWFID,
-                    },
-                    success(res) {
-                        var doc = xmlParser.parseFromString(res.data);
-                        var msg = doc.getElementsByTagName("Message")[0]
-                            .firstChild.data;
-                        resolve(msg);
-                    },
-                    fail: (err) => {
-                        console.error("失败", err);
-                        wx.showToast({
-                            icon: "none",
-                            title: "网络异常",
+            WV_loginCheck("language=zh_CN; privacy=1; ENABLE_RANDCODE=" +
+                _this.data.isNeedCaptcha +
+                "; TWFID=" +
+                app.globalData.sessionInfo.TWFID).then((res) => {
+                    var doc = xmlParser.parseFromString(res.data);
+                    var msg = doc.getElementsByTagName("Message")[0]
+                        .firstChild.data;
+                    if ("auth succ." == msg) {
+                        _this.setData({
+                            isWebVpnLogin: true,
                         });
-                        reject();
-                    },
+                    } else {
+                        _this.loginFunc.WEBVPN(() => {
+                            _this.loginFunc.JWGL();
+                        });
+                        app.globalData.sessionInfo.TWFID = "";
+                    }
                 });
-            }).then((msg) => {
-                if ("auth succ." == msg) {
-                    _this.setData({
-                        isWebVpnLogin: true,
-                    });
-                } else {
-                    _this.loginFunc.WEBVPN(() => {
-                        _this.loginFunc.JWGL();
-                    });
-                    app.globalData.sessionInfo.TWFID = "";
-                }
-            });
         },
 
         /**
@@ -754,40 +642,17 @@ Page({
          * @param {*} r
          */
         JWGL: function (r) {
-            new Promise((resolve, reject) => {
-                wx.request({
-                    url: app.globalData.API_DOMAIN + "/Jwgl/loginCheck",
-                    method: "POST",
-                    data: {
-                        cookie:
-                            app.globalData.sessionInfo.JWGL_cookie +
-                            "; TWFID=" +
-                            app.globalData.sessionInfo.TWFID,
-                    },
-                    header: {
-                        "content-type": "application/x-www-form-urlencoded",
-                    },
-                    success: (res) => {
-                        if (res.data.status == 2000) {
-                            resolve();
-                        } else {
-                            _this.loginFunc.JWGL();
-                        }
-                    },
-                    fail: (err) => {
-                        console.error("失败", err);
-                        wx.showToast({
-                            icon: "none",
-                            title: "网络异常",
+            jwglLoginCheck(app.globalData.sessionInfo.JWGL_cookie +
+                "; TWFID=" +
+                app.globalData.sessionInfo.TWFID).then(res => {
+                    if (res.data.status == 2000) {
+                        _this.setData({
+                            isJwglLogin: true,
                         });
-                        reject();
-                    },
+                    } else {
+                        _this.loginFunc.JWGL();
+                    }
                 });
-            }).then(() => {
-                _this.setData({
-                    isJwglLogin: true,
-                });
-            });
         },
 
     },
