@@ -35,7 +35,6 @@ App({
             }
         }).catch(e=>{
         });
-        request.init(config.API_DOMAIN);
     },
 
 	httpGet: request.httpGetForm,
