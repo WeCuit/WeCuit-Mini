@@ -3,6 +3,7 @@
 const XMLParser = require("../../../utils/xmldom/dom-parser");
 const xmlParser = new XMLParser.DOMParser();
 const login = require("../../../utils/login/login.js");
+import { captchaOCR } from '../api'
 // var L = new login.DoLogin();
 
 // rsa 加密
@@ -73,27 +74,27 @@ Page({
     /**
      * 生命周期函数--监听页面隐藏
      */
-    onHide: function () {},
+    onHide: function () { },
 
     /**
      * 生命周期函数--监听页面卸载
      */
-    onUnload: function () {},
+    onUnload: function () { },
 
     /**
      * 页面相关事件处理函数--监听用户下拉动作
      */
-    onPullDownRefresh: function () {},
+    onPullDownRefresh: function () { },
 
     /**
      * 页面上拉触底事件的处理函数
      */
-    onReachBottom: function () {},
+    onReachBottom: function () { },
 
     /**
      * 用户点击右上角分享
      */
-    onShareAppMessage: function () {},
+    onShareAppMessage: function () { },
 
     /**
      * 表单提交
@@ -161,8 +162,7 @@ Page({
                     });
             })
             .catch((err) => {
-                if("string" == typeof err.Msg)
-                {
+                if ("string" == typeof err.Msg) {
                     wx.showToast({
                         icon: 'none',
                         title: err.errMsg
@@ -246,7 +246,7 @@ Page({
                     this.loginFunc.WEBVPN_isAdmin().then(() => {
                         this.loginCheckFunc.WEBVPN();
                         this.loginCheckFunc.JWGL();
-                    }).catch(()=>{
+                    }).catch(() => {
                         this.loginCheckFunc.WEBVPN();
                         this.loginCheckFunc.JWGL();
                     });
@@ -303,7 +303,7 @@ Page({
                     });
                 });
             })
-            .catch(() => {});
+            .catch(() => { });
     },
 
     // ORC识别验证码
@@ -326,146 +326,54 @@ Page({
             // join all the hex values of the elements into a single string
             let h = hexParts.join("");
             var verify = h + "/@jysafe.cn";
-            wx.request({
-                url: app.globalData.API_DOMAIN + "/Tool/captchaDecodeV2",
-                method: "POST",
-                header: {
-                    "x-verify": app.RSAEncrypt(verify),
-                },
-                data: pic,
-                success: (res) => {
-                    if (2000 == res.data.status) r(res.data.result);
-                    else {
-                        wx.showToast({
-                            icon: "none",
-                            title: res.data.errMsg,
-                        });
-                    }
-                    return;
-                },
-                fail: (err) => {
-                    console.error("失败", err);
+            captchaOCR(app.RSAEncrypt(verify), pic).then(res => {
+                console.log(res)
+                if (200 == res.data.code) r(res.data.data.result);
+                else {
                     wx.showToast({
                         icon: "none",
-                        title: "网络异常",
+                        title: res.data.error,
                     });
-                },
-            });
+                }
+                return;
+            }).catch(err => {
+                console.error("失败", err);
+                wx.showToast({
+                    icon: "none",
+                    title: "网络异常",
+                });
+            })
+            // wx.request({
+            //     url: app.globalData.API_DOMAIN + "/Tool/captchaDecodeV2",
+            //     method: "POST",
+            //     header: {
+            //         "x-verify": app.RSAEncrypt(verify),
+            //     },
+            //     data: pic,
+            //     success: (res) => {
+            //         console.log(res)
+            //         if (200 == res.data.code) r(res.data.data.result);
+            //         else {
+            //             wx.showToast({
+            //                 icon: "none",
+            //                 title: res.data.error,
+            //             });
+            //         }
+            //         return;
+            //     },
+            //     fail: (err) => {
+            //         console.error("失败", err);
+            //         wx.showToast({
+            //             icon: "none",
+            //             title: "网络异常",
+            //         });
+            //     },
+            // });
         } catch (err) {
             console.log(err);
         }
     },
 
-    // 自动登录开关
-    // bindAutoLogin: function (e) {
-    //     this.data.isAutoLogin = e.detail.value;
-    //     app.globalData.isAutoLogin = e.detail.value;
-    //     if (true === e.detail.value) {
-    //         wx.showModal({
-    //             title: "关于自动登录",
-    //             content: "开启后，当打开小程序时，小程序将使用现有账户密码自动登录各个站点",
-    //             success: (res) => {
-    //                 if (res.confirm) {
-    //                     console.log("用户点击确定");
-    //                     wx.setStorage({
-    //                         key: "isAutoLogin",
-    //                         data: e.detail.value,
-    //                     });
-    //                 } else if (res.cancel) {
-    //                     console.log("用户点击取消");
-    //                     this.setData({
-    //                         isAutoLogin: false,
-    //                     });
-    //                     wx.setStorage({
-    //                         key: "isAutoLogin",
-    //                         data: false,
-    //                     });
-    //                     app.globalData.isAutoLogin = false;
-    //                 }
-    //             },
-    //         });
-    //     } else {
-    //         wx.setStorage({
-    //             key: "isAutoLogin",
-    //             data: false,
-    //         });
-    //     }
-    // },
-
-    // // 实时存储学号
-    // bindInputId: function (e) {
-    //     this.data.userId = e.detail.value;
-    //     app.globalData.sessionInfo.userId = e.detail.value;
-    //     // 存储密码于storage
-    //     if (this.data.isRemPass) {
-    //         wx.setStorage({
-    //             key: "userId",
-    //             data: e.detail.value,
-    //         });
-    //     }
-    // },
-
-    // // 实时存储密码
-    // bindInputPass: function (e) {
-    //     this.data.userPass = e.detail.value;
-    //     app.globalData.sessionInfo.userPass = e.detail.value;
-    //     // 存储密码于storage
-    //     if (this.data.isRemPass) {
-    //         wx.setStorage({
-    //             key: "userPass",
-    //             data: e.detail.value,
-    //         });
-    //     }
-    // },
-    // 实时存储VPN密码
-    // bindInputVpnPass: function (e) {
-    //     this.data.vpnPass = e.detail.value;
-    //     this.data.sessionInfo.vpnPass = e.detail.value;
-    //     // 存储密码于storage
-    //     if (this.data.isRemPass) {
-    //         wx.setStorage({
-    //             key: "vpnPass",
-    //             data: e.detail.value,
-    //         });
-    //     }
-    // },
-
-    // 记住密码
-    // remPassword: function (e) {
-    //     this.setData({
-    //         isRemPass: e.detail.value,
-    //     });
-    //     wx.setStorage({
-    //         key: "isRemPass",
-    //         data: e.detail.value,
-    //     });
-    //     // 存储密码于storage
-    //     if (true == e.detail.value) {
-    //         wx.setStorage({
-    //             key: "userId",
-    //             data: this.data.userId,
-    //         });
-    //         wx.setStorage({
-    //             key: "userPass",
-    //             data: this.data.userPass,
-    //         });
-    //     } else {
-    //         // 清除storage存储
-    //         wx.removeStorage({
-    //             key: "userId",
-    //         });
-    //         wx.removeStorage({
-    //             key: "userPass",
-    //         });
-    //         wx.removeStorage({
-    //             key: "isRemPass",
-    //         });
-    //     }
-    // },
-    // bindInputCaptcha: function (e) {
-    //     this.data.captchaCode = e.detail.value;
-    // },
-    
     /**
      * 注销按钮事件
      */
@@ -597,32 +505,32 @@ Page({
                 // 普通用户
                 if (true !== app.globalData.accountInfo.isAdmin) reject();
                 else
-                // 管理员
-                app.login().then((code) => {
-                    wx.request({
-                        url: app.globalData.API_DOMAIN + "/Sys/getAdminTWFID",
-                        data: { code: code },
-                        success: (res) => {
-                            if (2000 === res.data.status) {
-                                app.globalData.sessionInfo.TWFID =
-                                    res.data.twfid;
-                                wx.setStorage({
-                                    data: res.data.twfid,
-                                    key: "TWFID",
+                    // 管理员
+                    app.login().then((code) => {
+                        wx.request({
+                            url: app.globalData.API_DOMAIN + "/Sys/getAdminTWFID",
+                            data: { code: code },
+                            success: (res) => {
+                                if (2000 === res.data.status) {
+                                    app.globalData.sessionInfo.TWFID =
+                                        res.data.twfid;
+                                    wx.setStorage({
+                                        data: res.data.twfid,
+                                        key: "TWFID",
+                                    });
+                                }
+                                resolve();
+                            },
+                            fail: (err) => {
+                                console.error("失败", err);
+                                wx.showToast({
+                                    icon: "none",
+                                    title: "网络异常",
                                 });
-                            }
-                            resolve();
-                        },
-                        fail: (err) => {
-                            console.error("失败", err);
-                            wx.showToast({
-                                icon: "none",
-                                title: "网络异常",
-                            });
-                            reject();
-                        },
+                                reject();
+                            },
+                        });
                     });
-                });
             });
         },
         WEBVPNV2: function () {
