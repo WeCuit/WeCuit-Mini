@@ -2,8 +2,7 @@
 
 const XMLParser = require("../../../utils/xmldom/dom-parser");
 const xmlParser = new XMLParser.DOMParser();
-const login = require("../../../utils/login/login.js");
-import { captchaOCR } from '../api'
+import { captchaOCR, getSSOCaptcha, checkSSOLogin, jwglLogin } from '../api'
 // var L = new login.DoLogin();
 
 // rsa 加密
@@ -113,12 +112,13 @@ Page({
         this.data.isAutoLogin = this.data.accountInfo.isAutoLogin =
             formData.isAutoLogin;
 
-        if (this.data.isRemPass)
+        // 记住密码
+        if (this.data.isRemPass) {
             wx.setStorage({
                 key: "accountInfo",
                 data: this.data.accountInfo,
             });
-
+        }
         var sso_data = {
             SSO_SESSION: this.data.SSO_SESSION,
             execution: this.data.execution,
@@ -180,61 +180,96 @@ Page({
      *
      */
     checkSsoLogin: function (r) {
-        new Promise((resolve, reject) => {
-            wx.request({
-                url: "https://sso.cuit.edu.cn/authserver/login",
-                header: {
-                    cookie:
-                        "SESSION=" +
-                        this.data.SSO_SESSION +
-                        "; TGC=" +
-                        this.data.sessionInfo.SSO_TGC,
-                },
-                success(res) {
-                    var ret = {};
-                    if (
-                        res.data &&
-                        res.data.indexOf("已经成功登统一认证中心") != -1
-                    ) {
-                        ret["status"] = 2000;
-                        resolve(ret);
-                    } else if (
-                        res.data.indexOf("成都信息工程大学统一身份") != -1
-                    ) {
-                        // 登录webvpn，未登录统一认证中心
-                        ret["status"] = 2002;
-                        ret["SESSION"] = null;
-                        var cookie = "";
-                        if ("undefined" != typeof res.header["set-cookie"])
-                            cookie = res.header["set-cookie"];
-                        else if ("undefined" != typeof res.header["Set-Cookie"])
-                            cookie = res.header["Set-Cookie"];
-                        if (-1 != cookie.indexOf("SESSION")) {
-                            // SESSION需要更新
-                            ret["SESSION"] = cookie.match(/SESSION=(.*);/)[1];
-                        }
-                        ret["execution"] = null;
-                        if (res.data.indexOf("execution") != -1) {
-                            ret["execution"] = res.data.match(
-                                /" name="execution" value="(.*?)" \/>/
-                            )[1];
-                        }
-                        resolve(ret);
-                    } else {
-                        // 两个站点都未登录
-                        reject(-1);
+        // new Promise((resolve, reject) => {
+        //     wx.request({
+        //         url: "https://sso.cuit.edu.cn/authserver/login",
+        //         header: {
+        //             cookie:
+        //                 "SESSION=" +
+        //                 this.data.SSO_SESSION +
+        //                 "; TGC=" +
+        //                 this.data.sessionInfo.SSO_TGC,
+        //         },
+        //         success(res) {
+        //             var ret = {};
+        //             if (
+        //                 res.data &&
+        //                 res.data.indexOf("已经成功登统一认证中心") != -1
+        //             ) {
+        //                 ret["status"] = 2000;
+        //                 resolve(ret);
+        //             } else if (
+        //                 res.data.indexOf("成都信息工程大学统一身份") != -1
+        //             ) {
+        //                 // 登录webvpn，未登录统一认证中心
+        //                 ret["status"] = 2002;
+        //                 ret["SESSION"] = null;
+        //                 var cookie = "";
+        //                 if ("undefined" != typeof res.header["set-cookie"])
+        //                     cookie = res.header["set-cookie"];
+        //                 else if ("undefined" != typeof res.header["Set-Cookie"])
+        //                     cookie = res.header["Set-Cookie"];
+        //                 if (-1 != cookie.indexOf("SESSION")) {
+        //                     // SESSION需要更新
+        //                     ret["SESSION"] = cookie.match(/SESSION=(.*);/)[1];
+        //                 }
+        //                 ret["execution"] = null;
+        //                 if (res.data.indexOf("execution") != -1) {
+        //                     ret["execution"] = res.data.match(
+        //                         /" name="execution" value="(.*?)" \/>/
+        //                     )[1];
+        //                 }
+        //                 resolve(ret);
+        //             } else {
+        //                 // 两个站点都未登录
+        //                 reject(-1);
+        //             }
+        //         },
+        //         fail: (err) => {
+        //             console.error("失败", err);
+        //             wx.showToast({
+        //                 icon: "none",
+        //                 title: "网络异常",
+        //             });
+        //         },
+        //     });
+        // })
+        checkSSOLogin("SESSION=" +
+            this.data.SSO_SESSION +
+            "; TGC=" +
+            this.data.sessionInfo.SSO_TGC)
+            .then((res) => {
+                var ret = {};
+                if (
+                    res.data &&
+                    res.data.indexOf("已经成功登统一认证中心") != -1
+                ) {
+                    ret["status"] = 2000;
+                } else if (
+                    res.data.indexOf("成都信息工程大学统一身份") != -1
+                ) {
+                    // 登录webvpn，未登录统一认证中心
+                    ret["status"] = 2002;
+                    ret["SESSION"] = null;
+                    var cookie = "";
+                    if ("undefined" != typeof res.header["set-cookie"])
+                        cookie = res.header["set-cookie"];
+                    else if ("undefined" != typeof res.header["Set-Cookie"])
+                        cookie = res.header["Set-Cookie"];
+                    if (-1 != cookie.indexOf("SESSION")) {
+                        // SESSION需要更新
+                        ret["SESSION"] = cookie.match(/SESSION=(.*);/)[1];
                     }
-                },
-                fail: (err) => {
-                    console.error("失败", err);
-                    wx.showToast({
-                        icon: "none",
-                        title: "网络异常",
-                    });
-                },
-            });
-        })
-            .then((ret) => {
+                    ret["execution"] = null;
+                    if (res.data.indexOf("execution") != -1) {
+                        ret["execution"] = res.data.match(
+                            /" name="execution" value="(.*?)" \/>/
+                        )[1];
+                    }
+                } else {
+                    // 两个站点都未登录
+                    reject(-1);
+                }
                 if (ret.execution) {
                     this.data.execution = ret.execution;
                 }
@@ -272,26 +307,9 @@ Page({
      * @param {*} r
      */
     getCaptcha: function (SESSION) {
-        new Promise((resolve, reject) => {
-            wx.request({
-                url: "https://sso.cuit.edu.cn/authserver/captcha",
-                responseType: "arraybuffer",
-                header: {
-                    cookie: "SESSION=" + SESSION,
-                },
-                success(res) {
-                    resolve(res.data);
-                },
-                fail: (err) => {
-                    console.error("失败", err);
-                    wx.showToast({
-                        icon: "none",
-                        title: "网络异常",
-                    });
-                },
-            });
-        })
-            .then((captcha) => {
+        getSSOCaptcha("SESSION=" + SESSION)
+            .then((res) => {
+                const captcha = res.data;
                 var imgBase64 =
                     "data:image/png;base64," + wx.arrayBufferToBase64(captcha);
                 this.setData({
@@ -303,7 +321,9 @@ Page({
                     });
                 });
             })
-            .catch(() => { });
+            .catch((err) => {
+                console.log("error", err)
+            });
     },
 
     // ORC识别验证码
@@ -343,32 +363,6 @@ Page({
                     title: "网络异常",
                 });
             })
-            // wx.request({
-            //     url: app.globalData.API_DOMAIN + "/Tool/captchaDecodeV2",
-            //     method: "POST",
-            //     header: {
-            //         "x-verify": app.RSAEncrypt(verify),
-            //     },
-            //     data: pic,
-            //     success: (res) => {
-            //         console.log(res)
-            //         if (200 == res.data.code) r(res.data.data.result);
-            //         else {
-            //             wx.showToast({
-            //                 icon: "none",
-            //                 title: res.data.error,
-            //             });
-            //         }
-            //         return;
-            //     },
-            //     fail: (err) => {
-            //         console.error("失败", err);
-            //         wx.showToast({
-            //             icon: "none",
-            //             title: "网络异常",
-            //         });
-            //     },
-            // });
         } catch (err) {
             console.log(err);
         }
@@ -447,56 +441,24 @@ Page({
 
     // 登录函数
     loginFunc: {
-
         // 教务管理系统登录
         JWGL: function () {
-            new Promise((resolve, reject) => {
-                wx.request({
-                    url: app.globalData.API_DOMAIN + "/Jwgl/login",
-                    method: "POST",
-                    data: {
-                        cookie:
-                            "TGC=" +
-                            app.globalData.sessionInfo.SSO_TGC +
-                            "; TWFID=" +
-                            app.globalData.sessionInfo.TWFID,
-                    },
-                    header: {
-                        "Content-Type": "application/x-www-form-urlencoded",
-                    },
-                    success: (res) => {
-                        if (res.data.status == 2000) {
-                            resolve(res.data);
-                        } else {
-                            wx.showToast({
-                                icon: "none",
-                                title: res.data.errMsg,
-                            });
-                            reject();
-                        }
-                    },
-                    fail: (err) => {
-                        console.error("失败", err);
-                        wx.showToast({
-                            icon: "none",
-                            title: "网络异常",
-                        });
-                        reject();
-                    },
+            jwglLogin("TGC=" +
+                app.globalData.sessionInfo.SSO_TGC +
+                "; TWFID=" +
+                app.globalData.sessionInfo.TWFID).then((data) => {
+                    _this.data.sessionInfo.JWGL_cookie = data.cookie;
+                    wx.setStorage({
+                        key: "JWGL_cookie",
+                        data: data.cookie,
+                    });
+                    _this.setData({
+                        isJwglLogin: true,
+                    });
+                    wx.showToast({
+                        title: "教务处登录成功",
+                    });
                 });
-            }).then((data) => {
-                _this.data.sessionInfo.JWGL_cookie = data.cookie;
-                wx.setStorage({
-                    key: "JWGL_cookie",
-                    data: data.cookie,
-                });
-                _this.setData({
-                    isJwglLogin: true,
-                });
-                wx.showToast({
-                    title: "教务处登录成功",
-                });
-            });
         },
 
         // WebVpn登录

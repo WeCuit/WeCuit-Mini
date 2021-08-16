@@ -16,7 +16,7 @@ const baseUrl = API_DOMAIN;
  */
 function httpBase(method, url, data, config = {}) {
     
-    const requestUrl = url.indexOf("http")===0?'':baseUrl + url;
+    const requestUrl = (url.indexOf("http")===0?'':baseUrl) + url;
     const header = {
         'Content-Type': 'application/json'
     };
@@ -42,24 +42,40 @@ function httpBase(method, url, data, config = {}) {
             data,
             timeout: 3000,
             responseType: config.responseType || 'text',
-            success: function (result) {
-                console.log("result", result)
+            success: function (res) {
+                console.log("result", res)
                 if (config.loading) {
                     wx.hideLoading();
                 } else {
                     wx.hideNavigationBarLoading();
                 }
 
-                let resp = result.data || {};
+                // 服务器响应状态码异常检查
+                if(res.statusCode !== 200){
+                    const resp = res.data;
+                    if(resp.error){
+                        wx.showToast({
+                          title: resp.error,
+                          icon: 'none'
+                        })
+                    }
+                    reject(res);
+                    return;
+                }
+
+                // 数据响应体状态码异常检查
+                let resp = res.data || {};
                 let code = resp.code;
 
-                if (code !== 200) {
+                if (code && code !== 200) {
                     if (503 === code) {
                         // 维护提示
                         wx.reLaunch({
                             url: `/pages/maintenance/maintenance?BText=${resp.maintenance.BText}&OText=${resp.maintenance.OText}`,
                         });
-                    } else reject(result);
+                    } else {
+                        reject(res);
+                    }
                     if (resp.error) {
                         wx.showToast({
                             title: resp.error,
@@ -68,7 +84,7 @@ function httpBase(method, url, data, config = {}) {
                     }
                 } else {
                     // 数据包含cookie信息，所以要处理result对象而不是result.data
-                    resolve(result);
+                    resolve(res);
                 }
             },
             fail: function (res) {
