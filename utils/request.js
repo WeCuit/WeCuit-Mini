@@ -1,22 +1,33 @@
+import {
+    API_DOMAIN
+} from '../config'
+const baseUrl = API_DOMAIN;
+
 /**
  * http请求封装
  * @param method 请求方法类型
  * @param url 请求路径
  * @param data 请求参数
- * @param loading 请求加载效果 {0: 正常加载, 1: 表单提交加载效果 }
- * @param loadingMsg 请求提示信息
+ * @param config 请求配置
+ * @param config.responseType 响应类型
+ * @param config.header 请求头
+ * @param config.loading 请求加载效果 {0: 正常加载, 1: 表单提交加载效果 }
+ * @param config.loadingMsg 请求提示信息
  */
-let baseUrl = null;
-const init = (url)=>{
-    baseUrl = url
-}
-function httpBase(method, url, data, contentType, loading, loadingMsg) {
-
-    let requestUrl = baseUrl + url;
-
-    if (loading) {
+function httpBase(method, url, data, config = {}) {
+    
+    const requestUrl = url.indexOf("http")===0?'':baseUrl + url;
+    const header = {
+        'Content-Type': 'application/json'
+    };
+    if (config.header) {
+        for (let h in config.header) {
+            header[h] = config.header[h];
+        }
+    }
+    if (config.loading) {
         wx.showLoading({
-            title: loadingMsg || "提交中...",
+            title: config.loadingMsg || "提交中...",
             mask: true,
         });
     } else {
@@ -25,41 +36,43 @@ function httpBase(method, url, data, contentType, loading, loadingMsg) {
 
     function request(resolve, reject) {
         wx.request({
-            header: {
-                "Content-Type": contentType,
-            },
-            method: method,
             url: requestUrl,
-            data: data,
+            method,
+            header,
+            data,
+            timeout: 3000,
+            responseType: config.responseType || 'text',
             success: function (result) {
-                if (loading) {
+                console.log("result", result)
+                if (config.loading) {
                     wx.hideLoading();
                 } else {
                     wx.hideNavigationBarLoading();
                 }
 
-                let res = result.data || {};
-                let code = res.code;
+                let resp = result.data || {};
+                let code = resp.code;
 
-                if (code !== 2000) {
-                    if (10503 === code) {
+                if (code !== 200) {
+                    if (503 === code) {
+                        // 维护提示
                         wx.reLaunch({
-                            url: `/pages/maintenance/maintenance?BText=${res.maintenance.BText}&OText=${res.maintenance.OText}`,
+                            url: `/pages/maintenance/maintenance?BText=${resp.maintenance.BText}&OText=${resp.maintenance.OText}`,
                         });
-                    } else reject(res);
-                    if (res.error) {
+                    } else reject(result);
+                    if (resp.error) {
                         wx.showToast({
-                            title: res.error,
+                            title: resp.error,
                             icon: "none",
                         });
                     }
                 } else {
-                    resolve(res);
+                    // 数据包含cookie信息，所以要处理result对象而不是result.data
+                    resolve(result);
                 }
             },
             fail: function (res) {
-                reject(res);
-                if (loading) {
+                if (config.loading) {
                     wx.hideLoading();
                 } else {
                     wx.hideNavigationBarLoading();
@@ -68,42 +81,23 @@ function httpBase(method, url, data, contentType, loading, loadingMsg) {
                     title: "网络出错",
                     icon: "none",
                 });
+                reject(res);
             },
         });
     }
 
     return new Promise(request);
 };
-const httpGetForm = function ({
-    url = "",
-    data = {},
-    loading = false,
-    loadingMsg = "",
-} = {}) {
-    return httpBase("GET", url, data, "application/x-www-form-urlencoded", loading, loadingMsg);
-};
-const httpPostForm = function ({
-    url = "",
-    data = {},
-    loading = false,
-    loadingMsg = "",
-} = {}) {
-    return httpBase("POST", url, data, "application/x-www-form-urlencoded", loading, loadingMsg);
+
+const httpGet = function (url, data = {}, config) {
+    return httpBase("GET", url, data, config);
 };
 
-const httpPostJson = function ({
-    url = "",
-    data = {},
-    loading = false,
-    loadingMsg = "",
-} = {}) {
-    return httpBase("POST", url, data, "application/json", loading, loadingMsg);
+const httpPost = function (url, data, config) {
+    return httpBase("POST", url, data, config);
 };
-
 
 module.exports = {
-    init: init,
-    httpGetForm: httpGetForm,
-    httpPostForm: httpPostForm,
-    httpPostJson: httpPostJson
+    get: httpGet,
+    post: httpPost
 };
