@@ -617,14 +617,12 @@ Page({
     loginCheckFunc: {
         // WEBVPN检查登录状态
         WEBVPN: function () {
-            WV_loginCheck("language=zh_CN; privacy=1; ENABLE_RANDCODE=" +
-                _this.data.isNeedCaptcha +
-                "; TWFID=" +
-                app.globalData.sessionInfo.TWFID).then((res) => {
+            const cookie = `language=zh_CN; privacy=1; ENABLE_RANDCODE=${_this.data.isNeedCaptcha}; TWFID=${app.globalData.sessionInfo.TWFID}`;
+            WV_loginCheck(cookie).then((res) => {
                     var doc = xmlParser.parseFromString(res.data);
                     var msg = doc.getElementsByTagName("Message")[0]
                         .firstChild.data;
-                    if ("auth succ." == msg) {
+                    if ("auth succ." === msg) {
                         _this.setData({
                             isWebVpnLogin: true,
                         });
