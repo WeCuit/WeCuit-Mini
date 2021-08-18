@@ -75,6 +75,7 @@ function httpBase(method, url, data, config = {}) {
                         });
                         return;
                     } else if (code === 401
+                        // SSO页面请求，不弹框
                         && url !== "/Jwgl/loginCheck") {
                         // 未登录
                         wx.showModal({
