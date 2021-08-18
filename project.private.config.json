@@ -61,8 +61,8 @@
           "scene": null
         },
         {
-          "name": "pages/grade/grade",
-          "pathName": "pages/grade/grade",
+          "name": "pages/exam/exam",
+          "pathName": "pages/exam/exam",
           "query": "",
           "scene": null
         }
