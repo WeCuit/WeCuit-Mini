@@ -74,7 +74,8 @@ function httpBase(method, url, data, config = {}) {
                             url: `/pages/maintenance/maintenance?BText=${resp.maintenance.BText}&OText=${resp.maintenance.OText}`,
                         });
                         return;
-                    } else if (code === 401) {
+                    } else if (code === 401
+                        && url !== "/Jwgl/loginCheck") {
                         // 未登录
                         wx.showModal({
                             cancelColor: 'red',

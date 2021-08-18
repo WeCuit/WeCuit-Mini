@@ -4,3 +4,8 @@ import request from '../../utils/request'
 export const getConfig = ()=>{
   return request.get("/Sys/getConfig")
 }
+
+// 获取余额
+export const getAccWallet = (AccNum)=>{
+  return request.post("/Card/getAccWallet", {AccNum})
+}
