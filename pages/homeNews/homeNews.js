@@ -1,3 +1,5 @@
+import {getNewsList, getNewsTag} from './api'
+
 const app = getApp();
 
 let pageStart = 1;
@@ -20,9 +22,7 @@ Page({
 		pageData.requesting = true;
 		this.setCurrentData(currentCur, pageData);
 
-		app.httpGet({
-			url: `/News/getList/source/${this.data.source}/tag/${pageData.id}/page/${currentPage}`
-		}).then((res) => {
+		getNewsList(this.data.source, pageData.id, currentPage).then((res) => {
 			let data = res || {
 				list: [],
 				over: false
@@ -105,9 +105,7 @@ Page({
         if (options.source) this.data.source = options.source;
         if (options.tag) this.data.tag = options.tag;
 		// get tag
-		app.httpGet({
-			url: `/News/getTagsV2/source/${this.data.source}`
-		}).then((res) => {
+		getNewsTag(this.data.source).then((res) => {
 			let menus = res.tags || [];
 
 			let categoryMenu = [];
