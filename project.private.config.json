@@ -13,8 +13,8 @@
     "miniprogram": {
       "list": [
         {
-          "name": "pages/computerCenter/index",
-          "pathName": "pages/computerCenter/index",
+          "name": "pages/newsList/newsList",
+          "pathName": "pages/newsList/newsList",
           "query": "",
           "scene": null
         },
