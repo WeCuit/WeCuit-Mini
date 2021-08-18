@@ -45,7 +45,7 @@ UPYUN.getCdnToken = function(that, app)
                         }else{
                             wx.showToast({
                                 icon: 'none',
-                                title: data.errMsg
+                                title: data.error
                             })
                         }
                     }
