@@ -61,8 +61,8 @@
           "scene": null
         },
         {
-          "name": "pages/exam/exam",
-          "pathName": "pages/exam/exam",
+          "name": "pages/card/card",
+          "pathName": "pages/card/card",
           "query": "",
           "scene": null
         }

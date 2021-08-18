@@ -1,5 +1,5 @@
 //index.js
-import { getConfig } from './api'
+import { getConfig, getAccWallet } from './api'
 //获取应用实例
 const app = getApp();
 
@@ -664,11 +664,12 @@ Page({
   // 获取钱包金额
   getWalletDetail: function () {
     getAccWallet(this.data.CARD_AccNum)
-      .then((data) => {
+      .then((res) => {
+        const resp = res.data;
         this.setData({
           ballance:
-            parseFloat(data.Rows[0].WalletRows[0].MonDBCurr) +
-            parseFloat(data.Rows[0].WalletRows[1].MonDBCurr),
+            parseFloat(resp.data.Rows[0].WalletRows[0].MonDBCurr) +
+            parseFloat(resp.data.Rows[0].WalletRows[1].MonDBCurr),
         });
       })
       .catch((err) => { });
