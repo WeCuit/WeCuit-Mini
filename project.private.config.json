@@ -13,12 +13,6 @@
     "miniprogram": {
       "list": [
         {
-          "name": "pages/newsList/newsList",
-          "pathName": "pages/newsList/newsList",
-          "query": "",
-          "scene": null
-        },
-        {
           "name": "college/pages/list/list",
           "pathName": "college/pages/list/list",
           "query": "",
@@ -55,18 +49,6 @@
           "scene": null
         },
         {
-          "name": "pages/my/sso/sso",
-          "pathName": "pages/my/sso/sso",
-          "query": "",
-          "scene": null
-        },
-        {
-          "name": "pages/checkIn/list",
-          "pathName": "pages/checkIn/list",
-          "query": "",
-          "scene": null
-        },
-        {
           "name": "pages/laboratory/detail",
           "pathName": "pages/laboratory/detail",
           "query": "Yx=118&Lb=1",
@@ -76,6 +58,12 @@
           "name": "pages/articleView/articleView",
           "pathName": "pages/articleView/articleView",
           "query": "path=/info/1090/48680.htm&source=home&domain=www.cuit.edu.cn",
+          "scene": null
+        },
+        {
+          "name": "pages/laboratory/list",
+          "pathName": "pages/laboratory/list",
+          "query": "",
           "scene": null
         }
       ]
