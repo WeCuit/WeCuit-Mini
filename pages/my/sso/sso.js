@@ -313,10 +313,9 @@ Page({
                 }
                 return;
             }).catch(err => {
-                console.error("失败", err);
                 wx.showToast({
                     icon: "none",
-                    title: "网络异常",
+                    title: "验证码识别失败",
                 });
             })
         } catch (err) {
@@ -381,22 +380,21 @@ Page({
     loginFunc: {
         // 教务管理系统登录
         JWGL: function () {
-            jwglLogin("TGC=" +
-                app.globalData.sessionInfo.SSO_TGC +
-                "; TWFID=" +
-                app.globalData.sessionInfo.TWFID).then((data) => {
-                    _this.data.sessionInfo.JWGL_cookie = data.cookie;
-                    wx.setStorage({
-                        key: "JWGL_cookie",
-                        data: data.cookie,
-                    });
-                    _this.setData({
-                        isJwglLogin: true,
-                    });
-                    wx.showToast({
-                        title: "教务处登录成功",
-                    });
+            const cookie = `TGC=${app.globalData.sessionInfo.SSO_TGC}; TWFID=${app.globalData.sessionInfo.TWFID}`
+            jwglLogin(cookie).then((res) => {
+                const resp = res.data;
+                _this.data.sessionInfo.JWGL_cookie = resp.data;
+                wx.setStorage({
+                    key: "JWGL_cookie",
+                    data: resp.data,
                 });
+                _this.setData({
+                    isJwglLogin: true,
+                });
+                wx.showToast({
+                    title: "教务处登录成功",
+                });
+            });
         },
 
         // WebVpn登录
@@ -619,20 +617,20 @@ Page({
         WEBVPN: function () {
             const cookie = `language=zh_CN; privacy=1; ENABLE_RANDCODE=${_this.data.isNeedCaptcha}; TWFID=${app.globalData.sessionInfo.TWFID}`;
             WV_loginCheck(cookie).then((res) => {
-                    var doc = xmlParser.parseFromString(res.data);
-                    var msg = doc.getElementsByTagName("Message")[0]
-                        .firstChild.data;
-                    if ("auth succ." === msg) {
-                        _this.setData({
-                            isWebVpnLogin: true,
-                        });
-                    } else {
-                        _this.loginFunc.WEBVPN(() => {
-                            _this.loginFunc.JWGL();
-                        });
-                        app.globalData.sessionInfo.TWFID = "";
-                    }
-                });
+                var doc = xmlParser.parseFromString(res.data);
+                var msg = doc.getElementsByTagName("Message")[0]
+                    .firstChild.data;
+                if ("auth succ." === msg) {
+                    _this.setData({
+                        isWebVpnLogin: true,
+                    });
+                } else {
+                    _this.loginFunc.WEBVPN(() => {
+                        _this.loginFunc.JWGL();
+                    });
+                    app.globalData.sessionInfo.TWFID = "";
+                }
+            });
         },
 
         /**
