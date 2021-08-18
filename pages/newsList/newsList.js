@@ -22,12 +22,12 @@ Page({
 
 		getNewsList(this.data.source, pageData.id, currentPage).then((res) => {
 			const resp = res.data;
-			let data = resp || {
+			let data = resp.data || {
 				list: [],
 				over: false
 			};
-			data.over = (currentPage >= pageData.pageCount)
-			this.data.domain = resp.domain;
+			data.over = (currentPage >= pageData.pageCount);
+			this.data.domain = resp.data.domain;
 			let listData = data.list || [];
 			pageData.requesting = false;
 
@@ -106,7 +106,7 @@ Page({
 		// get tag
 		getNewsTag(this.data.source).then((res) => {
 			const resp = res.data;
-			let menus = resp.tags || [];
+			let menus = resp.data || [];
 
 			let categoryMenu = [];
 			let categoryData = [];
