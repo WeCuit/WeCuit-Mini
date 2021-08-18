@@ -15,8 +15,8 @@ const baseUrl = API_DOMAIN;
  * @param config.loadingMsg 请求提示信息
  */
 function httpBase(method, url, data, config = {}) {
-    
-    const requestUrl = (url.indexOf("http")===0?'':baseUrl) + url;
+
+    const requestUrl = (url.indexOf("http") === 0 ? '' : baseUrl) + url;
     const header = {
         'Content-Type': 'application/json'
     };
@@ -51,12 +51,12 @@ function httpBase(method, url, data, config = {}) {
                 }
 
                 // 服务器响应状态码异常检查
-                if(res.statusCode !== 200){
+                if (res.statusCode !== 200) {
                     const resp = res.data;
-                    if(resp.error){
+                    if (resp.error) {
                         wx.showToast({
-                          title: resp.error,
-                          icon: 'none'
+                            title: resp.error,
+                            icon: 'none'
                         })
                     }
                     reject(res);
@@ -73,15 +73,29 @@ function httpBase(method, url, data, config = {}) {
                         wx.reLaunch({
                             url: `/pages/maintenance/maintenance?BText=${resp.maintenance.BText}&OText=${resp.maintenance.OText}`,
                         });
+                        return;
+                    } else if (code === 401) {
+                        // 未登录
+                        wx.showModal({
+                            cancelColor: 'red',
+                            title: "未登录",
+                            content: "未登录，要去登录页面吗？",
+                            success: res => {
+                                if (res.confirm) {
+                                    //   前往登录页面
+                                    wx.navigateTo({
+                                        url: "../my/sso/sso",
+                                    })
+                                }
+                            }
+                        })
                     } else {
-                        reject(res);
-                    }
-                    if (resp.error) {
                         wx.showToast({
-                            title: resp.error,
+                            title: resp.error ? resp.error : '未知错误',
                             icon: "none",
                         });
                     }
+                    reject(res);
                 } else {
                     // 数据包含cookie信息，所以要处理result对象而不是result.data
                     resolve(res);
@@ -94,7 +108,7 @@ function httpBase(method, url, data, config = {}) {
                     wx.hideNavigationBarLoading();
                 }
                 wx.showToast({
-                    title: "网络出错",
+                    title: "本地网络出错",
                     icon: "none",
                 });
                 reject(res);

@@ -1,4 +1,5 @@
 // pages/grade/grade.js
+import { getGradeTable } from './api'
 const app = getApp();
 import { genQuerySign } from "../../utils/tool";
 
@@ -47,12 +48,12 @@ Page({
     /**
      * 生命周期函数--监听页面隐藏
      */
-    onHide: function () {},
+    onHide: function () { },
 
     /**
      * 生命周期函数--监听页面卸载
      */
-    onUnload: function () {},
+    onUnload: function () { },
 
     /**
      * 页面相关事件处理函数--监听用户下拉动作
@@ -64,7 +65,7 @@ Page({
     /**
      * 页面上拉触底事件的处理函数
      */
-    onReachBottom: function () {},
+    onReachBottom: function () { },
 
     /**
      * 分享至微信朋友圈
@@ -89,28 +90,17 @@ Page({
         };
     },
     gradeQueryV2: function () {
-        wx.showLoading({ title: "请求中~" });
-        app.httpPost({
-            url: "/Jwgl/getGradeTableV2/",
-            data: {
-                cookie:
-                    this.data.sessionInfo.JWGL_cookie +
-                    "; TWFID=" +
-                    this.data.sessionInfo.TWFID,
-            },
-        })
-            .then((data) => {
-                wx.hideLoading();
+        getGradeTable(`${this.data.sessionInfo.JWGL_cookie}; TWFID=${this.data.sessionInfo.TWFID}`)
+            .then((res) => {
+                const resp = res.data;
                 wx.stopPullDownRefresh();
                 this.setData({
-                    grade: data.grade,
-                    total: data.total,
+                    grade: resp.data.grade,
+                    total: resp.data.total,
                 });
             })
             .catch((err) => {
-                wx.hideLoading();
                 wx.stopPullDownRefresh();
-                this.handelERR(err);
             })
     },
     // 获取成绩提醒订阅状态
@@ -131,7 +121,7 @@ Page({
                     isSysSub: data.data.sysSub,
                 });
             })
-            .catch((err) => {})
+            .catch((err) => { })
     },
     // 改变订阅状态
     changeSubStatus: function (e) {
@@ -139,11 +129,11 @@ Page({
             url: "/Task/gradeInfoV2",
             data: {
                 openid: app.globalData.openid,
-                value: e.detail.value?'1':'0',
+                value: e.detail.value ? '1' : '0',
                 sign: genQuerySign(
                     "/Task/gradeInfoV2/",
                     app.globalData.openid,
-                    e.detail.value?'1':'0'
+                    e.detail.value ? '1' : '0'
                 ),
             },
         })
@@ -162,30 +152,5 @@ Page({
                         title: err.errMsg,
                     });
             });
-    },
-    handelERR: function (err) {
-        if (13401 === err.errorCode) {
-            wx.showToast({
-                icon: "none",
-                title: err.errMsg,
-            });
-            if (this.data.isFirstOpenSSO) {
-                this.data.isFirstOpenSSO = false;
-                wx.navigateTo({
-                    url: "../my/sso/sso",
-                });
-            }
-        } else if (err.errMsg) {
-            wx.showToast({
-                icon: "none",
-                title: err.errMsg,
-            });
-        } else {
-            console.error(err);
-            wx.showToast({
-                icon: "none",
-                title: "未知异常",
-            });
-        }
     },
 });

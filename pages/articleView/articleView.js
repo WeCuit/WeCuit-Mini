@@ -215,7 +215,7 @@ Page({
         fail(err){
           wx.showToast({
             icon:'none',
-            title: err.errMsg,
+            title: err.error,
           })
         }
       })
@@ -260,7 +260,7 @@ Page({
         // 其它错误
         wx.showToast({
           icon: 'none',
-          title: data.errMsg,
+          title: data.error,
         })
       }
     })
