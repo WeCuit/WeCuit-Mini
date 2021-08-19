@@ -59,6 +59,12 @@
           "pathName": "pages/articleView/articleView",
           "query": "path=/info/1090/48680.htm&source=home&domain=www.cuit.edu.cn",
           "scene": null
+        },
+        {
+          "name": "pages/courseTable/courseTable",
+          "pathName": "pages/courseTable/courseTable",
+          "query": "",
+          "scene": null
         }
       ]
     }

@@ -110,7 +110,7 @@ function httpBase(method, url, data, config = {}) {
                     wx.hideNavigationBarLoading();
                 }
                 wx.showToast({
-                    title: "本地网络出错",
+                    title: "与服务器通信失败",
                     icon: "none",
                 });
                 reject(res);
