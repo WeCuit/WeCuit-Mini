@@ -67,14 +67,14 @@ Page({
         //   "icon": "icon-kebiaoxinxi",
         //   "text": "公共课表"
         // },
-        // {
-        //     path: "/welcome/pages/welcome",
-        //     size: 30,
-        //     color: "#185f97",
-        //     action: "bindAction",
-        //     icon: "icon-xinshengfuwu",
-        //     text: "新生服务",
-        // },
+        {
+            path: "/welcome/pages/welcome",
+            size: 30,
+            color: "#185f97",
+            action: "bindAction",
+            icon: "icon-xinshengfuwu",
+            text: "新生服务",
+        },
         // {
         //     path: "/map/pages/index",
         //     size: 30,

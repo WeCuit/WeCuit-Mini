@@ -61,8 +61,14 @@
           "scene": null
         },
         {
-          "name": "pages/courseTable/courseTable",
-          "pathName": "pages/courseTable/courseTable",
+          "name": "welcome/pages/welcome",
+          "pathName": "welcome/pages/welcome",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "welcome/pages/admit/admit",
+          "pathName": "welcome/pages/admit/admit",
           "query": "",
           "scene": null
         }
