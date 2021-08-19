@@ -91,6 +91,8 @@ Page({
           text: "校历/地图",
           icon: "icon-calendar",
         },
+      ],
+      [
         {
           path: "../laboratory/list",
           size: 30,
@@ -99,8 +101,6 @@ Page({
           icon: "icon-shiyanshijianshe",
           text: "实验查询",
         },
-      ],
-      [
         {
           path: "../officeGrade/query",
           size: 30,
@@ -117,14 +117,14 @@ Page({
         //     text: "教师评选",
         //     icon: "icon-toupiao",
         // },
-        // {
-        //     path: "/college/pages/list/list",
-        //     size: 30,
-        //     color: "purple",
-        //     action: "bindAction",
-        //     icon: "icon-xueyuan",
-        //     text: "学院信息",
-        // },
+        {
+            path: "/college/pages/list/list",
+            size: 30,
+            color: "purple",
+            action: "bindAction",
+            icon: "icon-xueyuan",
+            text: "学院信息",
+        },
         // {
         //     path: "../THEOL/THEOL",
         //     size: 30,
