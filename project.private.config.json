@@ -17,60 +17,6 @@
           "pathName": "college/pages/list/list",
           "query": "",
           "scene": null
-        },
-        {
-          "name": "pages/articleView/articleView",
-          "pathName": "pages/articleView/articleView",
-          "query": "domain=glxy.cuit.edu.cn&link=info%2F1961%2F3685.htm&source=gl",
-          "scene": null
-        },
-        {
-          "name": "pages/THEOL/THEOL",
-          "pathName": "pages/THEOL/THEOL",
-          "query": "",
-          "scene": null
-        },
-        {
-          "name": "pages/THEOL/tree/tree",
-          "pathName": "pages/THEOL/tree/tree",
-          "query": "courseId=25039",
-          "scene": null
-        },
-        {
-          "name": "pages/checkIn/edit",
-          "pathName": "pages/checkIn/edit",
-          "query": "link=UTp%3DXs%26jkdk%3DY%26ObjId%3D2019051233%26Id%3D12869",
-          "scene": null
-        },
-        {
-          "name": "pages/laboratory/list",
-          "pathName": "pages/laboratory/list",
-          "query": "",
-          "scene": null
-        },
-        {
-          "name": "pages/laboratory/detail",
-          "pathName": "pages/laboratory/detail",
-          "query": "Yx=118&Lb=1",
-          "scene": null
-        },
-        {
-          "name": "pages/articleView/articleView",
-          "pathName": "pages/articleView/articleView",
-          "query": "path=/info/1090/48680.htm&source=home&domain=www.cuit.edu.cn",
-          "scene": null
-        },
-        {
-          "name": "welcome/pages/welcome",
-          "pathName": "welcome/pages/welcome",
-          "query": "",
-          "scene": null
-        },
-        {
-          "name": "welcome/pages/admit/admit",
-          "pathName": "welcome/pages/admit/admit",
-          "query": "",
-          "scene": null
         }
       ]
     }
