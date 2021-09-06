@@ -1,5 +1,4 @@
 // college/pages/menu/counselor/counselor.js
-import {getCounselorList} from './api'
 const app = getApp()
 Page({
 
@@ -72,9 +71,9 @@ Page({
    * 拉取辅导员列表
    */
   getCounselorList: function(college){
-    getCounselorList(college).then(res=>{
-      const resp = res.data;
-      const data = resp.data;
+    app.httpGet({
+      url: "/college/getCounselorList/college/" + college
+    }).then(data=>{
       this.setData({
         list: data.list
       })

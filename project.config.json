@@ -1,0 +1,138 @@
+{
+	"projectid": "1111006861_%E6%88%90%E4%BF%A1%E5%B7%A5%E5%85%B7%E7%AE%B1",
+	"setting": {
+		"urlCheck": true,
+		"es6": true,
+		"postcss": false,
+		"minified": true,
+		"newFeature": true,
+		"autoAudits": true,
+		"nodeModules": true,
+		"uploadWithSourceMap": true,
+		"uglifyFileName": true,
+		"remoteDebugLogEnable": false,
+		"prefetch": false
+	},
+	"qqLibVersion": "1.29.0",
+	"compileType": "miniprogram",
+	"createTime": 1602207331185,
+	"accessTime": 1602207331185,
+	"packOptions": {
+		"ignore": [
+			{
+				"type": "folder",
+				"value": "preview"
+			},
+			{
+				"type": "folder",
+				"value": "pages/card/card"
+			},
+			{
+				"type": "file",
+				"value": "config.example.js"
+			},
+			{
+				"type": "file",
+				"value": "components/description.json"
+			}
+		]
+	},
+	"debugOptions": {
+		"hidedInDevtools": []
+	},
+	"qqappid": "1111006861",
+	"projectname": "We%E6%88%90%E4%BF%A1%E5%A4%A7",
+	"scripts": {
+		"beforeCompile": "",
+		"beforePreview": "",
+		"beforeUpload": ""
+	},
+	"condition": {
+		"search": {
+			"current": -1,
+			"list": []
+		},
+		"conversation": {
+			"current": -1,
+			"list": []
+		},
+		"game": {
+			"currentL": -1,
+			"list": []
+		},
+		"plugin": {
+			"list": []
+		},
+		"gamePlugin": {
+			"list": []
+		},
+		"miniprogram": {
+			"current": -1,
+			"list": [
+				{
+					"id": -1,
+					"name": "sso",
+					"pathName": "pages/sso/sso",
+					"query": "",
+					"scene": ""
+				},
+				{
+					"id": -1,
+					"name": "AM",
+					"pathName": "pages/accountManage/accountManage",
+					"query": "",
+					"scene": ""
+				},
+				{
+					"id": -1,
+					"name": "exam",
+					"pathName": "pages/exam/exam",
+					"query": "",
+					"scene": ""
+				},
+				{
+					"id": -1,
+					"name": "test",
+					"pathName": "pages/test/test",
+					"query": "",
+					"scene": ""
+				},
+				{
+					"id": -1,
+					"name": "announce",
+					"pathName": "pages/announcement/announcement",
+					"query": "",
+					"scene": ""
+				},
+				{
+					"id": -1,
+					"name": "checkIn",
+					"pathName": "pages/attendance/list",
+					"query": "",
+					"scene": ""
+				},
+				{
+					"id": -1,
+					"name": "news",
+					"pathName": "pages/newsList/newsList",
+					"query": "",
+					"scene": ""
+				},
+				{
+					"id": 7,
+					"name": "share test",
+					"pathName": "pages/calendar/calendar",
+					"query": "share=true",
+					"scene": "2003"
+				},
+				{
+					"id": 8,
+					"name": "lab",
+					"pathName": "pages/laboratory/list",
+					"query": "",
+					"scene": ""
+				}
+			]
+		}
+	}
+}

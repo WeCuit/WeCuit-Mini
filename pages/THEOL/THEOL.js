@@ -1,5 +1,4 @@
 // pages/THEOL/THEOL.js
-import {getCourseList, theolLogin} from './api'
 const app = getApp();
 
 Page({
@@ -109,15 +108,23 @@ Page({
 
     // 获取课程列表
     getCourseList: function () {
-        return getCourseList( this.sessionInfo.theolCookie);
+        return app.httpPost({
+            url: "/Theol/courseList",
+            data: {
+                cookie: this.sessionInfo.theolCookie,
+            },
+        });
     },
 
     // 登录
     THEOL_Login: function (theolCookie) {
-        return theolLogin({
+        return app.httpPost({
+            url: "/Theol/login",
+            data: {
                 SSO_TGC: this.sessionInfo.SSO_TGC,
                 theolCookie: theolCookie,
-            });
+            },
+        });
     },
     bindViewCourseDir: function (e) {
         var data = e.currentTarget.dataset;
