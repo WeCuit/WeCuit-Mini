@@ -41,42 +41,16 @@ Page({
             },
         ],
         college: "",
-        collegeData: {
-            gl: "管理学院",
-            tj: "统计学院",
-            whys: "文化艺术学院",
-            wl: "物流学院",
-            dqkx: "大气科学学院",
-            dzgc: "电子工程学院",
-            gdgc: "光电工程学院",
-            compute: "计算机学院",
-            kzgc: "控制工程学院",
-            rjgc: "软件工程学院",
-            txgc: "通信工程学院",
-            wgy: "外国语学院",
-            wlaq: "网络空间安全学院",
-            yysx: "应用数学学院",
-            zyhj: "资源环境学院",
-            qkl: "区块链学院"
-        }
     },
 
     /**
      * 生命周期函数--监听页面加载
      */
     onLoad: function (options) {
-        if("undefined" != typeof this.data.collegeData[options.college])
-        {
-            this.data.college = options.college;
-            wx.setNavigationBarTitle({
-                title: this.data.collegeData[options.college]
-            });
-        }else{
-            wx.showToast({
-                icon: "none",
-                title: "无法识别的学院"
-            });
-        }
+        this.data.college = options.college;
+        wx.setNavigationBarTitle({
+            title: options.name
+        });
     },
 
     /**

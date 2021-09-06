@@ -1,5 +1,5 @@
 // pages/laboratory/list.js
-const app = getApp();
+import {getLabAll} from './api'
 
 Page({
     /**
@@ -266,15 +266,12 @@ Page({
         return url == "" ? url : url.substring(1);
     },
     requestForList: function (param) {
-        app.httpGet({
-            url: "/Jwc/labAll",
-            data: param,
-        }).then((res) => {
-            console.log(res);
+        getLabAll(param).then((res) => {
+            const resp = res.data;
             this.setData({
-                retList: res.data.list,
+                retList: resp.data.list,
             });
-            this.setData(res.data.form);
+            this.setData(resp.data.form);
             this.calAniHeight();
         });
     },

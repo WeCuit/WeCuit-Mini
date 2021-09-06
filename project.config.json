@@ -1,7 +1,7 @@
 {
 	"projectid": "1111006861_%E6%88%90%E4%BF%A1%E5%B7%A5%E5%85%B7%E7%AE%B1",
 	"setting": {
-		"urlCheck": true,
+		"urlCheck": false,
 		"es6": true,
 		"postcss": false,
 		"minified": true,

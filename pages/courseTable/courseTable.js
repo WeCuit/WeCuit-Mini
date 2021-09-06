@@ -1,9 +1,9 @@
 const app = getApp()
-import {genQuerySign} from '../../utils/tool'
+import {getCourseOption, getCourseTable} from './api'
 
 Page({
   data: {
-    colorArrays: ["rgba(133,184,207", "rgba(144,198,82", "rgba(216,170,90", "rgba(252,159,157", "rgba(10,154,132", "rgba(97,188,105", "rgba(18,174,243", "rgba(226,154,173"],
+    colorArrays: ["133,184,207", "144,198,82", "216,170,90", "252,159,157", "10,154,132", "97,188,105", "18,174,243", "226,154,173"],
     lastX: 0,
     currentGesture: '',
     courseWeekArray: [
@@ -343,18 +343,14 @@ Page({
    * 从服务器拉取课表数据
    */
   getCourseFromServer: function () {
-    // console.log(this.data.termArray[1][this.data.termIndex[1]])
-    app.httpPost({
-        url: '/Jwgl/getCourseTableV2/',
-        data: {
-          'cookie': "semester.id=" + this.data.termArray[1][this.data.termIndex[1]].id + ";" + this.data.sessionInfo.JWGL_cookie + '; TWFID=' + this.data.sessionInfo.TWFID,
-          'courseType': this.data.courseTypeArray[this.data.courseTypeIndex].key,
-          'semester': this.data.termArray[1][this.data.termIndex[1]].id
-        },
-    }).then((res)=>{
+    const cookie = `semester.id=${this.data.termArray[1][this.data.termIndex[1]].id};${this.data.sessionInfo.JWGL_cookie}; TWFID=${this.data.sessionInfo.TWFID}`
+    const courseType = this.data.courseTypeArray[this.data.courseTypeIndex].key;
+    const semester = this.data.termArray[1][this.data.termIndex[1]].id;
 
+    getCourseTable(cookie, courseType, semester).then((res)=>{
+      const resp = res.data;
       try {
-        var obj = res
+        var obj = resp.data;
         if (obj.start.year == null) {
           throw 'Error'
         }
@@ -398,13 +394,7 @@ Page({
   getOptions: function()
   {
     let semesterId = this.data.termArray[1][this.data.termIndex[1]].id!==0?"semester.id=" + this.data.termArray[1][this.data.termIndex[1]].id + ";":"";
-    app.httpPost({
-        url: '/Jwgl/getCourseOption/',
-        data: {
-          cookie: `${semesterId}${this.data.sessionInfo.JWGL_cookie};TWFID=${this.data.sessionInfo.TWFID}`
-        },
-
-    }).then((res)=>{
+    getCourseOption(`${semesterId}${this.data.sessionInfo.JWGL_cookie};TWFID=${this.data.sessionInfo.TWFID}`).then((res)=>{
       let tempData = {}
       let sem = res.semesters
       tempData['courseTypeArray'] = res.courseType
@@ -420,7 +410,6 @@ Page({
       this.data.termData = sem.list[1]
       this.setData(tempData)
     }).catch((err)=>{
-      this.handelERR(err)
       return;
     })
   },
@@ -513,33 +502,4 @@ Page({
       termIndex: data.termIndex,
     })
   },
-  handelERR: function(err){
-    if(13401 === err.errorCode)
-    {
-      wx.showToast({
-        icon: 'none',
-        title: err.errMsg,
-      })
-      // 没有数据未登录--打开登录界面；有数据未登录不打开登陆界面
-      if(!this.haveData() && this.data.isFirstOpenSSO)
-      {
-        this.data.isFirstOpenSSO = false
-        wx.navigateTo({
-          url: '../my/sso/sso'
-        })
-      }
-    }else if(err.errMsg)
-    {
-      wx.showToast({
-        icon: 'none',
-        title: err.errMsg,
-      })
-    }else{
-      console.error(err)
-      wx.showToast({
-        icon: 'none',
-        title: '未知异常',
-      })
-    }
-  }
 })
