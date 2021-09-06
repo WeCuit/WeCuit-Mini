@@ -1,5 +1,4 @@
 // pages/laboratory/detail.js
-import {getLabDetail} from './api'
 const app = getApp();
 
 Page({
@@ -214,12 +213,15 @@ Page({
         };
     },
     requestForDetail: function (param) {
-        getLabDetail(param).then((res) => {
-            const resp = res.data;
+        app.httpGet({
+            url: "/Jwc/labDetail",
+            data: param,
+        }).then((res) => {
+            console.log(res);
             this.setData({
-                retList: resp.data.list,
+                retList: res.data.list,
             });
-            this.setData(resp.data.form);
+            this.setData(res.data.form);
             this.calAniHeight();
         });
     },

@@ -3,7 +3,7 @@ const RSA = require("utils/rsa/wx_rsa.js");
 const config = require("config.js");
 const login = require("/utils/login/login");
 const log = require("utils/log");
-import {getUserInfo} from './api'
+const request = require("utils/request");
 
 App({
     onLaunch: function (e) {
@@ -35,7 +35,12 @@ App({
             }
         }).catch(e=>{
         });
+        request.init(config.API_DOMAIN);
     },
+
+	httpGet: request.httpGetForm,
+	httpPost: request.httpPostForm,
+	httpPostJson: request.httpPostJson,
 
     // 小程序发生脚本错误或 API 调用报错时触发。
     onError: function (e) {
@@ -166,7 +171,10 @@ App({
                     console.error(err);
                     // 本地信息获取失败，远程获取
                     this.login().then((code) => {
-                        getUserInfo(code).then((data)=>{
+                        this.httpGet({
+                            url: "/Sys/getUserInfoV2",
+                            data: { code: code }
+                        }).then((data)=>{
                             if ("object" == typeof data) {
                                 wx.setStorage({
                                     key: "UserInfo",

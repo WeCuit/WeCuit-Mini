@@ -642,6 +642,14 @@ class LOGIN {
         });
     }
 
+    yktLogin() {
+        return REQUEST.httpPostForm({
+            url: "/Card/login",
+            data: {
+                cookie: this.session.SSO_TGC,
+            },
+        });
+    }
     /**
      * ORC识别验证码
      *

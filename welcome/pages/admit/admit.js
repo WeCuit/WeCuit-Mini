@@ -1,5 +1,4 @@
 // pages/welcome/admit/admit.js
-import { queryAdmit } from './api'
 const app = getApp();
 
 Page({
@@ -67,21 +66,44 @@ Page({
   onShareAppMessage: function () {
 
   },
-  queryHandle: function (e) {
-    let ksh = '', sfz = '';
-    if (e) {
-      let data = e.detail.value;
+  queryHandle: function(e){
+    var ksh = '', sfz = '';
+    if(e){
+      var data = e.detail.value;
       ksh = data.ksh;
       sfz = data.sfz
     }
-    queryAdmit(ksh, sfz).then(res => {
-      const resp = res.data;
-      const data = resp.data;
-      this.setData({
-        list: data.list,
-        result: data.result,
-        update: data.update
-      })
+    this.query(ksh, sfz).then(res=>{
+      var data = res.data;
+      console.log(data)
+      if(2000 == data.status){
+        this.setData({
+          list: data.list,
+          result: data.result,
+          update: data.update
+        })
+      }else{
+        this.setData({
+          result: data.errMsg
+        })
+      }
     });
+  },
+  query: function(ksh, sfz){
+    return new Promise((resolve, reject)=>{
+      wx.request({
+        url: app.globalData.API_DOMAIN + '/Admit/query',
+        method: 'POST',
+        header: {
+          'content-type': 'application/x-www-form-urlencoded'
+        },
+        data: {
+          ksh: ksh,
+          sfz: sfz
+        },
+        success: resolve,
+        fail: reject
+      })
+    })
   },
 })

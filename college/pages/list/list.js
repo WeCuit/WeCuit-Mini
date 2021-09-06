@@ -7,7 +7,7 @@ Page({
     data: {
         menuList_lq: [
             {
-                path: "../menu/menu?college=gl&name=管理学院",
+                path: "../menu/menu?college=gl",
                 size: 22,
                 color: "rgb(0,255,255)",
                 action: "bindAction",
@@ -15,7 +15,7 @@ Page({
                 text: "管理学院",
             },
             {
-                path: "../menu/menu?college=tj&name=统计学院",
+                path: "../menu/menu?college=tj",
                 size: 23,
                 color: "rgb(0,255,255)",
                 action: "bindAction",
@@ -23,7 +23,7 @@ Page({
                 text: "统计学院",
             },
             {
-                path: "../menu/menu?college=whys&name=文化艺术",
+                path: "../menu/menu?college=whys",
                 size: 25,
                 color: "rgb(0,255,255)",
                 action: "bindAction",
@@ -31,7 +31,7 @@ Page({
                 text: "文化艺术",
             },
             {
-                path: "../menu/menu?college=wl&name=物流学院",
+                path: "../menu/menu?college=wl",
                 size: 23,
                 color: "rgb(0,255,255)",
                 action: "bindAction",
@@ -41,7 +41,7 @@ Page({
         ],
         menuList_hk: [
             {
-                path: "../menu/menu?college=dqkx&name=大气科学",
+                path: "../menu/menu?college=dqkx",
                 size: 25,
                 color: "rgb(0,255,255)",
                 action: "bindAction",
@@ -49,7 +49,7 @@ Page({
                 text: "大气科学",
             },
             {
-                path: "../menu/menu?college=dzgc&name=电子工程",
+                path: "../menu/menu?college=dzgc",
                 size: 25,
                 color: "rgb(0,255,255)",
                 action: "bindAction",
@@ -57,7 +57,7 @@ Page({
                 text: "电子工程",
             },
             {
-                path: "../menu/menu?college=gdgc&name=光电工程",
+                path: "../menu/menu?college=gdgc",
                 size: 25,
                 color: "rgb(0,255,255)",
                 action: "bindAction",
@@ -65,7 +65,7 @@ Page({
                 text: "光电工程",
             },
             {
-                path: "../menu/menu?college=compute&name=计算机",
+                path: "../menu/menu?college=compute",
                 size: 24,
                 color: "rgb(0,255,255)",
                 action: "bindAction",
@@ -73,7 +73,7 @@ Page({
                 text: "计算机",
             },
             {
-                path: "../menu/menu?college=kzgc&name=控制工程",
+                path: "../menu/menu?college=kzgc",
                 size: 25,
                 color: "rgb(0,255,255)",
                 action: "bindAction",
@@ -81,7 +81,7 @@ Page({
                 text: "控制工程",
             },
             {
-                path: "../menu/menu?college=rjgc&name=软件工程",
+                path: "../menu/menu?college=rjgc",
                 size: 25,
                 color: "rgb(0,255,255)",
                 action: "bindAction",
@@ -89,7 +89,7 @@ Page({
                 text: "软件工程",
             },
             {
-                path: "../menu/menu?college=txgc&name=通信工程",
+                path: "../menu/menu?college=txgc",
                 size: 25,
                 color: "rgb(0,255,255)",
                 action: "bindAction",
@@ -97,7 +97,7 @@ Page({
                 text: "通信工程",
             },
             {
-                path: "../menu/menu?college=wgy&name=外国语",
+                path: "../menu/menu?college=wgy",
                 size: 23,
                 color: "rgb(0,255,255)",
                 action: "bindAction",
@@ -105,7 +105,7 @@ Page({
                 text: "外国语",
             },
             {
-                path: "../menu/menu?college=wlaq&name=网安",
+                path: "../menu/menu?college=wlaq",
                 size: 23,
                 color: "rgb(0,255,255)",
                 action: "bindAction",
@@ -113,7 +113,7 @@ Page({
                 text: "网安",
             },
             {
-                path: "../menu/menu?college=yysx&name=应用数学",
+                path: "../menu/menu?college=yysx",
                 size: 25,
                 color: "rgb(0,255,255)",
                 action: "bindAction",
@@ -121,7 +121,7 @@ Page({
                 text: "应用数学",
             },
             {
-                path: "../menu/menu?college=zyhj&name=资源环境",
+                path: "../menu/menu?college=zyhj",
                 size: 25,
                 color: "rgb(0,255,255)",
                 action: "bindAction",
@@ -129,7 +129,7 @@ Page({
                 text: "资源环境",
             },
             {
-                path: "../menu/menu?college=qkl&name=区块链",
+                path: "../menu/menu?college=qkl",
                 size: 25,
                 color: "rgb(0,255,255)",
                 action: "bindAction",
@@ -137,7 +137,7 @@ Page({
                 text: "区块链",
             },
             // {
-            //     path: "../menu/menu?college=compute&name=",
+            //     path: "../menu/menu?college=compute",
             //     size: 25,
             //     color: "rgb(0,255,255)",
             //     action: "bindAction",

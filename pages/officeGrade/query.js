@@ -1,9 +1,6 @@
 // pages/computerCenter/officeGrade/query.js
-import {getCaptcha, officeQuery} from './api'
-
 const app = getApp()
-let office;
-
+var office;
 Page({
 
   /**
@@ -115,12 +112,18 @@ class OFFICE{
     })
   }
   getCaptcha(cookie, codeKey){
-    return getCaptcha({
+    return app.httpPost({
+      url: '/Jszx/office_getCaptcha',
+      data: {
         cookie: cookie,
         codeKey: codeKey
-      })
+      },
+    })
   }
   query(e){
-    return officeQuery(e)
+    return app.httpPost({
+      url: '/Jszx/office_query',
+      data: e,
+    })
   }
 }
