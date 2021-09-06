@@ -17,6 +17,12 @@
           "pathName": "college/pages/list/list",
           "query": "",
           "scene": null
+        },
+        {
+          "name": "pages/articleView/articleView",
+          "pathName": "pages/articleView/articleView",
+          "query": "path=info%2F1161%2F2068.htm&source=jwc&domain=jwc.cuit.edu.cn",
+          "scene": null
         }
       ]
     }
