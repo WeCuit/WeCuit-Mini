@@ -308,7 +308,7 @@ Page({
                 else {
                     wx.showToast({
                         icon: "none",
-                        title: res.data.error,
+                        title: res.data.msg,
                     });
                 }
                 return;

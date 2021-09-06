@@ -53,9 +53,10 @@ function httpBase(method, url, data, config = {}) {
                 // 服务器响应状态码异常检查
                 if (res.statusCode !== 200) {
                     const resp = res.data;
-                    if (resp.error) {
+                    console.log(resp)
+                    if (resp.msg) {
                         wx.showToast({
-                            title: resp.error,
+                            title: resp.msg,
                             icon: 'none'
                         })
                     }
@@ -93,7 +94,7 @@ function httpBase(method, url, data, config = {}) {
                         })
                     } else {
                         wx.showToast({
-                            title: resp.error ? resp.error : '未知错误',
+                            title: resp.msg ? resp.msg : '未知错误',
                             icon: "none",
                         });
                     }
