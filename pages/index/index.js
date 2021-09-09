@@ -302,7 +302,7 @@ Page({
       case "html":
         wx.navigateTo({
           url:
-            "../articleView/articleView?type=html&link=" +
+            "../articleView/articleView?type=html&link=" + app.globalData.API_DOMAIN + 
             data.data,
         });
         break;
