@@ -1,12 +1,14 @@
 {
-  "name": "cuit",
-  "version": "1.6.6",
-  "description": "CUIT TOOLS",
+  "name": "WeCuit",
+  "version": "1.0.0",
+  "description": "WeCuit",
   "main": "app.js",
   "dependencies": {
+    "jimp": "^0.16.1",
     "miniprogram-component-plus": "^1.0.0",
     "parser-wx": "^1.1.1",
-    "weui-miniprogram": "^1.0.7"
+    "qrcode-reader": "^1.0.4",
+    "weui-miniprogram": "^1.0.5"
   },
   "devDependencies": {},
   "scripts": {
