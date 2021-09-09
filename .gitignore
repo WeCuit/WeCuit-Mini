@@ -1,3 +1,4 @@
+
 # Windows
 [Dd]esktop.ini
 Thumbs.db
@@ -16,5 +17,7 @@ node_modules/
 
 miniprogram_npm/
 project.config.json
+
+docker-compose.yml
+
 qrcode.png
-private.key
