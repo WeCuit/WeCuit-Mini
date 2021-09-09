@@ -104,7 +104,7 @@ Page({
     bindThanks: function()
     {
       wx.navigateTo({
-        url: '/pages/articleView/articleView?link=' + app.globalData.API_DOMAIN + app.globalData.config['about-link']
+        url: '/pages/articleView/articleView?link=' + app.globalData.API_DOMAIN + '/Sys/about'
       })
     },
     bindLogout: function(){

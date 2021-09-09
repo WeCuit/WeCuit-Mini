@@ -1,21 +1,5 @@
-
-# Windows
-[Dd]esktop.ini
-Thumbs.db
-$RECYCLE.BIN/
-
-# macOS
-.DS_Store
-.fseventsd
-.Spotlight-V100
-.TemporaryItems
-.Trashes
-
-# Node.js
-node_modules/
-/config.js
-
-miniprogram_npm/
-project.config.json
-qrcode.png
 docker-compose.yml
+qrcode.png
+node_modules/*
+config.js
+miniprogram_npm/
