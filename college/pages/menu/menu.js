@@ -129,7 +129,6 @@ Page({
                     icon: "none",
                 });
                 return ;
-                break;
         }
         wx.navigateTo({
             url: url,

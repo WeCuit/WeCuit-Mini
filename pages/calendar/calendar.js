@@ -6,13 +6,13 @@ Page({
    * 页面的初始数据
    */
   data: {
-    calendarImg: 'https://jwc.cuit.edu.cn/xl2020-2021.jpg',
+    calendarImg: 'data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg==',
     lqImg: 'https://cuit.api.jysafe.cn/public/images/map/lq.jpg',
     hkgImg: ['https://cuit.api.jysafe.cn/public/images/map/hkg1.jpg', 'https://cuit.api.jysafe.cn/public/images/map/hkg.jpg'],
-    listData:[
-      {"code":"教学时间","text":"开始时间","type":"结束时间"},
-      {"code":"寒假","text":"开始时间","type":"结束时间"},
-      ],
+    listData: [
+      { "code": "教学时间", "text": "开始时间", "type": "结束时间" },
+      { "code": "寒假", "text": "开始时间", "type": "结束时间" },
+    ],
   },
 
   /**
@@ -32,12 +32,12 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-    if("undefined" !== typeof qq && 1 === getCurrentPages().length)
-    {
+    if ("undefined" !== typeof qq && 1 === getCurrentPages().length) {
       this.setData({
         fromShare: true
       })
     }
+    this.getCalendar()
   },
 
   /**
@@ -70,7 +70,7 @@ Page({
   /**
    * 分享至微信朋友圈
    */
-  onShareTimeline: function(e){
+  onShareTimeline: function (e) {
     // console.log(e)
     return {
       title: '成信大校历',
@@ -92,24 +92,26 @@ Page({
   /**
    * 获取校历
    */
-  getCalendar: function()
-  {
-    // wx.request({
-    //   url: app.globalData.API_DOMAIN + '/wx/static/calendar.png',
-    //   header:{
-    //     'X-FROM': 'wechat'
-    //   }
-    // })
+  getCalendar: function () {
+    // https://jwc.cuit.edu.cn/xl2020-2021.jpg
+    const now = new Date();
+    const year = now.getFullYear()
+    const month = now.getMonth() + 1
+    let xl = month > 8 ? `${year}-${year + 1}` : `${year - 1}-${year}`
+
+    this.setData({
+      calendarImg: `https://jwc.cuit.edu.cn/xl${xl}.jpg`
+    })
   },
   /**
    * 点击图片触发事件
    */
-  bindPreview: function(e){
+  bindPreview: function (e) {
     var url = e.target.dataset.src
     wx.previewImage({
       current: url, // 当前显示图片的http链接
       urls: url
-       // 需要预览的图片http链接列表
+      // 需要预览的图片http链接列表
     })
   },
 })

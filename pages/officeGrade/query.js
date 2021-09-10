@@ -1,5 +1,5 @@
 // pages/computerCenter/officeGrade/query.js
-import {getCaptcha, officeQuery} from './api'
+import { getOfficePrepare, getOfficeCaptcha, officeQuery } from './api'
 
 const app = getApp()
 let office;
@@ -20,16 +20,19 @@ Page({
    */
   onLoad: function (options) {
     office = new OFFICE(app.globalData.API_DOMAIN)
-    office.prepareQuery().then((res)=>{
-      this.data.cookie = res.cookie
-      this.data.codeKey = res.codeKey
+    office.prepareQuery().then((res) => {
+      const resp = res.data
+      this.data.cookie = resp.data.cookie
+      this.data.codeKey = resp.data.codeKey
       this.setData({
-        syncTime: res.syncTime
+        syncTime: resp.data.syncTime
       })
-      office.getCaptcha(this.data.cookie, this.data.codeKey).then((res)=>{
+      office.getCaptcha(this.data.cookie, this.data.codeKey).then((res) => {
+        const resp = res.data
+
         this.setData({
-          captchaImg: res.base64img,
-          captchaCode: res.imgCode
+          captchaImg: resp.data.base64img,
+          captchaCode: resp.data.imgCode
         })
       })
     })
@@ -84,43 +87,44 @@ Page({
   onShareAppMessage: function () {
 
   },
-  refreshCaptcha: function(){
-    office.getCaptcha(this.data.cookie, this.data.codeKey).then((res)=>{
+  refreshCaptcha: function () {
+    office.getCaptcha(this.data.cookie, this.data.codeKey).then((res) => {
+      const resp = res.data
       this.setData({
-        captchaImg: res.base64img,
-        captchaCode: res.imgCode
+        captchaImg: resp.data.base64img,
+        captchaCode: resp.data.imgCode
       })
     })
   },
-  formSubmit: function(e){
+  formSubmit: function (e) {
     let data = e.detail.value
     data.codeKey = this.data.codeKey
     data.cookie = this.data.cookie
     console.log(data)
-    office.query(data).then((res)=>{
+    office.query(data).then((res) => {
+      const resp = res.data
       this.setData({
-        result: res.result
+        result: resp.data.result
       })
       this.refreshCaptcha()
     })
   }
 })
-class OFFICE{
-  constructor(api){
+class OFFICE {
+  constructor(api) {
     this.API = api
   }
-  prepareQuery(){
-    return app.httpGet({
-      url: '/Jszx/office_prepare',
+  prepareQuery() {
+    return getOfficePrepare()
+  }
+  getCaptcha(cookie, codeKey) {
+    console.log(cookie, codeKey)
+    return getOfficeCaptcha({
+      cookie: cookie,
+      codeKey: codeKey
     })
   }
-  getCaptcha(cookie, codeKey){
-    return getCaptcha({
-        cookie: cookie,
-        codeKey: codeKey
-      })
-  }
-  query(e){
+  query(e) {
     return officeQuery(e)
   }
 }
