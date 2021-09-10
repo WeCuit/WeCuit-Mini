@@ -278,6 +278,7 @@ Page({
       },
       complete: (res) => {
         this.setData({ downloadHidden: true })
+        wx.hideLoading()
       }
     })
     downloadTask.onProgressUpdate((p) => {
