@@ -9,15 +9,15 @@
 	<view class="list">
 		<label class="type">教学时间</label>
 		<label class="time">
-				<view>开始时间:2020年09月14日</view>
-				<view>结束时间:2021年01月27日</view>
+				<view>开始时间:2021年09月06日</view>
+				<view>结束时间:2022年01月19日</view>
 		</label>
 	</view>
 	<view class="list">
 		<label class="type">寒假</label>
 		<label class="time">
-				<view>开始时间:2021年01月28日</view>
-				<view>结束时间:2021年02月25日</view>
+				<view>开始时间:2022年01月20日</view>
+				<view>结束时间:2022年02月17日</view>
 		</label>
 	</view>
 </view>
