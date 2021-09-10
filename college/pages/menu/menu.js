@@ -41,6 +41,7 @@ Page({
             },
         ],
         college: "",
+        collegeName: "",
     },
 
     /**
@@ -48,9 +49,7 @@ Page({
      */
     onLoad: function (options) {
         this.data.college = options.college;
-        wx.setNavigationBarTitle({
-            title: options.name
-        });
+        this.data.collegeName = options.name
     },
 
     /**
@@ -61,7 +60,10 @@ Page({
     /**
      * 生命周期函数--监听页面显示
      */
-    onShow: function (options) {
+    onShow: function () {
+        wx.setNavigationBarTitle({
+            title: this.data.collegeName
+        });
     },
 
     /**
@@ -127,7 +129,6 @@ Page({
                     icon: "none",
                 });
                 return ;
-                break;
         }
         wx.navigateTo({
             url: url,
