@@ -1,4 +1,4 @@
-import {getNewsTag, getNewsList} from './api';
+import { getNewsTag, getNewsList } from './api';
 
 let pageStart = 1;
 
@@ -41,6 +41,9 @@ Page({
 				pageData.page = currentPage + 1;
 			}
 
+			wx.setNavigationBarTitle({
+				title: data.name,
+			})
 			this.setCurrentData(currentCur, pageData);
 		});
 	},
@@ -96,13 +99,13 @@ Page({
 	showArticle(e) {
 		console.log(e);
 		var path = e.currentTarget.dataset.link;
-        wx.navigateTo({
-            url: `/pages/articleView/articleView?path=${encodeURIComponent(path)}&source=${this.data.source}&domain=${this.data.domain}`,
-        });
+		wx.navigateTo({
+			url: `/pages/articleView/articleView?path=${encodeURIComponent(path)}&source=${this.data.source}&domain=${this.data.domain}`,
+		});
 	},
 	onLoad(options) {
-        if (options.source) this.data.source = options.source;
-        if (options.tag) this.data.tag = options.tag;
+		if (options.source) this.data.source = options.source;
+		if (options.tag) this.data.tag = options.tag;
 		// get tag
 		getNewsTag(this.data.source).then((res) => {
 			const resp = res.data;
@@ -136,44 +139,44 @@ Page({
 			}, 350);
 		})
 	},
-    /**
-     * 生命周期函数--监听页面显示
-     */
-    onShow: function () {
-        if (typeof this.getTabBar === "function" && this.getTabBar()) {
-            this.getTabBar().setData({
-                selected: 1,
-            });
-        }
-        wx.showShareMenu({
-            withShareTicket: true,
-            // for wx
-            menus: ["shareAppMessage", "shareTimeline"],
-            // for qq
-            showShareItems: ["qq", "qzone", "wechatFriends", "wechatMoment"],
-        });
-    },
-    /**
-     * 分享至微信朋友圈
-     */
-    onShareTimeline: function () {
-        return {
-            title: this.data.tabs[this.data.activeTab].text,
-            query: `source=${this.data.source}&tag=${this.data.tabs[this.data.activeTab]}`,
-        };
-    },
+	/**
+	 * 生命周期函数--监听页面显示
+	 */
+	onShow: function () {
+		if (typeof this.getTabBar === "function" && this.getTabBar()) {
+			this.getTabBar().setData({
+				selected: 1,
+			});
+		}
+		wx.showShareMenu({
+			withShareTicket: true,
+			// for wx
+			menus: ["shareAppMessage", "shareTimeline"],
+			// for qq
+			showShareItems: ["qq", "qzone", "wechatFriends", "wechatMoment"],
+		});
+	},
+	/**
+	 * 分享至微信朋友圈
+	 */
+	onShareTimeline: function () {
+		return {
+			title: this.data.tabs[this.data.activeTab].text,
+			query: `source=${this.data.source}&tag=${this.data.tabs[this.data.activeTab]}`,
+		};
+	},
 
-    /**
-     * 用户点击右上角分享
-     */
-    onShareAppMessage: function (e) {
-        return {
-            title: this.data.tabs[this.data.activeTab].name,
-            // for wechat
-            path: `/pages/newsList/newsList?source=${this.data.source}&tag=${this.data.tabs[this.data.activeTab]}`,
-            // for qq
-            query: `source=${this.data.source}&tag=${this.data.tabs[this.data.activeTab]}`,
-        };
-    },
+	/**
+	 * 用户点击右上角分享
+	 */
+	onShareAppMessage: function (e) {
+		return {
+			title: this.data.tabs[this.data.activeTab].name,
+			// for wechat
+			path: `/pages/newsList/newsList?source=${this.data.source}&tag=${this.data.tabs[this.data.activeTab]}`,
+			// for qq
+			query: `source=${this.data.source}&tag=${this.data.tabs[this.data.activeTab]}`,
+		};
+	},
 });
 
