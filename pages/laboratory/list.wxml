@@ -57,7 +57,7 @@
 </view>
 
 <view class="result">
-    <block wx:for="{{retList}}" wx:key="index">
+    <block wx:if="{{retList.length>0}}" wx:for="{{retList}}" wx:key="index">
         <view class="search">
             <view class="title" >
                 <navigator url="detail?{{item.link}}">{{item.name}}</navigator>
@@ -78,6 +78,9 @@
                 </view>
             </view>
         </view>
+    </block>
+    <block wx:if="{{retList.length===0}}">
+        <view>没有数据</view>
     </block>
 </view>
 
