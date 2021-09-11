@@ -1,3 +1,4 @@
+
 # Windows
 [Dd]esktop.ini
 Thumbs.db
@@ -20,3 +21,5 @@ docker-compose.yml
 qrcode.png
 private.key
 project.private.config.json
+
+docker-compose.yml
