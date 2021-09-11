@@ -1,4 +1,5 @@
 // pages/JSZX/jkdk.js
+import { getCheckInList } from './api'
 const app = getApp();
 
 Page({
@@ -22,34 +23,34 @@ Page({
     /**
      * 生命周期函数--监听页面加载
      */
-    onLoad: function (options) {},
+    onLoad: function (options) { },
 
     /**
      * 生命周期函数--监听页面初次渲染完成
      */
     onReady: function () {
         this.data.sessionInfo = app.globalData.sessionInfo;
-        if (app.globalData.checkInList)
+        if (app.globalData.checkInList) {
             this.setData({
                 list: app.globalData.checkInList,
             });
-        else this.onPullDownRefresh();
+        } else this.onPullDownRefresh();
     },
 
     /**
      * 生命周期函数--监听页面显示
      */
-    onShow: function () {},
+    onShow: function () { },
 
     /**
      * 生命周期函数--监听页面隐藏
      */
-    onHide: function () {},
+    onHide: function () { },
 
     /**
      * 生命周期函数--监听页面卸载
      */
-    onUnload: function () {},
+    onUnload: function () { },
 
     /**
      * 页面相关事件处理函数--监听用户下拉动作
@@ -60,7 +61,8 @@ Page({
             .then(() => {
                 return this.getCheckInList();
             })
-            .then((data) => {
+            .then((res) => {
+                const { data } = res.data
                 this.setData({
                     list: data.list,
                 });
@@ -70,7 +72,8 @@ Page({
             })
             .catch((err) => {
                 if (null === err) return Promise.reject(null);
-                if (20401 == err.errorCode) {
+                const { data } = err
+                if (20401 == data.code) {
                     // 错误码：未登录
                     if (app.globalData.isUser && this.data.isFirstTry) {
                         this.data.isFirstTry = false;
@@ -83,10 +86,10 @@ Page({
                             url: "../my/sso/sso",
                         });
                     }
-                } else if (err.errMsg) {
+                } else if (data.msg) {
                     wx.showToast({
                         icon: "none",
-                        title: err.errMsg,
+                        title: data.msg,
                     });
                 } else {
                     console.log(err);
@@ -94,15 +97,15 @@ Page({
                         icon: "none",
                         title: "未知异常",
                     });
+                    return Promise.reject(null);
                 }
-                return Promise.reject(null);
             })
     },
 
     /**
      * 页面上拉触底事件的处理函数
      */
-    onReachBottom: function () {},
+    onReachBottom: function () { },
 
     /**
      * 分享至微信朋友圈
@@ -126,12 +129,7 @@ Page({
         };
     },
     getCheckInList: function () {
-        return app.httpPost({
-            url: "/Jszx/getCheckInListV2/",
-            data: {
-                cookie: this.data.sessionInfo.JSZX_cookie,
-            },
-        });
+        return getCheckInList(this.data.sessionInfo.JSZX_cookie)
     },
     openCheckIn: function (e) {
         if (e.currentTarget.dataset.link)

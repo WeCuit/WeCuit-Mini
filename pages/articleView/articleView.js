@@ -64,7 +64,7 @@ Page({
         this.loadLink(data);
         break;
       default:
-        var url = app.globalData.API_DOMAIN + '/News/getContent/source/' + source + '?link=' + this.data.link;
+        var url = app.globalData.API_DOMAIN + '/News/getContent?link=' + this.data.link;
         this.loadLink(url);
         break;
     }

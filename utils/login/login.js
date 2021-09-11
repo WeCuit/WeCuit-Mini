@@ -70,13 +70,13 @@ class LOGIN {
                     }
 
                     let res = result.data || {};
-                    let code = res.errorCode;
+                    let code = res.code;
 
-                    if (code !== 2000) {
+                    if (code !== 200) {
                         reject(res);
-                        if (res.errMsg) {
+                        if (res.msg) {
                             wx.showToast({
-                                title: res.errMsg,
+                                title: res.msg,
                                 icon: "none",
                             });
                         }
@@ -107,7 +107,7 @@ class LOGIN {
     httpPost({ url = "", data = {}, loading = false, loadingMsg = "" } = {}) {
         return this.httpBase("POST", url, data, loading, loadingMsg);
     }
-    
+
     ccDoLogin() {
         return this.httpPost({
             url: "/Jszx/loginRSAv1/",
@@ -115,7 +115,8 @@ class LOGIN {
                 userId: this.account.userId,
                 userPass: RSAEncrypt(this.account.userPass),
             },
-        }).then((data) => {
+        }).then((res) => {
+            const { data } = res
             this.session.JSZX_cookie = data.cookie;
             wx.setStorage({
                 key: "JSZX_cookie",
@@ -459,7 +460,7 @@ class LOGIN {
                         this.autoLogin();
                     }
                     return;
-                }else if (12200 == err.code) {
+                } else if (12200 == err.code) {
                     console.log("SSO Already Login");
                     r();
                 } else if (12401 === err.code) {
@@ -502,8 +503,7 @@ class LOGIN {
                 success: (res) => {
                     if (!res.data) resolve(-1);
                     const html = res.data;
-                    if("string" !== typeof html)
-                    {
+                    if ("string" !== typeof html) {
                         log.info(JSON.stringify(res))
                         reject({ code: 0, errMsg: "预期之外的异常" });
                     }
@@ -529,12 +529,12 @@ class LOGIN {
                         });
                     } else if (html.indexOf("禁用") != -1) {
                         reject({ code: 12403, errMsg: "账号被禁用！" });
-                    }else if (
+                    } else if (
                         html.indexOf("必须录入验证码") != -1 ||
                         -1 != html.indexOf("验证码无效")
                     ) {
                         resolve({ code: 12405, errMsg: "验证码有误" });
-                    }else{
+                    } else {
                         reject({
                             code: 0,
                             errMsg: '未知异常'
