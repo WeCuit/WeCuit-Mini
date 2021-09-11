@@ -40,7 +40,7 @@ function httpBase(method, url, data, config = {}) {
             method,
             header,
             data,
-            timeout: 3000,
+            timeout: 4000,
             responseType: config.responseType || 'text',
             success: function (res) {
                 console.log("result", res)

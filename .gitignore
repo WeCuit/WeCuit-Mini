@@ -16,6 +16,7 @@ node_modules/
 
 miniprogram_npm/
 project.config.json
+docker-compose.yml
 qrcode.png
 private.key
 project.private.config.json
