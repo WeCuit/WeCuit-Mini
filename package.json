@@ -7,8 +7,8 @@
     "jimp": "^0.16.1",
     "miniprogram-component-plus": "^1.0.0",
     "parser-wx": "^1.1.1",
-    "qrcode-reader": "^1.0.4",
-    "weui-miniprogram": "^1.0.5"
+    "url-parse": "^1.5.3",
+    "weui-miniprogram": "^1.0.7"
   },
   "devDependencies": {},
   "scripts": {

@@ -1,6 +1,7 @@
 // pages/attendance/edit.js
 const app = getApp()
-import {genQuerySign} from '../../utils/tool'
+import { genQuerySign } from '../../utils/tool'
+import { getCheckInData, postCheckInData } from './api'
 
 Page({
 
@@ -19,7 +20,7 @@ Page({
     isSubscription: false,
     showIntro: false,
   },
-  sessionInfo:{},
+  sessionInfo: {},
   tempForm: null,
 
   /**
@@ -33,8 +34,7 @@ Page({
    * 生命周期函数--监听页面初次渲染完成
    */
   onReady: function () {
-    if("undefined" !== typeof qq && 1 === getCurrentPages().length)
-    {
+    if ("undefined" !== typeof qq && 1 === getCurrentPages().length) {
       this.setData({
         fromShare: true
       })
@@ -46,7 +46,7 @@ Page({
    */
   onShow: function () {
     this.sessionInfo = app.globalData.sessionInfo
-    app.globalData.autoLoginProcess.then(()=>{
+    app.globalData.autoLoginProcess.then(() => {
       this.onPullDownRefresh();
     })
   },
@@ -70,7 +70,8 @@ Page({
    */
   onPullDownRefresh: function () {
     // this.getCheckInInfo()
-    this.getEditDetail().then(data => {
+    this.getEditDetail().then(res => {
+      const { data } = res.data
       wx.stopPullDownRefresh()
       wx.hideLoading()
       this.setData({
@@ -81,21 +82,22 @@ Page({
         title: data.form.title,
       })
       return Promise.reject();
-    }).catch(err =>{
-      if(err && 20401 == err.errorCode){
+    }).catch(err => {
+      if (err && 20401 == err.errorCode) {
         // 计算中心未登录
-        if (app.globalData.isUser) 
+        if (app.globalData.isUser)
           app.loginClass.ccDoLogin().then(this.onPullDownRefresh);
-        else{
+        else {
           wx.navigateTo({
             url: '../my/sso/sso'
           })
         }
-      }else if(err && err.errMsg){
+      } else if (err && err.errMsg) {
         wx.showToast({
           icon: 'none',
           title: err.errMsg,
-        })}
+        })
+      }
       return Promise.reject();
     })
   },
@@ -113,14 +115,14 @@ Page({
   onShareAppMessage: function () {
 
   },
-  onFormSubmit: function (e){
+  onFormSubmit: function (e) {
     console.log('submit', e);
     var data = e.detail;
     var form = {};
 
-    for(var key in data){
+    for (var key in data) {
       let type = data[key].original.type;
-      switch(type){
+      switch (type) {
         case 'picker':
           let idx = data[key].idx;
           form[key] = data[key].original.range[idx].id;
@@ -131,76 +133,56 @@ Page({
           break;
       }
     }
-    console.log(form);
     this.tempForm = form;
 
-    app.httpPostJson({
-      url: '/Jszx/doCheckInV3/',
-      data: {
-        link: this.data.link,
-        JSZXCookie: this.sessionInfo.JSZX_cookie,
-        form: form
-      }
-    }).then(data=>{
-      if(2000 == data.errorCode)
-      {
+    postCheckInData(this.data.link, this.sessionInfo.JSZX_cookie, form)
+      .then(res => {
+        const resp = res.data
+        const { data } = resp
         wx.showToast({
           icon: 'none',
-          title: data.errMsg
+          title: data.msg
         })
         this.setData({
           formData: data.form.data,
           checkInTime: data.form.checkTime
         })
-      }else{
+      }).catch(err => {
+        console.log(err)
         wx.showToast({
           icon: 'none',
-          title: data.errMsg,
+          title: err?.data?.msg ?? '未知异常'
         })
-      }
-    }).catch(err=>{
-      wx.showToast({
-        icon: 'none',
-        title: err.errMsg
       })
-    })
   },
   // 获取打卡详细信息
-  getEditDetail: function()
-  {
+  getEditDetail: function () {
     wx.showLoading({
       title: '获取打卡信息',
     })
-    return app.httpPost({
-      url: '/Jszx/getCheckInEditV2/',
-      data: {
-        cookie: this.sessionInfo.JSZX_cookie,
-        link: this.data.link
-      },
-    })
+    return getCheckInData(this.sessionInfo.JSZX_cookie, this.data.link)
   },
-  getCheckInInfo: function(){
+  getCheckInInfo: function () {
     app.httpPost({
       url: '/Task/checkInStatusV2',
       data: {
         openid: app.globalData.openid,
         sign: genQuerySign('/Task/checkInStatusV2/', app.globalData.openid)
       },
-    }).then(data=>{
+    }).then(data => {
       wx.stopPullDownRefresh()
       this.setData({
         isSubscription: data.isSubscription
       })
-      if(false !== data.autoCheckIn)
-      {
+      if (false !== data.autoCheckIn) {
         this.setData({
           autoCheckIn: data.autoCheckIn,
           isAutoCheckIn: true
         })
       }
-    }).catch(err=>{
+    }).catch(err => {
       wx.stopPullDownRefresh()
-      if(err.errMsg)
+      if (err.errMsg)
         wx.showToast({
           icon: 'none',
           title: err.errMsg,
@@ -209,47 +191,45 @@ Page({
   },
 
   // 监测自动打卡开关
-  autoCheckInSwitch:function(e){
+  autoCheckInSwitch: function (e) {
     this.data.isAutoCheckIn = e.detail.value
   },
 
-  bindShowIntro: function(){
-    this.setData({showIntro:!this.data.showIntro})
+  bindShowIntro: function () {
+    this.setData({ showIntro: !this.data.showIntro })
   },
 
   // 更新自动打卡状态
-  updateAutoCheckIn:function(){
-    if(this.tempForm == null){
+  updateAutoCheckIn: function () {
+    if (this.tempForm == null) {
       wx.showToast({
         icon: 'none',
         title: '请至少提交一次！'
       })
       return;
     }
-    new Promise((resolve, reject)=>{
-      if(this.data.isAutoCheckIn)
-      {
-        this.setData({isAutoCheckIn: true})
+    new Promise((resolve, reject) => {
+      if (this.data.isAutoCheckIn) {
+        this.setData({ isAutoCheckIn: true })
         resolve(false)
       }
-      else{
-        this.setData({isAutoCheckIn: false})
+      else {
+        this.setData({ isAutoCheckIn: false })
         // 删除
         resolve(true)
       }
-    }).then((del)=>{
+    }).then((del) => {
       //发起网络请求
-      if(!del)
-      {
+      if (!del) {
         // 添加
         this.addCheckInTask(this.data.autoCheckIn.time, app.globalData.openid, 0)
-      }else{
+      } else {
         // 删除
         this.addCheckInTask('06:00', app.globalData.openid, 1)
         let a = this.data.autoCheckIn
-        this.setData({autoCheckIn: a})
+        this.setData({ autoCheckIn: a })
       }
-    }).catch((err)=>{
+    }).catch((err) => {
       console.log(err)
       wx.showToast({
         icon: 'none',
@@ -257,14 +237,13 @@ Page({
       })
     })
   },
-  bindAutoCheckInTime:function(e)
-  {
+  bindAutoCheckInTime: function (e) {
     let a = this.data.autoCheckIn
     a.time = e.detail.value
-    this.setData({autoCheckIn: a})
+    this.setData({ autoCheckIn: a })
   },
-  addCheckInTask: function(time, openid, action){
-    wx.showLoading({title: '修改中~'})
+  addCheckInTask: function (time, openid, action) {
+    wx.showLoading({ title: '修改中~' })
     var data = {
       time: time,
       openid: openid,
@@ -272,7 +251,7 @@ Page({
       form: this.tempForm,
       link: this.data.link
     }
-    
+
     let encrypted = app.RSAEncrypt(JSON.stringify(data))
 
     app.httpPost({
@@ -280,19 +259,19 @@ Page({
       data: {
         data: encrypted
       }
-    }).then(data=>{
+    }).then(data => {
       wx.hideLoading()
       wx.showToast({
-            icon: 'none',
-            title: data.errMsg,
-          })
-    }).catch(err=>{
+        icon: 'none',
+        title: data.errMsg,
+      })
+    }).catch(err => {
       wx.hideLoading()
-      if(err.errMsg)
-          wx.showToast({
-            icon: 'none',
-            title: err.errMsg,
-          })
+      if (err.errMsg)
+        wx.showToast({
+          icon: 'none',
+          title: err.errMsg,
+        })
     })
   },
 })

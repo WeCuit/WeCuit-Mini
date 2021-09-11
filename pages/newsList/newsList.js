@@ -1,5 +1,5 @@
 import { getNewsTag, getNewsList } from './api';
-
+import Url from 'url-parse'
 let pageStart = 1;
 
 Page({
@@ -73,20 +73,14 @@ Page({
 	},
 	// 页面滑动切换事件
 	animationFinish(e) {
-		console.log(1313)
-
 		this.setData({
-			duration: 300
+			duration: 300,
+			categoryCur: e.detail.current
 		});
-		setTimeout(() => {
-			this.setData({
-				categoryCur: e.detail.current
-			});
-			let pageData = this.getCurrentData();
-			if (pageData.listData.length === 0) {
-				this.getList('refresh', pageStart);
-			}
-		}, 0);
+		let pageData = this.getCurrentData();
+		if (pageData.listData.length === 0) {
+			this.getList('refresh', pageStart);
+		}
 	},
 	// 刷新数据
 	refresh() {
@@ -98,10 +92,18 @@ Page({
 	},
 	showArticle(e) {
 		console.log(e);
-		var path = e.currentTarget.dataset.link;
-		wx.navigateTo({
-			url: `/pages/articleView/articleView?path=${encodeURIComponent(path)}&source=${this.data.source}&domain=${this.data.domain}`,
-		});
+		let path = e.currentTarget.dataset.link;
+		if(path.indexOf('http') === 0){
+			let url = new Url(path, true);
+			console.log(url)
+			wx.navigateTo({
+				url: `/pages/articleView/articleView?path=${encodeURIComponent(url.pathname)}&source=${this.data.source}&domain=${url.hostname}`,
+			});
+		}else{
+			wx.navigateTo({
+				url: `/pages/articleView/articleView?path=${encodeURIComponent(path)}&source=${this.data.source}&domain=${this.data.domain}`,
+			});
+		}
 	},
 	onLoad(options) {
 		if (options.source) this.data.source = options.source;
