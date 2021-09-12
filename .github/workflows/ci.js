@@ -7,6 +7,13 @@ const project = new ci.Project({
     ignores: ["node_modules/**/*", "preview/*"],
 });
 (async () => {
+    // console.warn("==========构建NPM==========")
+    // const warning = await ci.packNpm(project, {
+    //     ignores: [],
+    //     reporter: (infos) => { console.log(infos) }
+    // })
+    // console.warn(warning)
+    console.warn("==========上传==========")
     const uploadResult = await ci.upload({
         project,
         version: "1.1.1",

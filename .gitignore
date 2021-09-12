@@ -12,9 +12,9 @@ $RECYCLE.BIN/
 
 # Node.js
 node_modules/
+package-lock.json
 /config.js
 
-miniprogram_npm/
 project.config.json
 docker-compose.yml
 qrcode.png
