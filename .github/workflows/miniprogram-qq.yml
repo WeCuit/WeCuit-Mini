@@ -1,0 +1,45 @@
+name: QQ CI
+
+#写法一：在push事件时触发构建
+#on: [push] 
+
+#写法二：在master分支的push操作时触发构建
+on:
+  push:
+    branches:
+    - QQ
+
+jobs:
+  build-qq-ci: #job名称
+
+    runs-on: ubuntu-latest #运行环境
+
+#第一步：获取小程序源码
+    steps:
+    - name: Checkout 
+      uses: actions/checkout@master
+      
+    - name: generate config
+      run: \cp -rf config.example.js config.js
+          && sed -i 's|YOUR_PUBLIC_RSA_KEY|${{ secrets.CONFIG_PUBLIC_RSA_KEY }}|' config.js
+          && sed -i 's/YOUR_CDN_SALT/${{ secrets.CONFIG_CDN_SALT }}/' config.js
+          && sed -i 's/YOUR_QUERY_SALT/${{ secrets.CONFIG_QUERY_SALT }}/' config.js
+          
+#第二步：上传小程序版本到管理端，并将此版本设置为体验版（设置体验版可选）
+    - name: Build 
+      uses: docker://jiyecafe/qqminiapp_build:1.0.3
+      env: 
+        PLUGIN_VERSION: 1.6.11
+        PLUGIN_DESC: 新增实验室安排查询功能
+        PLUGIN_APPTOKEN: ${{ secrets.QQ_APPTOKEN }}
+        PLUGIN_BUILDUSER: ${{ github.actor }} 
+        PLUGIN_EXPERIENCE: true 
+        #PLUGIN_PREVIEW: true
+        PLUGIN_FIRSTPAGE: pages/index/index
+        #PLUGIN_USEPACKAGEJSON: true
+        # PLUGIN_NPMBUILD: true
+        #PLUGIN_SOURCECODEPATH: ./test
+
+    - name: Update Experience URL
+      run: npm install jimp qrcode-reader && node updateURL.js
+

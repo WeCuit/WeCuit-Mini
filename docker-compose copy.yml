@@ -1,0 +1,19 @@
+version: "2"
+services:
+    mini_qq:
+        image: qqminiapp/build:latest
+        container_name: mini_qq
+        volumes:
+            - ./:/tmp
+        environment:
+            PLUGIN_VERSION: 1.6.6
+            PLUGIN_DESC: 首页布局优化，新增部分功能
+            PLUGIN_APPTOKEN: ****
+            PLUGIN_EXPERIENCE: "true"
+            PLUGIN_PREVIEW: "false"
+            PLUGIN_BUILDUSER: jiye
+            PLUGIN_FIRSTPAGE: pages/index/index
+            PLUGIN_USEPACKAGEJSON: "false"
+            PLUGIN_NPMBUILD: "true"
+            # PLUGIN_SOURCECODEPATH: /tmp
+        working_dir: /tmp

@@ -1,3 +1,4 @@
+
 # Windows
 [Dd]esktop.ini
 Thumbs.db
@@ -15,8 +16,9 @@ node_modules/
 package-lock.json
 /config.js
 
-project.config.json
 docker-compose.yml
 qrcode.png
 private.key
 project.private.config.json
+
+docker-compose.yml
