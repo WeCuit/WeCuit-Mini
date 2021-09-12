@@ -13,6 +13,7 @@ $RECYCLE.BIN/
 
 # Node.js
 node_modules/
+package-lock.json
 /config.js
 
 docker-compose.yml

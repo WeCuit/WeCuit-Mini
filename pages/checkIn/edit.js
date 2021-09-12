@@ -149,9 +149,10 @@ Page({
         })
       }).catch(err => {
         console.log(err)
+        const msg = (err && err.data && err.data.msg) ? err.data.msg : '未知异常'
         wx.showToast({
           icon: 'none',
-          title: err?.data?.msg ?? '未知异常'
+          title: msg
         })
       })
   },
